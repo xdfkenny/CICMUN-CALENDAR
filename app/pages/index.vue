@@ -25,6 +25,7 @@ const {
   updateEvent, 
   deleteEvent, 
   resetToSeed, 
+  syncWithLatestUpdates,
   exportEvents, 
   importEvents 
 } = useEvents()
@@ -38,7 +39,7 @@ const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bili
 // Filter events by selected languages
 const languageFilteredEvents = computed(() => {
   if (selectedLanguages.value.size === 0) return []
-  return events.value.filter(event => selectedLanguages.value.has(event.language))
+  return events.value.filter(event => event.language && selectedLanguages.value.has(event.language))
 })
 
 const handleModelToggle = (modelId: string) => {
@@ -93,10 +94,10 @@ const handleImport = () => {
   input.click()
 }
 
-const handleReset = () => {
-  if (window.confirm("Reset to seed data?")) {
-    resetToSeed()
-    toast.success("Calendar reset")
+const handleSync = () => {
+  if (window.confirm("Sync with latest admin updates? Your custom events will be preserved.")) {
+    syncWithLatestUpdates()
+    toast.success("Calendar synced with latest updates")
   }
 }
 
@@ -146,7 +147,7 @@ const handleDateSelect = (date: string) => {
           <div class="flex flex-wrap gap-3 items-center">
             <button @click="handleExport" class="cicmun-button-primary text-sm" aria-label="Exportar eventos">Export</button>
             <button @click="handleImport" class="cicmun-button-primary text-sm" aria-label="Importar eventos">Import</button>
-            <button @click="handleReset" class="cicmun-button-secondary text-sm" aria-label="Restablecer calendario">Reset</button>
+            <button @click="handleSync" class="cicmun-button-secondary text-sm" aria-label="Sincronizar con últimas actualizaciones">Sync Latest Updates</button>
             <div class="flex-1" />
             <div class="text-sm font-semibold text-gray-700" aria-live="polite">
               {{ languageFilteredEvents.length }} events
