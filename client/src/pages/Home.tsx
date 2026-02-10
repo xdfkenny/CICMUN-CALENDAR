@@ -106,9 +106,9 @@ export default function Home() {
         {/* Header */}
         <div className="mac-window p-4 mb-4">
           <div className="flex items-center gap-4 mb-2">
-            <img 
-              src="/LOGO.png" 
-              alt="MUN Logo" 
+            <img
+              src="/LOGO.png"
+              alt="MUN Logo"
               className="w-12 h-12 object-contain"
               style={{ padding: '2px', border: '1px solid black', backgroundColor: 'white' }}
             />
@@ -197,6 +197,11 @@ export default function Home() {
             onDeleteEvent={deleteEvent}
           />
         )}
+        <div className="flex justify-end mt-8">
+          <span className="text-[10px] text-gray-100 select-none cursor-default opacity-40 hover:opacity-100 transition-opacity duration-500">
+            made by kenny
+          </span>
+        </div>
       </div>
     </div>
   );
