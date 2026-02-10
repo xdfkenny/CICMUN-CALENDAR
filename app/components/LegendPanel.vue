@@ -1,35 +1,60 @@
 <script setup lang="ts">
 import type { CalendarEvent } from '~/types/calendar'
 import { MODELS, MODEL_IDS } from '~/utils/models'
-import { getCommitteesByLanguage } from '~/utils/committees'
 
 interface Props {
   selectedModels: Set<string>
   searchQuery: string
   events: CalendarEvent[]
-  selectedCommittee: string | null
+  selectedLanguages: Set<string>
 }
 
 const props = defineProps<Props>()
-const emit = defineEmits(['modelToggle', 'showAll', 'clearAll', 'searchChange', 'committeeSelect'])
+const emit = defineEmits(['modelToggle', 'showAll', 'clearAll', 'searchChange', 'languageToggle'])
 
-const isCommitteeOpen = ref(false)
+// Language categories with colors
+const languageCategories = [
+  { value: 'Español', label: 'Spanish Events', color: '#E53935' },
+  { value: 'Inglés', label: 'English Events', color: '#1E88E5' },
+  { value: 'Bilingüe', label: 'Bilingual Events', color: '#43A047' },
+  { value: 'Special', label: 'Special Events', color: '#8E24AA' },
+  { value: 'Workshop', label: 'Workshops', color: '#FB8C00' }
+]
 
-const committeeGroups = computed(() => getCommitteesByLanguage(props.events))
+// Track which categories are expanded
+const expandedCategories = ref<Set<string>>(new Set())
 
-// Filter committees by search query
-const filteredGroups = computed(() => {
-  if (!props.searchQuery) return committeeGroups.value
-
-  return committeeGroups.value
-    .map((group) => ({
-      ...group,
-      committees: group.committees.filter((committee) =>
-        committee.name.toLowerCase().includes(props.searchQuery.toLowerCase())
-      ),
-    }))
-    .filter((group) => group.committees.length > 0)
+// Get events grouped by language
+const eventsByLanguage = computed(() => {
+  const grouped: Record<string, CalendarEvent[]> = {}
+  
+  languageCategories.forEach(cat => {
+    grouped[cat.value] = props.events.filter(event => event.language === cat.value)
+  })
+  
+  return grouped
 })
+
+// Toggle category expansion
+const toggleCategory = (value: string) => {
+  const newExpanded = new Set(expandedCategories.value)
+  if (newExpanded.has(value)) {
+    newExpanded.delete(value)
+  } else {
+    newExpanded.add(value)
+  }
+  expandedCategories.value = newExpanded
+}
+
+// Check if a language is selected
+const isLanguageSelected = (value: string) => {
+  return props.selectedLanguages.has(value)
+}
+
+// Toggle language filter
+const toggleLanguage = (value: string) => {
+  emit('languageToggle', value)
+}
 
 const filteredModelsList = computed(() => {
   return MODEL_IDS.filter((modelId) => {
@@ -43,122 +68,66 @@ const filteredModelsList = computed(() => {
 </script>
 
 <template>
-  <div class="mac-window p-3">
+  <div class="cicmun-card">
     <!-- Title bar -->
-    <div class="border-b-2 border-black pb-2 mb-3">
-      <h3 class="text-sm font-bold text-black" style="font-family: 'Chicago, monospace'">
-        Models
+    <div class="cicmun-card-header">
+      <h3 class="text-lg font-bold">
+        Filters
       </h3>
     </div>
 
-    <!-- Committee Dropdown -->
-    <div class="mb-3">
-      <div class="text-xs font-bold text-black mb-1" style="font-family: 'Chicago, monospace'">
-        Committee
-      </div>
-      <div class="relative">
-        <button
-          @click="isCommitteeOpen = !isCommitteeOpen"
-          class="mac-button w-full text-xs text-left flex justify-between items-center"
-          style="font-family: 'Monaco, monospace'"
-        >
-          <span class="truncate">
-            {{ selectedCommittee || "All Committees" }}
-          </span>
-          <span class="ml-1">{{ isCommitteeOpen ? "▲" : "▼" }}</span>
-        </button>
-
-        <div v-if="isCommitteeOpen" class="absolute top-full left-0 right-0 mt-0 border-2 border-black bg-white z-50 max-h-64 overflow-y-auto">
-          <!-- All Committees option -->
-          <button
-            @click="emit('committeeSelect', null); isCommitteeOpen = false"
-            class="w-full text-left px-2 py-1 text-xs border-b border-black hover:bg-black hover:text-white font-bold"
-            :class="{ 'bg-black text-white': selectedCommittee === null }"
-            style="font-family: 'Monaco, monospace'"
-          >
-            All Committees
-          </button>
-
-          <!-- Language-grouped committees -->
-          <div v-for="group in filteredGroups" :key="group.language">
-            <!-- Language header -->
-            <div
-              class="px-2 py-1 text-xs font-bold text-white bg-black border-b border-black"
-              style="font-family: 'Chicago, monospace'"
-            >
-              {{ group.language }} Events
+    <div class="cicmun-card-body space-y-4">
+      <!-- Language Categories -->
+      <div>
+        <div class="space-y-2">
+          <div v-for="category in languageCategories" :key="category.value" class="border border-gray-200 rounded-md overflow-hidden">
+            <!-- Category header with checkbox -->
+            <div class="flex items-center gap-2 p-2 bg-gray-50 hover:bg-gray-100 transition-colors">
+              <input
+                type="checkbox"
+                :checked="isLanguageSelected(category.value)"
+                @change="toggleLanguage(category.value)"
+                class="w-4 h-4 rounded border-gray-300 text-red-600 focus:ring-red-500"
+                :aria-label="`Filter ${category.label}`"
+              />
+              <div
+                class="w-4 h-4 rounded flex-shrink-0 border border-gray-300"
+                :style="{ backgroundColor: category.color }"
+                aria-hidden="true"
+              />
+              <button
+                @click="toggleCategory(category.value)"
+                class="flex-1 text-left text-sm font-semibold text-gray-700 flex items-center justify-between"
+              >
+                <span>{{ category.label }}</span>
+                <span class="text-xs text-gray-500">({{ eventsByLanguage[category.value].length }})</span>
+              </button>
+              <button
+                @click="toggleCategory(category.value)"
+                class="text-gray-500 hover:text-gray-700 text-xs"
+              >
+                {{ expandedCategories.has(category.value) ? '▲' : '▼' }}
+              </button>
             </div>
 
-            <!-- Committees in this language -->
-            <button
-              v-for="committee in group.committees"
-              :key="committee.id"
-              @click="emit('committeeSelect', committee.name); isCommitteeOpen = false"
-              class="w-full text-left px-4 py-1 text-xs border-b border-gray-200 hover:bg-gray-100"
-              :class="{ 'bg-gray-200 font-bold': selectedCommittee === committee.name }"
-              style="font-family: 'Monaco, monospace'"
-            >
-              {{ committee.name }} ({{ committee.count }})
-            </button>
+            <!-- Event list (expandable) -->
+            <div v-if="expandedCategories.has(category.value)" class="bg-white border-t border-gray-200">
+              <div v-if="eventsByLanguage[category.value].length === 0" class="px-4 py-2 text-xs text-gray-500 italic">
+                No events
+              </div>
+              <div v-else class="max-h-40 overflow-y-auto">
+                <div
+                  v-for="event in eventsByLanguage[category.value]"
+                  :key="event.id"
+                  class="px-4 py-1.5 text-xs text-gray-600 hover:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                >
+                  - {{ event.title }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Search -->
-    <div class="mb-3">
-      <input
-        type="text"
-        placeholder="Search..."
-        :value="searchQuery"
-        @input="emit('searchChange', ($event.target as HTMLInputElement).value)"
-        class="mac-input w-full text-xs"
-        style="font-family: 'Monaco, monospace'"
-      />
-    </div>
-
-    <!-- Model list -->
-    <div class="space-y-1 mb-3 max-h-48 overflow-y-auto">
-      <label
-        v-for="modelId in filteredModelsList"
-        :key="modelId"
-        class="flex items-center gap-2 p-1 cursor-pointer hover:bg-gray-100"
-        style="font-family: 'Chicago, monospace'"
-      >
-        <input
-          type="checkbox"
-          :checked="selectedModels.has(modelId)"
-          @change="emit('modelToggle', modelId)"
-          class="mac-checkbox"
-          :aria-label="`Filter ${MODELS[modelId].name}`"
-        />
-        <div
-          class="w-3 h-3 border border-black flex-shrink-0"
-          :style="{ backgroundColor: MODELS[modelId].color }"
-          aria-hidden="true"
-        />
-        <span class="text-xs font-bold text-black flex-1">
-          {{ MODELS[modelId].name }}
-        </span>
-      </label>
-    </div>
-
-    <!-- Action buttons -->
-    <div class="flex gap-1">
-      <button
-        @click="emit('showAll')"
-        class="mac-button text-xs flex-1"
-        aria-label="Show all models"
-      >
-        All
-      </button>
-      <button
-        @click="emit('clearAll')"
-        class="mac-button text-xs flex-1"
-        aria-label="Clear all filters"
-      >
-        None
-      </button>
     </div>
   </div>
 </template>

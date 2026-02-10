@@ -95,63 +95,64 @@ const getDayData = (dayNum: number) => {
 </script>
 
 <template>
-  <div class="mac-window p-4">
+  <div class="cicmun-card">
     <!-- Title bar -->
-    <div class="border-b-2 border-black pb-2 mb-4">
-      <h2 class="text-sm font-bold text-black" style="font-family: 'Chicago, monospace'">
+    <div class="cicmun-card-header">
+      <h2 class="text-xl font-bold">
         {{ monthName }}
       </h2>
     </div>
 
-    <!-- Navigation buttons -->
-    <div class="flex gap-1 mb-4">
-      <button
-        @click="previousMonth"
-        class="mac-button"
-        aria-label="Previous month"
-      >
-        &lt;
-      </button>
-      <button
-        @click="goToToday"
-        class="mac-button"
-        aria-label="Go to today"
-      >
-        Today
-      </button>
-      <button
-        @click="nextMonth"
-        class="mac-button"
-        aria-label="Next month"
-      >
-        &gt;
-      </button>
-    </div>
-
-    <!-- Weekday headers -->
-    <div class="grid grid-cols-7 gap-0 border-2 border-black mb-0">
-      <div
-        v-for="day in weekDays"
-        :key="day"
-        class="text-center text-xs font-bold text-black bg-white border-r border-b border-black py-1 last:border-r-0"
-        style="font-family: 'Chicago, monospace'"
-      >
-        {{ day }}
+    <div class="cicmun-card-body">
+      <!-- Navigation buttons -->
+      <div class="flex gap-2 mb-4">
+        <button
+          @click="previousMonth"
+          class="cicmun-button-secondary text-sm px-4"
+          aria-label="Previous month"
+        >
+          ←
+        </button>
+        <button
+          @click="goToToday"
+          class="cicmun-button-primary text-sm flex-1"
+          aria-label="Go to today"
+        >
+          Today
+        </button>
+        <button
+          @click="nextMonth"
+          class="cicmun-button-secondary text-sm px-4"
+          aria-label="Next month"
+        >
+          →
+        </button>
       </div>
-    </div>
 
-    <!-- Calendar grid -->
-    <div class="border-2 border-t-0 border-black">
-      <div class="grid grid-cols-7 gap-0">
-        <DayCell
-          v-for="(dayNum, idx) in calendarDays"
-          :key="idx"
-          v-bind="getDayData(dayNum!)"
-          :is-selected="selectedDate === getDayData(dayNum!).dateStr"
-          :events="getDayData(dayNum!).dayEvents"
-          @select="emit('dateSelect', getDayData(dayNum!).dateStr)"
-          class="last:border-r-0"
-        />
+      <!-- Weekday headers -->
+      <div class="grid grid-cols-7 gap-0 border border-gray-300 rounded-t-md overflow-hidden mb-0">
+        <div
+          v-for="day in weekDays"
+          :key="day"
+          class="text-center text-sm font-semibold text-gray-700 bg-gray-100 border-r border-gray-300 py-2 last:border-r-0"
+        >
+          {{ day }}
+        </div>
+      </div>
+
+      <!-- Calendar grid -->
+      <div class="border border-t-0 border-gray-300 rounded-b-md overflow-hidden">
+        <div class="grid grid-cols-7 gap-0">
+          <DayCell
+            v-for="(dayNum, idx) in calendarDays"
+            :key="idx"
+            v-bind="getDayData(dayNum!)"
+            :is-selected="selectedDate === getDayData(dayNum!).dateStr"
+            :events="getDayData(dayNum!).dayEvents"
+            @select="emit('dateSelect', getDayData(dayNum!).dateStr)"
+            class="last:border-r-0"
+          />
+        </div>
       </div>
     </div>
   </div>

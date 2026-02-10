@@ -33,12 +33,13 @@ const selectedDate = ref<string | null>(null)
 const isModalOpen = ref(false)
 const filteredModels = ref(new Set(MODEL_IDS))
 const searchQuery = ref("")
-const selectedCommittee = ref<string | null>(null)
+const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bilingüe', 'Special', 'Workshop']))
 
-// Filter events by committee
-const committeeFilteredEvents = computed(() => 
-  filterEventsByCommittee(events.value, selectedCommittee.value)
-)
+// Filter events by selected languages
+const languageFilteredEvents = computed(() => {
+  if (selectedLanguages.value.size === 0) return []
+  return events.value.filter(event => selectedLanguages.value.has(event.language))
+})
 
 const handleModelToggle = (modelId: string) => {
   const newFiltered = new Set(filteredModels.value)
@@ -106,72 +107,83 @@ const handleDateSelect = (date: string) => {
 </script>
 
 <template>
-  <main class="min-h-screen bg-white p-4" style="font-family: 'Chicago, monospace'">
-    <div v-if="isLoading" class="min-h-screen flex items-center justify-center bg-white">
-      <div class="mac-window p-6 text-center">
-        <div class="text-sm font-bold text-black mb-4" style="font-family: 'Chicago, monospace'">
+  <main class="min-h-screen bg-gray-50 p-4">
+    <div v-if="isLoading" class="min-h-screen flex items-center justify-center bg-gray-50">
+      <div class="cicmun-card p-8 text-center">
+        <div class="text-lg font-bold text-black mb-4">
           Loading Calendar...
         </div>
-        <div class="w-12 h-12 border-2 border-black border-t-transparent animate-spin mx-auto"></div>
+        <div class="w-12 h-12 border-4 border-red-600 border-t-transparent animate-spin mx-auto rounded-full"></div>
       </div>
     </div>
 
     <div v-else class="max-w-6xl mx-auto">
       <!-- Header -->
-      <header class="mac-window p-4 mb-4">
-        <div class="flex items-center gap-4 mb-2">
-          <img
-            src="/LOGO.png"
-            alt="Model United Nations - MUN logo oficial"
-            class="w-12 h-12 object-contain"
-            style="padding: 2px; border: 1px solid black; background-color: white"
-            loading="eager"
-          />
-          <div>
-            <h1 class="text-lg font-bold text-black">
-              MUN Calendar 2025–2026
-            </h1>
-            <p class="text-xs text-black">
-              Model United Nations events across Latin America
-            </p>
+      <header class="cicmun-card mb-6">
+        <div class="cicmun-card-header">
+          <div class="flex items-center gap-4">
+            <img
+              src="/LOGO.png"
+              alt="Model United Nations - MUN logo oficial"
+              class="w-16 h-16 object-contain bg-white rounded-lg p-2"
+              loading="eager"
+            />
+            <div>
+              <h1 class="text-2xl font-bold">
+                MUN Calendar 2025–2026
+              </h1>
+              <p class="text-sm opacity-90">
+                Model United Nations events across Latin America
+              </p>
+            </div>
           </div>
         </div>
       </header>
 
       <!-- Toolbar -->
-      <section class="mac-window p-3 mb-4" aria-label="Herramientas de calendario">
-        <div class="flex flex-wrap gap-2 mb-2">
-          <button @click="handleExport" class="mac-button text-xs" aria-label="Exportar eventos">Export</button>
-          <button @click="handleImport" class="mac-button text-xs" aria-label="Importar eventos">Import</button>
-          <button @click="handleReset" class="mac-button text-xs" aria-label="Restablecer calendario">Reset</button>
-          <div class="flex-1" />
-          <div class="text-xs text-black font-bold" aria-live="polite">
-            {{ committeeFilteredEvents.length }} events
+      <section class="cicmun-card mb-6" aria-label="Herramientas de calendario">
+        <div class="cicmun-card-body">
+          <div class="flex flex-wrap gap-3 items-center">
+            <button @click="handleExport" class="cicmun-button-primary text-sm" aria-label="Exportar eventos">Export</button>
+            <button @click="handleImport" class="cicmun-button-primary text-sm" aria-label="Importar eventos">Import</button>
+            <button @click="handleReset" class="cicmun-button-secondary text-sm" aria-label="Restablecer calendario">Reset</button>
+            <div class="flex-1" />
+            <div class="text-sm font-semibold text-gray-700" aria-live="polite">
+              {{ languageFilteredEvents.length }} events
+            </div>
           </div>
         </div>
       </section>
 
       <!-- Main content -->
-      <section class="grid grid-cols-1 lg:grid-cols-4 gap-4" aria-label="Calendario de eventos">
+      <section class="grid grid-cols-1 lg:grid-cols-4 gap-6" aria-label="Calendario de eventos">
         <!-- Sidebar -->
         <aside class="lg:col-span-1" aria-label="Filtros de eventos">
           <LegendPanel
             :selected-models="filteredModels"
             :search-query="searchQuery"
             :events="events"
-            :selected-committee="selectedCommittee"
+            :selected-languages="selectedLanguages"
             @model-toggle="handleModelToggle"
             @show-all="handleShowAll"
             @clear-all="handleClearAll"
             @search-change="searchQuery = $event"
-            @committee-select="selectedCommittee = $event"
+            @language-toggle="(lang) => {
+              const newSet = new Set(selectedLanguages)
+              if (newSet.has(lang)) {
+                newSet.delete(lang)
+              } else {
+                newSet.add(lang)
+              }
+              selectedLanguages = newSet
+            }"
           />
         </aside>
 
         <!-- Calendar -->
         <article class="lg:col-span-3" aria-label="Calendario mensual">
           <CalendarGrid
-            :events="committeeFilteredEvents"
+            :events="languageFilteredEvents"
             :selected-date="selectedDate"
             :filtered-models="filteredModels"
             @date-select="handleDateSelect"
@@ -184,7 +196,7 @@ const handleDateSelect = (date: string) => {
         v-if="selectedDate"
         :is-open="isModalOpen"
         :selected-date="selectedDate"
-        :events="committeeFilteredEvents"
+        :events="languageFilteredEvents"
         @close="isModalOpen = false; selectedDate = null"
         @add-event="addEvent"
         @update-event="updateEvent"

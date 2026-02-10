@@ -1,3 +1,6 @@
+/* Import Google Fonts - Montserrat for headings, Open Sans for body */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -42,52 +45,76 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* CICMUN Portal Design Style - Color Palette */
 :root {
-  --primary: #000000;
+  /* Primary Colors */
+  --cicmun-red: #DC2628;
+  --cicmun-red-600: #DC2628;
+  --cicmun-red-700: #B91C1C;
+  --cicmun-black: #000000;
+  --cicmun-white: #FFFFFF;
+  --cicmun-light-gray: #F5F5F5;
+  --cicmun-dark-gray: #333333;
+
+  /* Theme Variables */
+  --primary: #DC2628;
   --primary-foreground: #FFFFFF;
-  --sidebar-primary: #000000;
+  --sidebar-primary: #DC2628;
   --sidebar-primary-foreground: #FFFFFF;
-  --chart-1: #E53935;
+  --chart-1: #DC2628;
   --chart-2: #1E88E5;
   --chart-3: #43A047;
   --chart-4: #8E24AA;
   --chart-5: #FB8C00;
-  --radius: 0px;
-  --background: #FFFFFF;
+  --radius: 8px;
+  --background: #F5F5F5;
   --foreground: #000000;
   --card: #FFFFFF;
   --card-foreground: #000000;
   --popover: #FFFFFF;
   --popover-foreground: #000000;
-  --secondary: #F0F0F0;
-  --secondary-foreground: #000000;
-  --muted: #E0E0E0;
-  --muted-foreground: #666666;
-  --accent: #000000;
+  --secondary: #000000;
+  --secondary-foreground: #FFFFFF;
+  --muted: #F5F5F5;
+  --muted-foreground: #333333;
+  --accent: #DC2628;
   --accent-foreground: #FFFFFF;
-  --destructive: #E53935;
+  --destructive: #DC2628;
   --destructive-foreground: #FFFFFF;
   --border: #000000;
-  --input: #FFFFFF;
-  --ring: #000000;
+  --input: #F5F5F5;
+  --ring: #DC2628;
   --sidebar: #FFFFFF;
   --sidebar-foreground: #000000;
-  --sidebar-accent: #F0F0F0;
+  --sidebar-accent: #F5F5F5;
   --sidebar-accent-foreground: #000000;
   --sidebar-border: #000000;
-  --sidebar-ring: #000000;
+  --sidebar-ring: #DC2628;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Chicago', 'Monaco', monospace;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-weight: 700;
+  }
+
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
   [type="button"]:not(:disabled),
@@ -101,92 +128,175 @@
   }
 }
 
-@layer components {
-  /**
-   * Macintosh Retro Style - Pixel Art Aesthetic
-   * Classic 1984 Macintosh design with black borders and white background
-   */
-  
-  .mac-window {
-    @apply bg-white border-2 border-black;
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5),
-                inset -1px -1px 0 rgba(0, 0, 0, 0.5),
-                2px 2px 0 rgba(0, 0, 0, 0.3);
-  }
+/**
+ * CICMUN Portal Design Style Components
+ * Professional, modern design with red/black/white color scheme
+ */
 
-  .mac-button {
-    @apply px-3 py-1 border-2 border-black bg-white text-black font-bold;
-    font-family: 'Chicago', monospace;
-    font-size: 12px;
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5),
-                inset -1px -1px 0 rgba(0, 0, 0, 0.5);
-    transition: all 50ms;
-  }
+/* Navigation */
+.cicmun-nav {
+  @apply sticky top-0 z-50 bg-white border-b-2 border-black;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-  .mac-button:hover:not(:disabled) {
-    @apply bg-black text-white;
-  }
+.cicmun-nav-link {
+  @apply px-4 py-2 rounded-md transition-all duration-200;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
 
-  .mac-button:active:not(:disabled) {
-    box-shadow: inset -1px -1px 0 rgba(255, 255, 255, 0.5),
-                inset 1px 1px 0 rgba(0, 0, 0, 0.5);
-  }
+.cicmun-nav-link:hover {
+  @apply bg-red-600 text-white scale-105;
+  background-color: var(--cicmun-red);
+}
 
-  .mac-input {
-    @apply px-2 py-1 border-2 border-black bg-white text-black;
-    font-family: 'Monaco', monospace;
-    font-size: 12px;
-    box-shadow: inset 1px 1px 0 rgba(0, 0, 0, 0.3);
-  }
+.cicmun-nav-link.active {
+  @apply bg-red-600 text-white;
+  background-color: var(--cicmun-red);
+}
 
-  .mac-input:focus {
-    @apply outline-none ring-2 ring-black;
-  }
+/* Hero Section */
+.cicmun-hero {
+  background: linear-gradient(135deg, #DC2628 0%, #B91C1C 50%, #000000 100%);
+  @apply text-white;
+}
 
-  .mac-checkbox {
-    @apply w-4 h-4 border-2 border-black;
-    appearance: none;
-    background-color: white;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
+/* Cards */
+.cicmun-card {
+  @apply bg-white rounded-lg overflow-hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .mac-checkbox:checked {
-    @apply bg-black;
-  }
+.cicmun-card-header {
+  background: linear-gradient(135deg, #DC2628 0%, #B91C1C 100%);
+  @apply text-white p-4;
+}
 
-  .mac-checkbox:checked::after {
-    content: '✓';
-    @apply text-white font-bold text-xs;
-  }
+.cicmun-card-body {
+  @apply bg-white p-4;
+}
 
+/* Buttons */
+.cicmun-button-primary {
+  @apply px-6 py-2 rounded-md font-semibold transition-all duration-200;
+  background-color: var(--cicmun-red);
+  color: var(--cicmun-white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(220, 38, 40, 0.3);
+}
+
+.cicmun-button-primary:hover:not(:disabled) {
+  @apply scale-105;
+  background-color: var(--cicmun-red-700);
+  box-shadow: 0 4px 8px rgba(220, 38, 40, 0.4);
+}
+
+.cicmun-button-primary:active:not(:disabled) {
+  @apply scale-95;
+}
+
+.cicmun-button-secondary {
+  @apply px-6 py-2 rounded-md font-semibold transition-all duration-200;
+  background-color: var(--cicmun-black);
+  color: var(--cicmun-white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.cicmun-button-secondary:hover:not(:disabled) {
+  @apply scale-105;
+  background-color: var(--cicmun-dark-gray);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.cicmun-button-secondary:active:not(:disabled) {
+  @apply scale-95;
+}
+
+/* Form Inputs */
+.cicmun-input {
+  @apply px-4 py-2 rounded-md border border-gray-300 transition-all duration-200;
+  background-color: var(--cicmun-light-gray);
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+}
+
+.cicmun-input:focus {
+  @apply outline-none ring-2;
+  ring-color: var(--cicmun-red);
+  border-color: var(--cicmun-red);
+}
+
+.cicmun-input::placeholder {
+  @apply text-gray-400;
+}
+
+/* Topic Boxes */
+.cicmun-topic-a {
+  @apply bg-red-50 border-l-4 border-red-600 p-3 rounded;
+  border-left-color: var(--cicmun-red);
+}
+
+.cicmun-topic-b {
+  @apply bg-blue-50 border-l-4 border-blue-600 p-3 rounded;
+}
+
+/* Profile Images */
+.cicmun-profile-chair {
+  @apply rounded-full border-4 border-red-600;
+  border-color: var(--cicmun-red);
+}
+
+.cicmun-profile-cochair {
+  @apply rounded-full border-4 border-blue-600;
+}
+
+.cicmun-profile-secretary {
+  @apply rounded-full border-4 border-green-600;
+}
+
+/* Container System */
+.container {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.flex {
+  min-height: 0;
+  min-width: 0;
+}
+
+@media (min-width: 640px) {
   .container {
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 24px;
+    padding-right: 24px;
   }
+}
 
-  .flex {
-    min-height: 0;
-    min-width: 0;
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 32px;
+    padding-right: 32px;
+    max-width: 1280px;
   }
+}
 
-  @media (min-width: 640px) {
-    .container {
-      padding-left: 1.5rem;
-      padding-right: 1.5rem;
-    }
-  }
+/* Legacy Support - Keep old classes for gradual migration */
+.mac-window {
+  @apply bg-white rounded-lg overflow-hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-  @media (min-width: 1024px) {
-    .container {
-      padding-left: 2rem;
-      padding-right: 2rem;
-      max-width: 1280px;
-    }
-  }
+.mac-button {
+  @apply px-6 py-2 rounded-md font-semibold transition-all duration-200;
+  background-color: var(--cicmun-black);
+  color: var(--cicmun-white);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
