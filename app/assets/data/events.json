@@ -11,11 +11,11 @@
   {
     "id": "britmun-2025",
     "title": "BRITMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2025-11-01",
     "endDate": "2025-11-02",
     "notes": "1 y 2",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "ecamun-2025",
@@ -28,12 +28,12 @@
   },
   {
     "id": "vmuns-school-edition-2025",
-    "title": "VMUNS School Edition",
-    "model": "B",
+    "title": "VMUNS Edición Escolar / VMUNS School Edition",
+    "model": "C",
     "startDate": "2025-11-14",
     "endDate": "2025-11-16",
     "notes": "14, 15 y 16",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "damun-semi-interno-2025",
@@ -74,29 +74,29 @@
   {
     "id": "camun-2026",
     "title": "CaMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-01-25",
     "endDate": "2026-01-27",
     "notes": "25, 26 y 27 💙",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "lasamun-2026",
     "title": "LASAMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-01-31",
     "endDate": "2026-02-01",
     "notes": "31 de enero y 1 de febrero 💙🌟🤍",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "himun-2026",
     "title": "HIMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-01-30",
     "endDate": "2026-02-01",
     "notes": "30, 31 y 1 de febrero 💙🤍",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "tarmun-externo-2026",
@@ -146,29 +146,29 @@
   {
     "id": "wamun-2026",
     "title": "WAMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-02-21",
     "endDate": "2026-02-22",
     "notes": "21 y 22 de febrero 🩵",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "claymun-2026",
     "title": "CLAYMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-02-27",
     "endDate": "2026-03-01",
     "notes": "27, 28 de febrero y 1 de marzo 💙",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "stvmun-2026",
     "title": "STVMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-02-27",
     "endDate": "2026-03-01",
     "notes": "27, 28 de febrero y 1 de marzo 🤍🩵",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "csgmun-2026",
@@ -182,11 +182,11 @@
   {
     "id": "sibmun-2026",
     "title": "SIBMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-03-06",
     "endDate": "2026-03-08",
     "notes": "6, 7 y 8",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "usb-lamun-school-edition-ii-2026",
@@ -200,11 +200,11 @@
   {
     "id": "maimun-2026",
     "title": "MAIMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-03-13",
     "endDate": "2026-03-15",
     "notes": "13, 14 y 15 🤍♥️",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "msmun-2026",
@@ -218,11 +218,11 @@
   {
     "id": "saimun-2026",
     "title": "SAIMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-03-20",
     "endDate": "2026-03-22",
     "notes": "20, 21 y 22 💛💙",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "huimun-2026",
@@ -245,11 +245,11 @@
   {
     "id": "abmun-2026",
     "title": "ABMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-04-11",
     "endDate": "2026-04-12",
     "notes": "11 y 12 de abril 💙",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "clamun-2026",
@@ -281,20 +281,20 @@
   {
     "id": "madimun-2026",
     "title": "MADIMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-04-24",
     "endDate": "2026-04-26",
     "notes": "24, 25, 26 ❤️💙🤍",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "iamun-2026",
     "title": "IAMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-04-24",
     "endDate": "2026-04-26",
     "notes": "24, 25, 26",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "imamun-2026",
@@ -317,11 +317,11 @@
   {
     "id": "ammun-2026",
     "title": "Academia Merici MUN - AMMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-05-15",
     "endDate": "2026-05-24",
     "notes": "Fecha por confirmar (15-17 o 22-24 de mayo)",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "simun-2026",
@@ -334,12 +334,12 @@
   },
   {
     "id": "saimun-semi-interno-2026",
-    "title": "SAIMUN (Semi-Interno)",
-    "model": "B",
+    "title": "SAIMUN (Semi-Interno) / SAIMUN (Semi-Internal)",
+    "model": "C",
     "startDate": "2026-05-16",
     "endDate": "2026-05-17",
     "notes": "16 y 17 de mayo 💙💛",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "el-penon-mun-2026",
@@ -371,11 +371,11 @@
   {
     "id": "lcimun-2026",
     "title": "LCIMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-06-05",
     "endDate": "2026-06-07",
     "notes": "5, 6 y 7",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "guaimun-2026",
@@ -416,11 +416,11 @@
   {
     "id": "vamun-2026",
     "title": "VAMUN",
-    "model": "B",
+    "model": "C",
     "startDate": "2026-06-19",
     "endDate": "2026-06-20",
     "notes": "19 y 20 🤍🩵",
-    "language": "Inglés"
+    "language": "Bilingüe"
   },
   {
     "id": "stjmun-2026",

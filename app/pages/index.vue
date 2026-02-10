@@ -33,7 +33,7 @@ const selectedDate = ref<string | null>(null)
 const isModalOpen = ref(false)
 const filteredModels = ref(new Set(MODEL_IDS))
 const searchQuery = ref("")
-const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bilingüe', 'Special', 'Workshop']))
+const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bilingüe']))
 
 // Filter events by selected languages
 const languageFilteredEvents = computed(() => {

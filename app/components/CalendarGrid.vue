@@ -57,7 +57,40 @@ const monthName = computed(() => currentMonth.value.toLocaleDateString("en-US", 
   year: "numeric",
 }))
 
-const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+const weekDays = ["Dom / Sun", "Lun / Mon", "Mar / Tue", "Mié / Wed", "Jue / Thu", "Vie / Fri", "Sáb / Sat"]
+
+// Get all unique events occurring in the current month
+const eventsInCurrentMonth = computed(() => {
+  const firstDayOfMonth = new Date(year.value, month.value, 1)
+  const lastDayOfMonth = new Date(year.value, month.value + 1, 0)
+  
+  const monthEvents = props.events.filter((event) => {
+    const start = parseDate(event.startDate)
+    const end = parseDate(event.endDate)
+    
+    // Check if event overlaps with current month
+    const eventOverlapsMonth = start <= lastDayOfMonth && end >= firstDayOfMonth
+    
+    // Check if event's model is in filtered models
+    return eventOverlapsMonth && props.filteredModels.has(event.model)
+  })
+  
+  // Remove duplicates and sort by start date
+  const uniqueEvents = Array.from(new Map(monthEvents.map(e => [e.id, e])).values())
+  return uniqueEvents.sort((a, b) => parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime())
+})
+
+// Format date range for display
+const formatEventDates = (event: CalendarEvent) => {
+  const start = parseDate(event.startDate)
+  const end = parseDate(event.endDate)
+  
+  if (start.getTime() === end.getTime()) {
+    return start.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })
+  }
+  
+  return `${start.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}`
+}
 
 const getDayData = (dayNum: number) => {
   let dateStr = ""
@@ -118,7 +151,7 @@ const getDayData = (dayNum: number) => {
           class="cicmun-button-primary text-sm flex-1"
           aria-label="Go to today"
         >
-          Today
+          Hoy / Today
         </button>
         <button
           @click="nextMonth"
@@ -152,6 +185,35 @@ const getDayData = (dayNum: number) => {
             @select="emit('dateSelect', getDayData(dayNum!).dateStr)"
             class="last:border-r-0"
           />
+        </div>
+      </div>
+
+      <!-- Monthly Event List -->
+      <div v-if="eventsInCurrentMonth.length > 0" class="mt-6 pt-6 border-t border-gray-300">
+        <h3 class="text-lg font-bold text-gray-800 mb-3">
+          Eventos del Mes / Events This Month
+        </h3>
+        <div class="space-y-2">
+          <div
+            v-for="event in eventsInCurrentMonth"
+            :key="event.id"
+            class="flex items-start gap-3 p-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors"
+          >
+            <div
+              class="w-3 h-3 rounded-full flex-shrink-0 mt-1"
+              :style="{ backgroundColor: event.language === 'Español' ? '#E53935' : event.language === 'Inglés' ? '#1E88E5' : '#43A047' }"
+              aria-hidden="true"
+            />
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold text-gray-900 text-sm">
+                {{ event.title }}
+              </div>
+              <div class="text-xs text-gray-600 mt-0.5">
+                {{ formatEventDates(event) }}
+                <span v-if="event.notes" class="ml-2 text-gray-500">{{ event.notes }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

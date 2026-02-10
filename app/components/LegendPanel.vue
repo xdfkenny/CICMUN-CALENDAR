@@ -14,11 +14,9 @@ const emit = defineEmits(['modelToggle', 'showAll', 'clearAll', 'searchChange', 
 
 // Language categories with colors
 const languageCategories = [
-  { value: 'Español', label: 'Spanish Events', color: '#E53935' },
-  { value: 'Inglés', label: 'English Events', color: '#1E88E5' },
-  { value: 'Bilingüe', label: 'Bilingual Events', color: '#43A047' },
-  { value: 'Special', label: 'Special Events', color: '#8E24AA' },
-  { value: 'Workshop', label: 'Workshops', color: '#FB8C00' }
+  { value: 'Español', label: 'Eventos en Español / Spanish Events', color: '#E53935' },
+  { value: 'Inglés', label: 'Eventos en Inglés / English Events', color: '#1E88E5' },
+  { value: 'Bilingüe', label: 'Eventos Bilingües / Bilingual Events', color: '#43A047' }
 ]
 
 // Track which categories are expanded
@@ -72,7 +70,7 @@ const filteredModelsList = computed(() => {
     <!-- Title bar -->
     <div class="cicmun-card-header">
       <h3 class="text-lg font-bold">
-        Filters
+        Filtros / Filters
       </h3>
     </div>
 
