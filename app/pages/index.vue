@@ -3,6 +3,21 @@ import { toast } from 'vue-sonner'
 import { MODEL_IDS } from '~/utils/models'
 import { filterEventsByCommittee } from '~/utils/committees'
 
+useHead({
+  title: 'Calendario MUN 2025-2026 América Latina',
+  meta: [
+    { name: 'description', content: 'Calendario completo de eventos Model United Nations en América Latina. Encuentra conferencias MUN en español, inglés y eventos bilingües para el año escolar 2025-2026.' },
+    { name: 'keywords', content: 'MUN, Model United Nations, calendario, América Latina, conferencias, eventos MUN, 2025, 2026, español, inglés' },
+    { property: 'og:title', content: 'MUN Calendar 2025-2026 | Eventos en América Latina' },
+    { property: 'og:description', content: 'Calendario completo de eventos Model United Nations en América Latina. Encuentra conferencias MUN en español, inglés y eventos bilingües.' },
+    { property: 'og:url', content: 'https://mun-calendar.vercel.app' },
+    { property: 'og:image', content: 'https://mun-calendar.vercel.app/LOGO.png' },
+    { name: 'twitter:title', content: 'MUN Calendar 2025-2026 | Eventos en América Latina' },
+    { name: 'twitter:description', content: 'Calendario completo de eventos Model United Nations en América Latina.' },
+    { name: 'twitter:image', content: 'https://mun-calendar.vercel.app/LOGO.png' }
+  ]
+})
+
 const { 
   events, 
   isLoading, 
@@ -91,7 +106,7 @@ const handleDateSelect = (date: string) => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-white p-4" style="font-family: 'Chicago, monospace'">
+  <main class="min-h-screen bg-white p-4" style="font-family: 'Chicago, monospace'">
     <div v-if="isLoading" class="min-h-screen flex items-center justify-center bg-white">
       <div class="mac-window p-6 text-center">
         <div class="text-sm font-bold text-black mb-4" style="font-family: 'Chicago, monospace'">
@@ -103,13 +118,14 @@ const handleDateSelect = (date: string) => {
 
     <div v-else class="max-w-6xl mx-auto">
       <!-- Header -->
-      <div class="mac-window p-4 mb-4">
+      <header class="mac-window p-4 mb-4">
         <div class="flex items-center gap-4 mb-2">
           <img
             src="/LOGO.png"
-            alt="MUN Logo"
+            alt="Model United Nations - MUN logo oficial"
             class="w-12 h-12 object-contain"
             style="padding: 2px; border: 1px solid black; background-color: white"
+            loading="eager"
           />
           <div>
             <h1 class="text-lg font-bold text-black">
@@ -120,25 +136,25 @@ const handleDateSelect = (date: string) => {
             </p>
           </div>
         </div>
-      </div>
+      </header>
 
       <!-- Toolbar -->
-      <div class="mac-window p-3 mb-4">
+      <section class="mac-window p-3 mb-4" aria-label="Herramientas de calendario">
         <div class="flex flex-wrap gap-2 mb-2">
-          <button @click="handleExport" class="mac-button text-xs">Export</button>
-          <button @click="handleImport" class="mac-button text-xs">Import</button>
-          <button @click="handleReset" class="mac-button text-xs">Reset</button>
+          <button @click="handleExport" class="mac-button text-xs" aria-label="Exportar eventos">Export</button>
+          <button @click="handleImport" class="mac-button text-xs" aria-label="Importar eventos">Import</button>
+          <button @click="handleReset" class="mac-button text-xs" aria-label="Restablecer calendario">Reset</button>
           <div class="flex-1" />
-          <div class="text-xs text-black font-bold">
+          <div class="text-xs text-black font-bold" aria-live="polite">
             {{ committeeFilteredEvents.length }} events
           </div>
         </div>
-      </div>
+      </section>
 
       <!-- Main content -->
-      <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <section class="grid grid-cols-1 lg:grid-cols-4 gap-4" aria-label="Calendario de eventos">
         <!-- Sidebar -->
-        <div class="lg:col-span-1">
+        <aside class="lg:col-span-1" aria-label="Filtros de eventos">
           <LegendPanel
             :selected-models="filteredModels"
             :search-query="searchQuery"
@@ -150,18 +166,18 @@ const handleDateSelect = (date: string) => {
             @search-change="searchQuery = $event"
             @committee-select="selectedCommittee = $event"
           />
-        </div>
+        </aside>
 
         <!-- Calendar -->
-        <div class="lg:col-span-3">
+        <article class="lg:col-span-3" aria-label="Calendario mensual">
           <CalendarGrid
             :events="committeeFilteredEvents"
             :selected-date="selectedDate"
             :filtered-models="filteredModels"
             @date-select="handleDateSelect"
           />
-        </div>
-      </div>
+        </article>
+      </section>
 
       <!-- Event Modal -->
       <EventModal
@@ -181,5 +197,5 @@ const handleDateSelect = (date: string) => {
         </span>
       </div>
     </div>
-  </div>
+  </main>
 </template>

@@ -1,2 +1,8 @@
-User-Agent: *
-Disallow:
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://mun-calendar.vercel.app/sitemap.xml
+
+# Crawl-delay (optional, ajustar según necesidad)
+Crawl-delay: 1
