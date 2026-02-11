@@ -3,9 +3,9 @@
     "id": "redemil-31-2025",
     "title": "REDEMIL 31",
     "model": "A",
-    "startDate": "2025-11-01",
+    "startDate": "2025-10-31",
     "endDate": "2025-11-02",
-    "notes": "1 y 2",
+    "notes": "31, 1 y 2",
     "language": "Español"
   },
   {
@@ -297,6 +297,15 @@
     "language": "Español"
   },
   {
+    "id": "srimun-2026",
+    "title": "SRIMUN",
+    "model": "C",
+    "startDate": "2026-05-01",
+    "endDate": "2026-05-03",
+    "notes": "1, 2 y 3 de mayo 💙",
+    "language": "Bilingüe"
+  },
+  {
     "id": "iccmun-2026",
     "title": "ICCMUN (Instituto Cumbres de Caracas)",
     "model": "A",
@@ -311,7 +320,7 @@
     "model": "C",
     "startDate": "2026-05-15",
     "endDate": "2026-05-24",
-    "notes": "Fecha por confirmar (15-17 o 22-24 de mayo)",
+    "notes": "15,16,17 o 22,23,24 de mayo.",
     "language": "Bilingüe"
   },
   {
