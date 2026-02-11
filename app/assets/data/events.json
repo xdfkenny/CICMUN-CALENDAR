@@ -225,15 +225,6 @@
     "language": "Bilingüe"
   },
   {
-    "id": "huimun-2026",
-    "title": "HUIMUN",
-    "model": "A",
-    "startDate": "2026-03-20",
-    "endDate": "2026-03-22",
-    "notes": "20, 21 y 22 🤍",
-    "language": "Español"
-  },
-  {
     "id": "chamun-2026",
     "title": "CHAMUN",
     "model": "A",
@@ -334,12 +325,21 @@
   },
   {
     "id": "saimun-semi-interno-2026",
-    "title": "SAIMUN (Semi-Interno) / SAIMUN (Semi-Internal)",
+    "title": "SAIMUN (Semi-Interno)",
     "model": "C",
     "startDate": "2026-05-16",
     "endDate": "2026-05-17",
     "notes": "16 y 17 de mayo 💙💛",
     "language": "Bilingüe"
+  },
+  {
+    "id": "roraimun-2026",
+    "title": "RoraiMUN",
+    "model": "A",
+    "startDate": "2026-05-23",
+    "endDate": "2026-05-24",
+    "notes": "23 y 24 de mayo 📗",
+    "language": "Español"
   },
   {
     "id": "el-penon-mun-2026",
@@ -351,12 +351,12 @@
     "language": "Español"
   },
   {
-    "id": "roraimun-2026",
-    "title": "RoraiMUN",
+    "id": "huimun-2026",
+    "title": "HUIMUN",
     "model": "A",
-    "startDate": "2026-05-23",
+    "startDate": "2026-05-22",
     "endDate": "2026-05-24",
-    "notes": "23 y 24 de mayo 📗",
+    "notes": "22, 23 y 24 de mayo 🤍",
     "language": "Español"
   },
   {
