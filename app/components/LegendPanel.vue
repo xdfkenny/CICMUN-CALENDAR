@@ -16,7 +16,8 @@ const emit = defineEmits(['modelToggle', 'showAll', 'clearAll', 'searchChange', 
 const languageCategories = [
   { value: 'Español', label: 'Eventos en Español / Spanish Events', color: '#E53935' },
   { value: 'Inglés', label: 'Eventos en Inglés / English Events', color: '#1E88E5' },
-  { value: 'Bilingüe', label: 'Eventos Bilingües / Bilingual Events', color: '#43A047' }
+  { value: 'Bilingüe', label: 'Eventos Bilingües / Bilingual Events', color: '#43A047' },
+  { value: 'Colegio', label: 'Calendario Escolar / School Calendar', color: '#607D8B', isSchool: true }
 ]
 
 // Track which categories are expanded
@@ -27,7 +28,11 @@ const eventsByLanguage = computed(() => {
   const grouped: Record<string, CalendarEvent[]> = {}
   
   languageCategories.forEach(cat => {
-    grouped[cat.value] = props.events.filter(event => event.language === cat.value)
+    if (cat.isSchool) {
+      grouped[cat.value] = props.events.filter(event => event.model === 'S')
+    } else {
+      grouped[cat.value] = props.events.filter(event => event.language === cat.value && event.model !== 'S')
+    }
   })
   
   return grouped
@@ -57,6 +62,7 @@ const toggleLanguage = (value: string) => {
 const filteredModelsList = computed(() => {
   return MODEL_IDS.filter((modelId) => {
     const model = MODELS[modelId]
+    if (!model) return false
     return (
       model.name.toLowerCase().includes(props.searchQuery.toLowerCase()) ||
       modelId.toLowerCase().includes(props.searchQuery.toLowerCase())
@@ -98,7 +104,7 @@ const filteredModelsList = computed(() => {
                 class="flex-1 text-left text-sm font-semibold text-gray-700 flex items-center justify-between"
               >
                 <span>{{ category.label }}</span>
-                <span class="text-xs text-gray-500">({{ eventsByLanguage[category.value].length }})</span>
+                <span class="text-xs text-gray-500">({{ (eventsByLanguage[category.value] || []).length }})</span>
               </button>
               <button
                 @click="toggleCategory(category.value)"
@@ -110,7 +116,7 @@ const filteredModelsList = computed(() => {
 
             <!-- Event list (expandable) -->
             <div v-if="expandedCategories.has(category.value)" class="bg-white border-t border-gray-200">
-              <div v-if="eventsByLanguage[category.value].length === 0" class="px-4 py-2 text-xs text-gray-500 italic">
+              <div v-if="!eventsByLanguage[category.value] || eventsByLanguage[category.value].length === 0" class="px-4 py-2 text-xs text-gray-500 italic">
                 No events
               </div>
               <div v-else class="max-h-40 overflow-y-auto">

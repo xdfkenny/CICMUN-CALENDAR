@@ -201,7 +201,7 @@ const getDayData = (dayNum: number) => {
           >
             <div
               class="w-3 h-3 rounded-full flex-shrink-0 mt-1"
-              :style="{ backgroundColor: event.language === 'Español' ? '#E53935' : event.language === 'Inglés' ? '#1E88E5' : '#43A047' }"
+              :style="{ backgroundColor: event.model === 'S' ? '#607D8B' : (event.language === 'Español' ? '#E53935' : event.language === 'Inglés' ? '#1E88E5' : '#43A047') }"
               aria-hidden="true"
             />
             <div class="flex-1 min-w-0">

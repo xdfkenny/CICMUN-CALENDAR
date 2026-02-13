@@ -34,12 +34,15 @@ const selectedDate = ref<string | null>(null)
 const isModalOpen = ref(false)
 const filteredModels = ref(new Set(MODEL_IDS))
 const searchQuery = ref("")
-const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bilingüe']))
+const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bilingüe', 'Colegio']))
 
 // Filter events by selected languages
 const languageFilteredEvents = computed(() => {
   if (selectedLanguages.value.size === 0) return []
-  return events.value.filter(event => event.language && selectedLanguages.value.has(event.language))
+  return events.value.filter(event => {
+    if (event.model === 'S' && selectedLanguages.value.has('Colegio')) return true
+    return event.language && selectedLanguages.value.has(event.language)
+  })
 })
 
 const handleModelToggle = (modelId: string) => {

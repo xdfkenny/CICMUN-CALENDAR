@@ -42,6 +42,13 @@ export const MODELS: Record<string, Model> = {
         bgColor: "bg-orange-100",
         textColor: "text-orange-700",
     },
+    S: {
+        id: "S",
+        name: "Colegio / School",
+        color: "#607D8B", // Blue Grey
+        bgColor: "bg-slate-100",
+        textColor: "text-slate-700",
+    },
 };
 
 export const MODEL_IDS = Object.keys(MODELS);
