@@ -153,7 +153,7 @@ const handleDateSelect = (date: string) => {
             <button @click="handleSync" class="cicmun-button-secondary text-sm" aria-label="Sincronizar con últimas actualizaciones">Sync Latest Updates</button>
             <div class="flex-1" />
             <div class="text-sm font-semibold text-gray-700" aria-live="polite">
-              {{ languageFilteredEvents.length }} events
+              {{ languageFilteredEvents.filter(e => e.model !== 'S').length }} events
             </div>
           </div>
         </div>
