@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   // Sitemap Configuration
   sitemap: {
     strictNuxtContentPaths: true,
-    exclude: ['/international-club'],
+    exclude: ['/global', '/global/**', '/grobal', '/grobal/**', '/grobal-mun'],
   },
 
   // App Configuration

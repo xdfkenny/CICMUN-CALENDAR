@@ -139,6 +139,45 @@ export const formatVisaLabel = (category: string) => {
   return 'e-Visa'
 }
 
+export const getStayLimitDays = (stayLimit: string | null) => {
+  if (!stayLimit) return null
+
+  const match = stayLimit.match(/(\d+)/)
+  return match ? Number(match[1]) : null
+}
+
+export const getStayWindowGuidance = (
+  stayLimit: string | null,
+  minimumTripDays = 5,
+) => {
+  const days = getStayLimitDays(stayLimit)
+
+  if (days === null) {
+    return {
+      days: null,
+      enoughForConferenceTrip: null,
+      label: 'Stay window needs manual verification',
+      shortLabel: 'Stay window: verify',
+    }
+  }
+
+  if (days >= minimumTripDays) {
+    return {
+      days,
+      enoughForConferenceTrip: true,
+      label: `Stay window covers a short MUN trip (${days} days)`,
+      shortLabel: `${days}-day stay`,
+    }
+  }
+
+  return {
+    days,
+    enoughForConferenceTrip: false,
+    label: `Stay window is tight for a short MUN trip (${days} days)`,
+    shortLabel: `${days}-day stay`,
+  }
+}
+
 export const daysUntil = (value: string | null, todayIso: string) => {
   if (!value) return null
 

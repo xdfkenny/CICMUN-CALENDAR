@@ -26,6 +26,7 @@ export interface InternationalEvent {
   pageUrl: string;
   durationDays: number;
   isCancelled: boolean;
+  applicationStatus?: 'open' | 'closed';
   city: string;
   destinationKey: string;
   destinationLabel: string;
@@ -45,10 +46,16 @@ export interface InternationalDestination {
   events: InternationalEvent[];
 }
 
-export interface RemovalSummary {
-  cancelled: number;
-  durationOver4Days: number;
-  invalidDateRanges: number;
+export type RemovalSummary = Record<string, number>;
+
+export interface DatasetCounts {
+  original?: number;
+  cleaned?: number;
+  removed?: number;
+  destinations: number;
+  baseCleaned?: number;
+  filtered?: number;
+  removedByStrictFilters?: number;
 }
 
 export interface InternationalDatasetMetadata {
@@ -57,18 +64,23 @@ export interface InternationalDatasetMetadata {
   generatedFiles: string[];
   sourcePage: string | null;
   extractionDate: string | null;
+  processedDate?: string;
   effectiveFilters: string | null;
   exportMethod: string | null;
   note: string | null;
   reviewOrdering: string;
   passportOrigin: string;
   visaVerificationDate: string;
-  cleaningRules: string[];
+  cleaningRules?: string[];
+  filterRules?: string[];
   counts: {
-    original: number;
-    cleaned: number;
-    removed: number;
+    original?: number;
+    cleaned?: number;
+    removed?: number;
     destinations: number;
+    baseCleaned?: number;
+    filtered?: number;
+    removedByStrictFilters?: number;
   };
   removalSummary: RemovalSummary;
   monthBreakdown: Record<string, number>;

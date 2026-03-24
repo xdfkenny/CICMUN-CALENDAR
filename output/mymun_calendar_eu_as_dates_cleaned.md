@@ -1,6 +1,6 @@
 # mymun Conference Date Extract (Cleaned)
 
-- Source file: /Users/xdfke/Documents/CICMUN-CALENDAR/output/mymun_calendar_eu_as_dates.md
+- Source file: C:\Users\xdfke\Desktop\CICMUN-CALENDAR\output\mymun_calendar_eu_as_dates.md
 - Source page: https://mymun.com/conferences/calendar?a=eu,as&s=fe&r=desc
 - Extraction date: 2026-03-24
 - Processed date: 2026-03-24

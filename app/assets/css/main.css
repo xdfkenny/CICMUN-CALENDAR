@@ -1,6 +1,7 @@
 /* Import Google Fonts - Montserrat for headings, Open Sans for body */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap');
 
+@import "flag-icons/css/flag-icons.min.css";
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -299,4 +300,33 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.flag-avatar {
+  display: block;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 9999px;
+  flex-shrink: 0;
+}
+
+.flag-avatar-shell {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.flag-avatar-flag {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  line-height: 0 !important;
+  overflow: hidden;
+  border-radius: 9999px;
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.flag-avatar-flag::before {
+  content: none !important;
 }

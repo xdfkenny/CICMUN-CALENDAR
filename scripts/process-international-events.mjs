@@ -4,9 +4,14 @@ import { dirname, resolve } from 'node:path';
 const SOURCE_PATH = resolve('output/mymun_calendar_eu_as_dates.md');
 const REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned.md');
 const REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned.json');
+const STRICT_REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free_max_3_days.md');
+const STRICT_REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free_max_3_days.json');
 const APP_DATA_PATH = resolve('app/assets/data/international-events.json');
 const PASSPORT_ORIGIN = 'Venezuela';
 const VERIFIED_AT = new Date().toISOString().slice(0, 10);
+const STRICT_DURATION_LIMIT = 3;
+const STRICT_VISA_CATEGORY = 'visa-free';
+const SHOULD_WRITE_APP_DATA = process.argv.includes('--sync-app-data');
 
 const passportIndexSource = {
   label: 'Passport Index: Venezuela passport dashboard',
@@ -307,6 +312,55 @@ const tryInferDestination = (location) => {
   }
 };
 
+const buildDestinationGroups = (events) => {
+  const destinationGroups = new Map();
+
+  for (const destination of DESTINATIONS) {
+    destinationGroups.set(destination.key, {
+      key: destination.key,
+      label: destination.label,
+      flag: destination.flag,
+      visaPolicy: destination.visaPolicy,
+      eventCount: 0,
+      nextEventDate: null,
+      lastEventDate: null,
+      cities: [],
+      events: [],
+    });
+  }
+
+  for (const event of events) {
+    const group = destinationGroups.get(event.destinationKey);
+    if (!group) continue;
+    group.events.push(event);
+    group.eventCount += 1;
+    group.nextEventDate = group.nextEventDate
+      ? event.startDate < group.nextEventDate
+        ? event.startDate
+        : group.nextEventDate
+      : event.startDate;
+    group.lastEventDate = group.lastEventDate
+      ? event.endDate > group.lastEventDate
+        ? event.endDate
+        : group.lastEventDate
+      : event.endDate;
+    if (!group.cities.includes(event.city)) {
+      group.cities.push(event.city);
+      group.cities.sort((a, b) => a.localeCompare(b));
+    }
+  }
+
+  return [...destinationGroups.values()]
+    .filter((destination) => destination.eventCount > 0)
+    .sort((a, b) => a.label.localeCompare(b.label));
+};
+
+const buildMonthBreakdown = (events) =>
+  events.reduce((accumulator, event) => {
+    accumulator[event.startMonth] = (accumulator[event.startMonth] ?? 0) + 1;
+    return accumulator;
+  }, {});
+
 const rawEntries = [];
 
 for (const line of lines) {
@@ -361,6 +415,7 @@ for (const entry of rawEntries) {
 
   cleaned.push({
     ...entry,
+    applicationStatus: entry.applicationsOpen ? 'open' : 'closed',
     city,
     destinationKey: destination.key,
     destinationLabel: destination.label,
@@ -377,38 +432,7 @@ cleaned.sort((a, b) => {
 
 removed.sort((a, b) => a.startDate.localeCompare(b.startDate) || a.title.localeCompare(b.title));
 
-const destinationGroups = new Map();
-
-for (const destination of DESTINATIONS) {
-  destinationGroups.set(destination.key, {
-    key: destination.key,
-    label: destination.label,
-    flag: destination.flag,
-    visaPolicy: destination.visaPolicy,
-    eventCount: 0,
-    nextEventDate: null,
-    lastEventDate: null,
-    cities: [],
-    events: [],
-  });
-}
-
-for (const event of cleaned) {
-  const group = destinationGroups.get(event.destinationKey);
-  if (!group) continue;
-  group.events.push(event);
-  group.eventCount += 1;
-  group.nextEventDate = group.nextEventDate ? (event.startDate < group.nextEventDate ? event.startDate : group.nextEventDate) : event.startDate;
-  group.lastEventDate = group.lastEventDate ? (event.endDate > group.lastEventDate ? event.endDate : group.lastEventDate) : event.endDate;
-  if (!group.cities.includes(event.city)) {
-    group.cities.push(event.city);
-    group.cities.sort((a, b) => a.localeCompare(b));
-  }
-}
-
-const destinations = [...destinationGroups.values()]
-  .filter((destination) => destination.eventCount > 0)
-  .sort((a, b) => a.label.localeCompare(b.label));
+const destinations = buildDestinationGroups(cleaned);
 
 const removalSummary = {
   cancelled: removed.filter((entry) => entry.removalReasons.includes('cancelled')).length,
@@ -416,16 +440,15 @@ const removalSummary = {
   invalidDateRanges: removed.filter((entry) => entry.removalReasons.includes('invalid-date-range')).length,
 };
 
-const monthBreakdown = cleaned.reduce((accumulator, event) => {
-  accumulator[event.startMonth] = (accumulator[event.startMonth] ?? 0) + 1;
-  return accumulator;
-}, {});
+const monthBreakdown = buildMonthBreakdown(cleaned);
 
 const reviewDataset = {
   metadata: {
     title: 'mymun Conference Date Extract (Cleaned)',
     sourceFile: SOURCE_PATH,
-    generatedFiles: [REVIEW_MARKDOWN_PATH, REVIEW_JSON_PATH, APP_DATA_PATH],
+    generatedFiles: SHOULD_WRITE_APP_DATA
+      ? [REVIEW_MARKDOWN_PATH, REVIEW_JSON_PATH, APP_DATA_PATH]
+      : [REVIEW_MARKDOWN_PATH, REVIEW_JSON_PATH],
     sourcePage: rawMetadata['Source page'] ?? null,
     extractionDate: rawMetadata['Extraction date'] ?? null,
     effectiveFilters: rawMetadata['Effective filters kept from the URL'] ?? null,
@@ -528,13 +551,158 @@ const reviewMarkdown = [
   '',
 ].join('\n');
 
-for (const targetPath of [REVIEW_MARKDOWN_PATH, REVIEW_JSON_PATH, APP_DATA_PATH]) {
+const strictRemoved = [];
+const strictEvents = [];
+
+for (const event of cleaned) {
+  const reasons = [];
+  if (event.durationDays > STRICT_DURATION_LIMIT) reasons.push(`duration-over-${STRICT_DURATION_LIMIT}-days`);
+  if (event.visaPolicy.category !== STRICT_VISA_CATEGORY) {
+    reasons.push(`visa-category-is-${event.visaPolicy.category}`);
+  }
+
+  if (reasons.length > 0) {
+    strictRemoved.push({
+      ...event,
+      removalReasons: reasons,
+    });
+    continue;
+  }
+
+  strictEvents.push(event);
+}
+
+const strictDestinations = buildDestinationGroups(strictEvents);
+const strictMonthBreakdown = buildMonthBreakdown(strictEvents);
+const strictRemovalSummary = {
+  durationOver3Days: strictRemoved.filter((entry) =>
+    entry.removalReasons.includes(`duration-over-${STRICT_DURATION_LIMIT}-days`),
+  ).length,
+  notVisaFree: strictRemoved.filter((entry) =>
+    entry.removalReasons.some((reason) => reason.startsWith('visa-category-is-')),
+  ).length,
+};
+
+const strictDataset = {
+  metadata: {
+    title: 'mymun Conference Date Extract (Visa-Free, Max 3 Days)',
+    sourceFile: SOURCE_PATH,
+    generatedFiles: [STRICT_REVIEW_MARKDOWN_PATH, STRICT_REVIEW_JSON_PATH],
+    sourcePage: rawMetadata['Source page'] ?? null,
+    extractionDate: rawMetadata['Extraction date'] ?? null,
+    processedDate: VERIFIED_AT,
+    effectiveFilters: rawMetadata['Effective filters kept from the URL'] ?? null,
+    exportMethod: rawMetadata['Export method'] ?? null,
+    note: rawMetadata.Note ?? null,
+    reviewOrdering: 'chronological by start date',
+    passportOrigin: PASSPORT_ORIGIN,
+    visaVerificationDate: VERIFIED_AT,
+    filterRules: [
+      'Kept only entries not marked as cancelled/canceled in the title.',
+      `Kept only conferences with inclusive duration of ${STRICT_DURATION_LIMIT} days or less.`,
+      `Kept only destinations marked as ${STRICT_VISA_CATEGORY} for a Venezuelan passport.`,
+      'Preserved application status from the source; closed statuses are kept because some future events may reopen later.',
+    ],
+    counts: {
+      baseCleaned: cleaned.length,
+      filtered: strictEvents.length,
+      removedByStrictFilters: strictRemoved.length,
+      destinations: strictDestinations.length,
+    },
+    removalSummary: strictRemovalSummary,
+    monthBreakdown: strictMonthBreakdown,
+  },
+  destinations: strictDestinations,
+  events: strictEvents,
+  removedEvents: strictRemoved,
+};
+
+const strictMonthGroups = strictEvents.reduce((accumulator, event) => {
+  if (!accumulator[event.startMonth]) accumulator[event.startMonth] = [];
+  accumulator[event.startMonth].push(event);
+  return accumulator;
+}, {});
+
+const strictCountryOverviewLines = strictDestinations.map((destination) => {
+  const stay = destination.visaPolicy.stayLimit ? ` | stay: ${destination.visaPolicy.stayLimit}` : '';
+  return `- ${destination.flag} ${destination.label} | ${destination.eventCount} event${destination.eventCount === 1 ? '' : 's'} | visa: ${destination.visaPolicy.label}${stay}`;
+});
+
+const strictRemovedLines = strictRemoved.map((entry) => {
+  const reasons = entry.removalReasons.join(', ');
+  return `- ${entry.startDate} to ${entry.endDate} | ${entry.title} | ${entry.location} | removed: ${reasons} | [page](${entry.pageUrl})`;
+});
+
+const strictMonthSections = Object.keys(strictMonthGroups)
+  .sort()
+  .map((month) => {
+    const sectionLines = strictMonthGroups[month].map((event) => {
+      const stay = event.visaPolicy.stayLimit ? ` | visa: ${event.visaPolicy.label} (${event.visaPolicy.stayLimit})` : ` | visa: ${event.visaPolicy.label}`;
+      return `- ${event.startDate} to ${event.endDate} | ${event.title} | ${event.location} | destination: ${event.destinationFlag} ${event.destinationLabel} | duration: ${event.durationDays} days | price: ${event.price} | verified: ${
+        event.verified ? 'yes' : 'no'
+      } | applications open: ${event.applicationsOpen ? 'yes' : 'no'}${stay} | [page](${event.pageUrl})`;
+    });
+
+    return [`### ${month}`, '', ...sectionLines].join('\n');
+  })
+  .join('\n\n');
+
+const strictReviewMarkdown = [
+  '# mymun Conference Date Extract (Visa-Free, Max 3 Days)',
+  '',
+  `- Source file: ${SOURCE_PATH}`,
+  `- Source page: ${strictDataset.metadata.sourcePage}`,
+  `- Extraction date: ${strictDataset.metadata.extractionDate}`,
+  `- Processed date: ${VERIFIED_AT}`,
+  `- Passport origin for visa review: ${PASSPORT_ORIGIN}`,
+  `- Effective filters kept from the source: ${strictDataset.metadata.effectiveFilters}`,
+  `- Export method: ${strictDataset.metadata.exportMethod}`,
+  `- Note preserved from source: ${strictDataset.metadata.note}`,
+  '',
+  '## Summary',
+  '',
+  `- Base cleaned conferences: ${strictDataset.metadata.counts.baseCleaned}`,
+  `- Filtered conferences: ${strictDataset.metadata.counts.filtered}`,
+  `- Removed by strict filters: ${strictDataset.metadata.counts.removedByStrictFilters}`,
+  `- Removed entries over ${STRICT_DURATION_LIMIT} days: ${strictRemovalSummary.durationOver3Days}`,
+  `- Removed entries not visa-free for Venezuelan passport: ${strictRemovalSummary.notVisaFree}`,
+  `- Countries/territories represented after filtering: ${strictDataset.metadata.counts.destinations}`,
+  '',
+  '## Filter Rules',
+  '',
+  ...strictDataset.metadata.filterRules.map((rule) => `- ${rule}`),
+  '',
+  '## Visa-Free Destinations',
+  '',
+  ...(strictCountryOverviewLines.length > 0 ? strictCountryOverviewLines : ['- None']),
+  '',
+  '## Removed By Strict Filters',
+  '',
+  ...(strictRemovedLines.length > 0 ? strictRemovedLines : ['- None']),
+  '',
+  '## Conferences By Start Month',
+  '',
+  strictMonthSections,
+  '',
+].join('\n');
+
+for (const targetPath of [
+  REVIEW_MARKDOWN_PATH,
+  REVIEW_JSON_PATH,
+  STRICT_REVIEW_MARKDOWN_PATH,
+  STRICT_REVIEW_JSON_PATH,
+  ...(SHOULD_WRITE_APP_DATA ? [APP_DATA_PATH] : []),
+]) {
   mkdirSync(dirname(targetPath), { recursive: true });
 }
 
 writeFileSync(REVIEW_MARKDOWN_PATH, reviewMarkdown);
 writeFileSync(REVIEW_JSON_PATH, `${JSON.stringify(reviewDataset, null, 2)}\n`);
-writeFileSync(APP_DATA_PATH, `${JSON.stringify(appDataset, null, 2)}\n`);
+writeFileSync(STRICT_REVIEW_MARKDOWN_PATH, strictReviewMarkdown);
+writeFileSync(STRICT_REVIEW_JSON_PATH, `${JSON.stringify(strictDataset, null, 2)}\n`);
+if (SHOULD_WRITE_APP_DATA) {
+  writeFileSync(APP_DATA_PATH, `${JSON.stringify(appDataset, null, 2)}\n`);
+}
 
 console.log(
   JSON.stringify(
@@ -542,7 +710,15 @@ console.log(
       cleaned: cleaned.length,
       removed: removed.length,
       destinations: destinations.length,
-      generated: [REVIEW_MARKDOWN_PATH, REVIEW_JSON_PATH, APP_DATA_PATH],
+      strictFiltered: strictEvents.length,
+      strictDestinations: strictDestinations.length,
+      generated: [
+        REVIEW_MARKDOWN_PATH,
+        REVIEW_JSON_PATH,
+        STRICT_REVIEW_MARKDOWN_PATH,
+        STRICT_REVIEW_JSON_PATH,
+        ...(SHOULD_WRITE_APP_DATA ? [APP_DATA_PATH] : []),
+      ],
     },
     null,
     2,
