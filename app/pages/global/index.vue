@@ -3,7 +3,7 @@ import { Icon } from '@iconify/vue'
 
 import { FLAG_CODE_BY_DESTINATION_KEY, getStayWindowGuidance } from '~/utils/international-dashboard'
 
-const { dataset, sections, visaFreeDestinations, eVisaDestinations } = useGlobalDataset()
+const { dataset, sections, visaFreeDestinations, eVisaDestinations, visaRequiredDestinations } = useGlobalDataset()
 
 useSeoMeta({
   title: 'Global',
@@ -22,18 +22,15 @@ const flagCodeFor = (destinationKey: string) => FLAG_CODE_BY_DESTINATION_KEY[des
     <div class="mx-auto max-w-6xl">
       <header class="rounded-[32px] border border-white/70 bg-white/80 px-6 py-8 shadow-[0_28px_70px_rgba(15,23,42,0.08)] backdrop-blur md:px-8">
         <div class="max-w-3xl space-y-4">
-          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-700">
-            Hidden Directory
-          </p>
           <h1 class="text-4xl font-extrabold tracking-[-0.06em] text-slate-950 md:text-6xl">
             Global
           </h1>
           <p class="max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
-            Pick a flag and jump into the country page. Visa-free options stay separate from destinations that still require eVisa or on-arrival processing.
+            Explore countries hosting short events, check how easy entry is with a Venezuelan passport, and open each flag for dates, cities, stay limits, and extra travel details.
           </p>
         </div>
 
-        <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <div class="mt-6 grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
           <article class="rounded-[24px] border border-slate-200/80 bg-white/90 p-4">
             <div class="flex items-center justify-between gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
@@ -90,11 +87,24 @@ const flagCodeFor = (destinationKey: string) => FLAG_CODE_BY_DESTINATION_KEY[des
             </p>
           </article>
 
-          <article class="rounded-[24px] border border-slate-200/80 bg-white/90 p-4 sm:col-span-2 xl:col-span-4">
+          <article class="rounded-[24px] border border-slate-200/80 bg-white/90 p-4">
             <div class="flex items-center justify-between gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              Countries
-              Passport Filter
+                Visa Required
+              </p>
+              <span class="grid size-10 place-items-center rounded-2xl bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-100">
+                <Icon icon="solar:danger-triangle-bold-duotone" class="size-5" />
+              </span>
+            </div>
+            <p class="mt-2 text-3xl font-semibold tracking-[-0.05em] text-slate-950">
+              {{ visaRequiredDestinations.length }}
+            </p>
+          </article>
+
+          <article class="rounded-[24px] border border-slate-200/80 bg-white/90 p-4 sm:col-span-2 xl:col-span-5">
+            <div class="flex items-center justify-between gap-3">
+              <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                Based on Origin Passport
               </p>
               <span class="grid size-10 place-items-center rounded-2xl bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200">
                 <Icon icon="solar:card-2-bold-duotone" class="size-5" />
@@ -117,9 +127,20 @@ const flagCodeFor = (destinationKey: string) => FLAG_CODE_BY_DESTINATION_KEY[des
             <div class="flex items-center gap-3">
               <span
                 class="grid size-11 place-items-center rounded-2xl ring-1 ring-inset"
-                :class="section.requiresVisaAction ? 'bg-amber-50 text-amber-700 ring-amber-100' : 'bg-emerald-50 text-emerald-700 ring-emerald-100'"
+                :class="section.key === 'visa-free'
+                  ? 'bg-emerald-50 text-emerald-700 ring-emerald-100'
+                  : section.key === 'e-visa'
+                    ? 'bg-amber-50 text-amber-700 ring-amber-100'
+                    : 'bg-rose-50 text-rose-700 ring-rose-100'"
               >
-                <Icon :icon="section.requiresVisaAction ? 'solar:passport-bold-duotone' : 'solar:shield-check-bold-duotone'" class="size-5" />
+                <Icon
+                  :icon="section.key === 'visa-free'
+                    ? 'solar:shield-check-bold-duotone'
+                    : section.key === 'e-visa'
+                      ? 'solar:passport-bold-duotone'
+                      : 'solar:danger-triangle-bold-duotone'"
+                  class="size-5"
+                />
               </span>
               <div>
                 <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
@@ -138,7 +159,10 @@ const flagCodeFor = (destinationKey: string) => FLAG_CODE_BY_DESTINATION_KEY[des
 
         <div
           v-if="section.advisory"
-          class="mb-6 rounded-[26px] border border-amber-200/80 bg-[linear-gradient(180deg,rgba(255,247,237,0.98),rgba(254,243,199,0.96))] px-4 py-4 text-sm leading-6 text-amber-950 shadow-[0_12px_30px_rgba(180,83,9,0.08)]"
+          class="mb-6 rounded-[26px] px-4 py-4 text-sm leading-6 shadow-[0_12px_30px_rgba(15,23,42,0.08)]"
+          :class="section.key === 'e-visa'
+            ? 'border border-amber-200/80 bg-[linear-gradient(180deg,rgba(255,247,237,0.98),rgba(254,243,199,0.96))] text-amber-950'
+            : 'border border-rose-200/80 bg-[linear-gradient(180deg,rgba(255,241,242,0.98),rgba(255,228,230,0.96))] text-rose-950'"
         >
           {{ section.advisory }}
         </div>
@@ -175,8 +199,24 @@ const flagCodeFor = (destinationKey: string) => FLAG_CODE_BY_DESTINATION_KEY[des
               <p class="text-[11px] font-medium text-slate-500">
                 {{ getStayWindowGuidance(destination.visaPolicy.stayLimit).shortLabel }}
               </p>
-              <p v-if="section.requiresVisaAction" class="text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-700">
-                Needs {{ destination.visaPolicy.category === 'visa on arrival' ? 'arrival visa' : 'eVisa step' }}
+              <p
+                v-if="section.requiresVisaAction"
+                class="inline-flex items-center justify-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.14em]"
+                :class="section.key === 'visa-required' ? 'text-rose-700' : 'text-amber-700'"
+              >
+                <Icon
+                  :icon="section.key === 'visa-required' ? 'solar:danger-circle-bold-duotone' : 'solar:passport-bold-duotone'"
+                  class="size-3.5"
+                />
+                {{
+                  section.key === 'visa-required'
+                    ? 'Regular visa needed'
+                    : destination.visaPolicy.category === 'visa on arrival'
+                      ? 'Needs arrival visa'
+                      : destination.visaPolicy.category === 'eTA'
+                        ? 'Needs eTA step'
+                        : 'Needs eVisa step'
+                }}
               </p>
             </div>
           </article>

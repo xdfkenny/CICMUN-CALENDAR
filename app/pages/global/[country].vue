@@ -49,8 +49,17 @@ const openCount = computed(() => destination.value!.events.filter((event) => eve
 const closedCount = computed(() => destination.value!.events.length - openCount.value)
 const firstYear = computed(() => destination.value!.events[0]?.startDate.slice(0, 4) ?? 'TBD')
 const lastYear = computed(() => destination.value!.events.at(-1)?.startDate.slice(0, 4) ?? 'TBD')
-const requiresVisaAction = computed(() => destination.value!.visaPolicy.category !== 'visa-free')
+const visaCategory = computed(() => destination.value!.visaPolicy.category)
+const requiresVisaAction = computed(() => visaCategory.value !== 'visa-free')
 const stayWindowGuidance = computed(() => getStayWindowGuidance(destination.value!.visaPolicy.stayLimit))
+const isRegularVisaCountry = computed(() => visaCategory.value === 'visa-required')
+const advisoryEyebrow = computed(() => (isRegularVisaCountry.value ? 'Visa Required' : 'E-Visa Advisory'))
+const advisoryTitle = computed(() => (isRegularVisaCountry.value ? 'This country needs a regular visa' : 'This country still needs visa processing'))
+const advisoryCopy = computed(() => (
+  isRegularVisaCountry.value
+    ? 'These events are shown for planning, but entry is not easy-access for the filtered passport. You need to secure the regular visa before traveling and re-check consular requirements before booking.'
+    : 'These events are shown in the E-Visa section because entry is not visa-free for the filtered passport. Complete the eVisa flow or the visa-on-arrival process before travel and re-check the airline and official visa portal before booking.'
+))
 
 const visaTone = computed(() => {
   const category = destination.value!.visaPolicy.category
@@ -183,16 +192,22 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
 
       <section
         v-if="requiresVisaAction"
-        class="mt-6 rounded-[28px] border border-amber-200/80 bg-[linear-gradient(180deg,rgba(255,247,237,0.98),rgba(254,243,199,0.96))] px-5 py-5 text-amber-950 shadow-[0_18px_40px_rgba(180,83,9,0.08)]"
+        class="mt-6 rounded-[28px] px-5 py-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)]"
+        :class="isRegularVisaCountry
+          ? 'border border-rose-200/80 bg-[linear-gradient(180deg,rgba(255,241,242,0.98),rgba(255,228,230,0.96))] text-rose-950'
+          : 'border border-amber-200/80 bg-[linear-gradient(180deg,rgba(255,247,237,0.98),rgba(254,243,199,0.96))] text-amber-950'"
       >
-        <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-amber-700">
-          E-Visa Advisory
+        <p
+          class="text-[11px] font-semibold uppercase tracking-[0.18em]"
+          :class="isRegularVisaCountry ? 'text-rose-700' : 'text-amber-700'"
+        >
+          {{ advisoryEyebrow }}
         </p>
         <h2 class="mt-2 text-2xl font-semibold tracking-[-0.04em]">
-          This country still needs visa processing
+          {{ advisoryTitle }}
         </h2>
         <p class="mt-3 max-w-4xl text-sm leading-7">
-          These events are shown in the E-Visa section because entry is not visa-free for the filtered passport. Complete the eVisa flow or the visa-on-arrival process before travel and re-check the airline and official visa portal before booking.
+          {{ advisoryCopy }}
         </p>
         <p class="mt-3 text-sm font-medium">
           {{ stayWindowGuidance.label }}
@@ -296,15 +311,15 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
                     </h3>
 
                     <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-600">
-                      <span class="inline-flex items-center gap-1.5">
-                        <Icon icon="solar:calendar-mark-line-duotone" class="size-[15px]" />
+                      <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 font-medium text-sky-900 ring-1 ring-inset ring-sky-100">
+                        <Icon icon="solar:calendar-date-bold-duotone" class="size-[16px] text-sky-600" />
                         {{ formatDateRange(event.startDate, event.endDate) }}
                       </span>
-                      <span class="inline-flex items-center gap-1.5">
-                        <Icon icon="solar:map-point-wave-line-duotone" class="size-[15px]" />
+                      <span class="inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1.5 font-medium text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
+                        <Icon icon="solar:routing-3-bold-duotone" class="size-[16px] text-fuchsia-600" />
                         {{ event.city }}
                       </span>
-                      <span class="inline-flex items-center gap-1.5 font-semibold text-slate-800">
+                      <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 font-semibold text-amber-950 ring-1 ring-inset ring-amber-100">
                         <Icon icon="solar:stopwatch-bold-duotone" class="size-[15px] text-amber-600" />
                         Event duration: {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }}
                       </span>
@@ -318,14 +333,45 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
                   </div>
                 </div>
 
-                <div class="mt-4 grid gap-3 border-t border-slate-200/80 pt-4 text-sm text-slate-600 md:grid-cols-3">
-                  <p>
+                <div class="mt-4 grid gap-3 border-t border-slate-200/80 pt-4 md:grid-cols-3">
+                  <p class="inline-flex items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-900 ring-1 ring-inset ring-emerald-100">
+                    <Icon icon="solar:wallet-money-bold-duotone" class="size-4 text-emerald-600" />
                     Price: {{ formatPrice(event.price) }}
                   </p>
-                  <p>
+                  <p
+                    class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold ring-1 ring-inset"
+                    :class="event.verified
+                      ? 'bg-sky-50 text-sky-900 ring-sky-100'
+                      : 'bg-slate-100 text-slate-700 ring-slate-200'"
+                  >
+                    <Icon
+                      :icon="event.verified ? 'solar:verified-check-bold-duotone' : 'solar:shield-cross-bold-duotone'"
+                      class="size-4"
+                      :class="event.verified ? 'text-sky-600' : 'text-slate-500'"
+                    />
                     Verified: {{ event.verified ? 'Yes' : 'No' }}
                   </p>
-                  <p>
+                  <p
+                    class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold ring-1 ring-inset"
+                    :class="event.visaPolicy.category === 'visa-free'
+                      ? 'bg-emerald-50 text-emerald-900 ring-emerald-100'
+                      : event.visaPolicy.category === 'visa-required'
+                        ? 'bg-rose-50 text-rose-900 ring-rose-100'
+                        : 'bg-amber-50 text-amber-950 ring-amber-100'"
+                  >
+                    <Icon
+                      :icon="event.visaPolicy.category === 'visa-free'
+                        ? 'solar:shield-check-bold-duotone'
+                        : event.visaPolicy.category === 'visa-required'
+                          ? 'solar:danger-circle-bold-duotone'
+                          : 'solar:passport-bold-duotone'"
+                      class="size-4"
+                      :class="event.visaPolicy.category === 'visa-free'
+                        ? 'text-emerald-600'
+                        : event.visaPolicy.category === 'visa-required'
+                          ? 'text-rose-600'
+                          : 'text-amber-600'"
+                    />
                     Visa: {{ formatVisaLabel(event.visaPolicy.category) }}
                   </p>
                 </div>

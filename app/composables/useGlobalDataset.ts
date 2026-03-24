@@ -3,7 +3,7 @@ import globalDatasetRaw from '~~/output/mymun_calendar_eu_as_dates_cleaned.json'
 import type { InternationalDataset, InternationalDestination, InternationalEvent } from '~/types/international'
 
 type GlobalSection = {
-  key: 'visa-free' | 'e-visa'
+  key: 'visa-free' | 'e-visa' | 'visa-required'
   title: string
   eyebrow: string
   description: string
@@ -16,6 +16,7 @@ type GlobalSection = {
 const MAX_EVENT_DURATION_DAYS = 3
 const VISA_FREE_CATEGORIES = new Set(['visa-free'])
 const E_VISA_CATEGORIES = new Set(['eVisa', 'visa on arrival', 'eVisa or visa on arrival', 'eTA'])
+const VISA_REQUIRED_CATEGORIES = new Set(['visa-required'])
 
 const sourceDataset = globalDatasetRaw as InternationalDataset
 
@@ -75,15 +76,21 @@ const buildDestinations = (events: InternationalEvent[]) => {
 const visibleEvents = sortEvents(
   (sourceDataset.events ?? []).filter((event) =>
     event.durationDays <= MAX_EVENT_DURATION_DAYS &&
-    (VISA_FREE_CATEGORIES.has(event.visaPolicy.category) || E_VISA_CATEGORIES.has(event.visaPolicy.category)),
+    (
+      VISA_FREE_CATEGORIES.has(event.visaPolicy.category) ||
+      E_VISA_CATEGORIES.has(event.visaPolicy.category) ||
+      VISA_REQUIRED_CATEGORIES.has(event.visaPolicy.category)
+    ),
   ),
 )
 
 const visaFreeEvents = visibleEvents.filter((event) => VISA_FREE_CATEGORIES.has(event.visaPolicy.category))
 const eVisaEvents = visibleEvents.filter((event) => E_VISA_CATEGORIES.has(event.visaPolicy.category))
+const visaRequiredEvents = visibleEvents.filter((event) => VISA_REQUIRED_CATEGORIES.has(event.visaPolicy.category))
 
 const visaFreeDestinations = buildDestinations(visaFreeEvents)
 const eVisaDestinations = buildDestinations(eVisaEvents)
+const visaRequiredDestinations = buildDestinations(visaRequiredEvents)
 
 const sections: GlobalSection[] = [
   {
@@ -106,9 +113,19 @@ const sections: GlobalSection[] = [
     destinations: eVisaDestinations,
     eventCount: eVisaEvents.length,
   },
+  {
+    key: 'visa-required',
+    title: 'Sadly Not Simple',
+    eyebrow: 'Visa Required',
+    description: 'Short events in countries where this passport still needs a regular visa before traveling.',
+    advisory: 'These destinations are visible for planning only. Entry is not easy-access here, so a regular visa is still required before the event.',
+    requiresVisaAction: true,
+    destinations: visaRequiredDestinations,
+    eventCount: visaRequiredEvents.length,
+  },
 ]
 
-const allDestinations = sortDestinations([...visaFreeDestinations, ...eVisaDestinations])
+const allDestinations = sortDestinations([...visaFreeDestinations, ...eVisaDestinations, ...visaRequiredDestinations])
 const destinationMap = new Map<string, InternationalDestination>(
   allDestinations.map((destination) => [destination.key, destination]),
 )
@@ -127,6 +144,7 @@ export const useGlobalDataset = () => {
     destinations: allDestinations,
     visaFreeDestinations,
     eVisaDestinations,
+    visaRequiredDestinations,
     sections,
     getDestinationByKey,
   }

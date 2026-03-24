@@ -77,12 +77,12 @@ const flagCode = computed(() => {
                 {{ event.title }}
               </h2>
               <p class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-slate-600">
-                <span class="inline-flex items-center gap-1.5">
-                  <Icon icon="solar:calendar-mark-line-duotone" class="size-[15px]" />
+                <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 font-medium text-sky-900 ring-1 ring-inset ring-sky-100">
+                  <Icon icon="solar:calendar-date-bold-duotone" class="size-[15px] text-sky-600" />
                   {{ formatDateRange(event.startDate, event.endDate) }}
                 </span>
-                <span class="inline-flex items-center gap-1.5">
-                  <Icon icon="solar:map-point-wave-line-duotone" class="size-[15px]" />
+                <span class="inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1.5 font-medium text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
+                  <Icon icon="solar:routing-3-bold-duotone" class="size-[15px] text-fuchsia-600" />
                   {{ event.location }}
                 </span>
               </p>
@@ -131,7 +131,12 @@ const flagCode = computed(() => {
                   <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
                     Application
                   </p>
-                  <span class="grid size-10 place-items-center rounded-2xl bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-100">
+                  <span
+                    class="grid size-10 place-items-center rounded-2xl ring-1 ring-inset"
+                    :class="event.applicationsOpen
+                      ? 'bg-emerald-50 text-emerald-700 ring-emerald-100'
+                      : 'bg-rose-50 text-rose-700 ring-rose-100'"
+                  >
                     <Icon :icon="event.applicationsOpen ? 'solar:check-circle-bold-duotone' : 'solar:close-circle-bold-duotone'" class="size-5" />
                   </span>
                 </div>
@@ -154,20 +159,29 @@ const flagCode = computed(() => {
                 </span>
               </div>
               <div class="mt-4 grid gap-3 text-sm text-slate-600">
-                <p class="flex items-center gap-2">
-                  <Icon icon="solar:wallet-money-line-duotone" class="size-4 text-slate-400" />
+                <p class="flex items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2 font-semibold text-emerald-900 ring-1 ring-inset ring-emerald-100">
+                  <Icon icon="solar:wallet-money-bold-duotone" class="size-4 text-emerald-600" />
                   <span>Price: {{ formatPrice(event.price) }}</span>
                 </p>
-                <p class="flex items-center gap-2">
-                  <Icon icon="solar:verified-check-line-duotone" class="size-4 text-slate-400" />
+                <p
+                  class="flex items-center gap-2 rounded-2xl px-3 py-2 font-semibold ring-1 ring-inset"
+                  :class="event.verified
+                    ? 'bg-sky-50 text-sky-900 ring-sky-100'
+                    : 'bg-slate-100 text-slate-700 ring-slate-200'"
+                >
+                  <Icon
+                    :icon="event.verified ? 'solar:verified-check-bold-duotone' : 'solar:shield-cross-bold-duotone'"
+                    class="size-4"
+                    :class="event.verified ? 'text-sky-600' : 'text-slate-500'"
+                  />
                   <span>Verified listing: {{ event.verified ? 'Yes' : 'No' }}</span>
                 </p>
-                <p class="flex items-center gap-2">
-                  <Icon icon="solar:city-line-duotone" class="size-4 text-slate-400" />
+                <p class="flex items-center gap-2 rounded-2xl bg-violet-50 px-3 py-2 font-semibold text-violet-900 ring-1 ring-inset ring-violet-100">
+                  <Icon icon="solar:city-bold-duotone" class="size-4 text-violet-600" />
                   <span>City: {{ event.city }}</span>
                 </p>
-                <p class="flex items-center gap-2">
-                  <Icon icon="solar:global-line-duotone" class="size-4 text-slate-400" />
+                <p class="flex items-center gap-2 rounded-2xl bg-fuchsia-50 px-3 py-2 font-semibold text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
+                  <Icon icon="solar:global-bold-duotone" class="size-4 text-fuchsia-600" />
                   <span>Destination: {{ event.destinationFlag }} {{ event.destinationLabel }}</span>
                 </p>
               </div>
@@ -187,10 +201,11 @@ const flagCode = computed(() => {
               <div class="mt-4">
                 <StatusBadge :label="formatVisaLabel(event.visaPolicy.category)" :tone="visaTone" size="md" />
               </div>
-              <p class="mt-4 text-sm leading-7 text-slate-200">
+              <p class="mt-4 rounded-[20px] bg-white/8 px-4 py-3 text-sm leading-7 text-slate-200 ring-1 ring-inset ring-white/10">
                 {{ event.visaPolicy.note }}
               </p>
-              <p v-if="event.visaPolicy.stayLimit" class="mt-3 text-sm font-medium text-sky-100">
+              <p v-if="event.visaPolicy.stayLimit" class="mt-3 inline-flex items-center gap-2 rounded-full bg-sky-400/12 px-3 py-2 text-sm font-medium text-sky-100 ring-1 ring-inset ring-white/10">
+                <Icon icon="solar:alarm-bold-duotone" class="size-4" />
                 Stay window: {{ event.visaPolicy.stayLimit }}
               </p>
             </article>
