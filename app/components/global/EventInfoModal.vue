@@ -115,9 +115,15 @@ const flagCode = computed(() => {
                 <p class="mt-3 text-lg font-semibold tracking-[-0.03em] text-slate-950">
                   {{ formatDateRange(event.startDate, event.endDate) }}
                 </p>
-                <p class="mt-1 text-sm text-slate-500">
-                  {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }} | {{ event.startDate.slice(0, 4) }}
-                </p>
+                <div class="mt-2 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
+                  <p class="inline-flex items-center gap-1.5 font-semibold text-slate-900">
+                    <Icon icon="solar:stopwatch-bold-duotone" class="size-4 text-amber-600" />
+                    Event duration: {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }}
+                  </p>
+                  <p class="text-slate-500">
+                    {{ event.startDate.slice(0, 4) }}
+                  </p>
+                </div>
               </article>
 
               <article class="rounded-[22px] border border-slate-200/80 bg-white/90 p-4">

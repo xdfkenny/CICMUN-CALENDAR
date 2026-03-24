@@ -304,8 +304,9 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
                         <Icon icon="solar:map-point-wave-line-duotone" class="size-[15px]" />
                         {{ event.city }}
                       </span>
-                      <span>
-                        {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }}
+                      <span class="inline-flex items-center gap-1.5 font-semibold text-slate-800">
+                        <Icon icon="solar:stopwatch-bold-duotone" class="size-[15px] text-amber-600" />
+                        Event duration: {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }}
                       </span>
                     </div>
                   </div>
