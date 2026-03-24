@@ -26,7 +26,7 @@ export default defineNuxtConfig({
   // Sitemap Configuration
   sitemap: {
     strictNuxtContentPaths: true,
-    exclude: [],
+    exclude: ['/international-club'],
   },
 
   // App Configuration
