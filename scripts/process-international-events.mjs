@@ -85,6 +85,11 @@ const thailandSource = {
   url: 'https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf',
 };
 
+const thailandLimaSource = {
+  label: 'Royal Thai Embassy Lima: visa application and e-Visa guidance',
+  url: 'https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002',
+};
+
 const uaeSource = {
   label: 'UAE Government: visa exemptions and entry rules',
   url: 'https://assets.u.ae/api/public/content/531126a24c2b4940acae0a9ecb5f89d9?v=79c19310',
@@ -172,6 +177,11 @@ const verifiedVisaPolicyOverrides = {
     note:
       'Singapore ICA lists the travel documents that require an entry visa, and Venezuelan passports are not on that list. The final period of stay is determined at immigration clearance through the electronic visit pass.',
       sources: [singaporeSource],
+  }),
+  thailand: makeVisaPolicy('eVisa or visa on arrival', '15 days', {
+    note:
+      'Thailand MFA lists Venezuela for visa on arrival, while the Royal Thai Embassy in Lima says Venezuelan residents who need a Thai visa must use the e-Visa platform from January 1, 2025. For short tourism visits, the visa-on-arrival path remains available for stays under 15 days.',
+    sources: [thailandSource, thailandLimaSource],
   }),
   uzbekistan: makeVisaPolicy('eVisa', '30 days', {
     note:

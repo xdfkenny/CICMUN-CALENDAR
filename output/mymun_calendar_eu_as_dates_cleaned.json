@@ -12680,16 +12680,20 @@
       "label": "Thailand",
       "flag": "🇹🇭",
       "visaPolicy": {
-        "category": "visa on arrival",
-        "label": "Visa on arrival",
+        "category": "eVisa or visa on arrival",
+        "label": "eVisa or visa on arrival",
         "stayLimit": "15 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Ordinary passport holders from Venezuela should use Thailand's visa-on-arrival path for short stays and re-check airline boarding rules before travel.",
+        "note": "Thailand MFA lists Venezuela for visa on arrival, while the Royal Thai Embassy in Lima says Venezuelan residents who need a Thai visa must use the e-Visa platform from January 1, 2025. For short tourism visits, the visa-on-arrival path remains available for stays under 15 days.",
         "sources": [
           {
             "label": "Thailand MFA: visa on arrival / visa exemption lists",
             "url": "https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf"
+          },
+          {
+            "label": "Royal Thai Embassy Lima: visa application and e-Visa guidance",
+            "url": "https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002"
           }
         ]
       },
@@ -12719,16 +12723,20 @@
           "destinationLabel": "Thailand",
           "destinationFlag": "🇹🇭",
           "visaPolicy": {
-            "category": "visa on arrival",
-            "label": "Visa on arrival",
+            "category": "eVisa or visa on arrival",
+            "label": "eVisa or visa on arrival",
             "stayLimit": "15 days",
             "verifiedAt": "2026-03-24",
             "passportOrigin": "Venezuela",
-            "note": "Ordinary passport holders from Venezuela should use Thailand's visa-on-arrival path for short stays and re-check airline boarding rules before travel.",
+            "note": "Thailand MFA lists Venezuela for visa on arrival, while the Royal Thai Embassy in Lima says Venezuelan residents who need a Thai visa must use the e-Visa platform from January 1, 2025. For short tourism visits, the visa-on-arrival path remains available for stays under 15 days.",
             "sources": [
               {
                 "label": "Thailand MFA: visa on arrival / visa exemption lists",
                 "url": "https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf"
+              },
+              {
+                "label": "Royal Thai Embassy Lima: visa application and e-Visa guidance",
+                "url": "https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002"
               }
             ]
           }
@@ -12752,16 +12760,20 @@
           "destinationLabel": "Thailand",
           "destinationFlag": "🇹🇭",
           "visaPolicy": {
-            "category": "visa on arrival",
-            "label": "Visa on arrival",
+            "category": "eVisa or visa on arrival",
+            "label": "eVisa or visa on arrival",
             "stayLimit": "15 days",
             "verifiedAt": "2026-03-24",
             "passportOrigin": "Venezuela",
-            "note": "Ordinary passport holders from Venezuela should use Thailand's visa-on-arrival path for short stays and re-check airline boarding rules before travel.",
+            "note": "Thailand MFA lists Venezuela for visa on arrival, while the Royal Thai Embassy in Lima says Venezuelan residents who need a Thai visa must use the e-Visa platform from January 1, 2025. For short tourism visits, the visa-on-arrival path remains available for stays under 15 days.",
             "sources": [
               {
                 "label": "Thailand MFA: visa on arrival / visa exemption lists",
                 "url": "https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf"
+              },
+              {
+                "label": "Royal Thai Embassy Lima: visa application and e-Visa guidance",
+                "url": "https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002"
               }
             ]
           }
@@ -21133,16 +21145,20 @@
       "destinationLabel": "Thailand",
       "destinationFlag": "🇹🇭",
       "visaPolicy": {
-        "category": "visa on arrival",
-        "label": "Visa on arrival",
+        "category": "eVisa or visa on arrival",
+        "label": "eVisa or visa on arrival",
         "stayLimit": "15 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Ordinary passport holders from Venezuela should use Thailand's visa-on-arrival path for short stays and re-check airline boarding rules before travel.",
+        "note": "Thailand MFA lists Venezuela for visa on arrival, while the Royal Thai Embassy in Lima says Venezuelan residents who need a Thai visa must use the e-Visa platform from January 1, 2025. For short tourism visits, the visa-on-arrival path remains available for stays under 15 days.",
         "sources": [
           {
             "label": "Thailand MFA: visa on arrival / visa exemption lists",
             "url": "https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf"
+          },
+          {
+            "label": "Royal Thai Embassy Lima: visa application and e-Visa guidance",
+            "url": "https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002"
           }
         ]
       }
@@ -26365,16 +26381,20 @@
       "destinationLabel": "Thailand",
       "destinationFlag": "🇹🇭",
       "visaPolicy": {
-        "category": "visa on arrival",
-        "label": "Visa on arrival",
+        "category": "eVisa or visa on arrival",
+        "label": "eVisa or visa on arrival",
         "stayLimit": "15 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Ordinary passport holders from Venezuela should use Thailand's visa-on-arrival path for short stays and re-check airline boarding rules before travel.",
+        "note": "Thailand MFA lists Venezuela for visa on arrival, while the Royal Thai Embassy in Lima says Venezuelan residents who need a Thai visa must use the e-Visa platform from January 1, 2025. For short tourism visits, the visa-on-arrival path remains available for stays under 15 days.",
         "sources": [
           {
             "label": "Thailand MFA: visa on arrival / visa exemption lists",
             "url": "https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf"
+          },
+          {
+            "label": "Royal Thai Embassy Lima: visa application and e-Visa guidance",
+            "url": "https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002"
           }
         ]
       }

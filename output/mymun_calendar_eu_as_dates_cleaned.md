@@ -77,7 +77,7 @@
 - 🇸🇪 Sweden | 2 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇨🇭 Switzerland | 8 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇸🇾 Syria | 1 event | visa: eVisa
-- 🇹🇭 Thailand | 2 events | visa: Visa on arrival | stay: 15 days
+- 🇹🇭 Thailand | 2 events | visa: eVisa or visa on arrival | stay: 15 days
 - 🇹🇷 Türkiye | 14 events | visa: Visa-free | stay: 90 days
 - 🇦🇪 United Arab Emirates | 14 events | visa: Visa required
 - 🇬🇧 United Kingdom | 10 events | visa: Visa required
@@ -311,7 +311,7 @@
 - 2026-06-05 to 2026-06-07 | LUBMUN 2026 | Lublin, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: zł220.00 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/lubmun-2026)
 - 2026-06-05 to 2026-06-07 | MUN-THWS 2026 | Schweinfurt, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/mun-thws-2026)
 - 2026-06-05 to 2026-06-07 | SOTONMUN 2026 | Southampton, United Kingdom of Great Britain and Northern Ireland | destination: 🇬🇧 United Kingdom | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/sotonmun-2026)
-- 2026-06-06 to 2026-06-06 | NISMUN IV 2026 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa on arrival (15 days) | [page](https://mymun.com/conferences/nismun-iv-2026)
+- 2026-06-06 to 2026-06-06 | NISMUN IV 2026 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 1 days | price: n/a | verified: no | applications open: no | visa: eVisa or visa on arrival (15 days) | [page](https://mymun.com/conferences/nismun-iv-2026)
 - 2026-06-06 to 2026-06-07 | ISHMUN 2026 | Hilversum, Netherlands | destination: 🇳🇱 Netherlands | duration: 2 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/ishmun-2026)
 - 2026-06-06 to 2026-06-07 | MUNIO 2026 | İstanbul, Türkiye | destination: 🇹🇷 Türkiye | duration: 2 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days) | [page](https://mymun.com/conferences/munio-2026)
 - 2026-06-11 to 2026-06-13 | ISOMUN 2026 | Amman, Jordan | destination: 🇯🇴 Jordan | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa or visa on arrival (30 days) | [page](https://mymun.com/conferences/isomun-2026)
@@ -480,7 +480,7 @@
 - 2027-01-15 to 2027-01-17 | KOSZMUN 2027 | Koszalin, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/koszmun-2027)
 - 2027-01-16 to 2027-01-16 | ACMUN 2027 | Barcelona, Spain | destination: 🇪🇸 Spain | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/acmun-2027)
 - 2027-01-22 to 2027-01-24 | BayernMUN - MUN in the heart of Europe 2027 | Nuremberg, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/bayernmun-mun-in-the-heart-of-europe-2027)
-- 2027-01-23 to 2027-01-24 | SEAMUN I 2027 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 2 days | price: $85.00 | verified: yes | applications open: no | visa: Visa on arrival (15 days) | [page](https://mymun.com/conferences/seamun-i-2027)
+- 2027-01-23 to 2027-01-24 | SEAMUN I 2027 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 2 days | price: $85.00 | verified: yes | applications open: no | visa: eVisa or visa on arrival (15 days) | [page](https://mymun.com/conferences/seamun-i-2027)
 - 2027-01-28 to 2027-01-30 | Economix MUN 2027 | Jakarta, Indonesia | destination: 🇮🇩 Indonesia | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa or visa on arrival (30 days) | [page](https://mymun.com/conferences/economix-mun-2027)
 
 ### 2027-02
