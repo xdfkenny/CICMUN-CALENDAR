@@ -65,6 +65,21 @@ const singaporeSource = {
   url: 'https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements',
 };
 
+const azerbaijanSource = {
+  label: 'Azerbaijan ASAN Visa: countries eligible for e-visa',
+  url: 'https://evisa.gov.az/en/countries',
+};
+
+const omanSource = {
+  label: 'Royal Oman Police: visa-free entry countries',
+  url: 'https://www.rop.gov.om/english/VisaExempt.aspx',
+};
+
+const saudiVisaSource = {
+  label: 'Saudi eVisa: eligible countries terms',
+  url: 'https://visa.visitsaudi.com/Home/TermsConditions',
+};
+
 const thailandSource = {
   label: 'Thailand MFA: visa on arrival / visa exemption lists',
   url: 'https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf',
@@ -73,6 +88,11 @@ const thailandSource = {
 const uaeSource = {
   label: 'UAE Government: visa exemptions and entry rules',
   url: 'https://assets.u.ae/api/public/content/531126a24c2b4940acae0a9ecb5f89d9?v=79c19310',
+};
+
+const uzbekistanSource = {
+  label: 'Uzbekistan MFA: visa regulations and e-visa list',
+  url: 'https://oman.mfa.uz/page/736?language=en',
 };
 
 const labelForVisaCategory = {
@@ -113,6 +133,11 @@ const makeDestination = (key, label, flag, aliases, visaPolicy) => ({
 });
 
 const verifiedVisaPolicyOverrides = {
+  azerbaijan: makeVisaPolicy('visa-required', null, {
+    note:
+      'Azerbaijan\'s official ASAN Visa portal publishes the countries eligible for e-visa, and Venezuela is not listed there. Venezuelan ordinary passport holders should treat Azerbaijan as visa-required and confirm the application path with the nearest Azerbaijani mission before booking.',
+    sources: [azerbaijanSource],
+  }),
   armenia: makeVisaPolicy('eVisa', '120 days', {
     note:
       'Armenia MFA states that holders of other national passports need an entry visa, and Venezuela is not in the invitation-only list. The MFA e-visa service is available online, with visas issued for up to 120 days.',
@@ -133,10 +158,25 @@ const verifiedVisaPolicyOverrides = {
       'Kazakhstan\'s official e-visa guidance lists Venezuela among the countries eligible for an electronic single-entry visa for business, tourism, and medical travel. The traveler must also have an approved invitation number and use an eligible airport checkpoint.',
     sources: [kazakhstanSource],
   }),
+  oman: makeVisaPolicy('visa-free', null, {
+    note:
+      'Royal Oman Police lists Venezuela among the countries that can enter Oman without a tourist visa. The official list page does not state the permitted stay length here, so reconfirm the maximum stay and documentary conditions before travel.',
+    sources: [omanSource],
+  }),
+  'saudi-arabia': makeVisaPolicy('visa-required', null, {
+    note:
+      'Saudi Arabia\'s official tourist eVisa terms publish the eligible nationalities, and Venezuela is not on that list. Venezuelan ordinary passport holders should arrange a regular Saudi visa through official Saudi channels before travel.',
+    sources: [saudiVisaSource],
+  }),
   singapore: makeVisaPolicy('visa-free', '30 days', {
     note:
       'Singapore ICA lists the travel documents that require an entry visa, and Venezuelan passports are not on that list. The final period of stay is determined at immigration clearance through the electronic visit pass.',
-    sources: [singaporeSource],
+      sources: [singaporeSource],
+  }),
+  uzbekistan: makeVisaPolicy('eVisa', '30 days', {
+    note:
+      'Uzbekistan MFA guidance lists Venezuela among the countries eligible for simplified tourist e-visa issuance and states that the electronic entry visa is issued with a 30-day validity period.',
+    sources: [uzbekistanSource],
   }),
 };
 

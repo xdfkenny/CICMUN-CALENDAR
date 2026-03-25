@@ -12,11 +12,11 @@
 ## Summary
 
 - Base cleaned conferences: 356
-- Filtered conferences: 174
-- Removed by strict filters: 182
+- Filtered conferences: 175
+- Removed by strict filters: 181
 - Removed entries over 3 days: 61
-- Removed entries not visa-free for Venezuelan passport: 130
-- Countries/territories represented after filtering: 28
+- Removed entries not visa-free for Venezuelan passport: 129
+- Countries/territories represented after filtering: 29
 
 ## Filter Rules
 
@@ -43,6 +43,7 @@
 - 🇲🇹 Malta | 2 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇳🇱 Netherlands | 12 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇳🇴 Norway | 1 event | visa: Visa-free | stay: 90 days within 180 days
+- 🇴🇲 Oman | 1 event | visa: Visa-free
 - 🇵🇸 Palestine | 2 events | visa: Visa-free
 - 🇵🇱 Poland | 34 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇵🇹 Portugal | 3 events | visa: Visa-free | stay: 90 days within 180 days
@@ -60,11 +61,11 @@
 
 - 2026-03-25 to 2026-03-27 | temun 2026 | Dubai, United Arab Emirates | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/temun-2026)
 - 2026-03-26 to 2026-03-28 | GULFMUN 2026 | Mubarak Al-Abdullah, Kuwait | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/gulfmun-2026)
-- 2026-03-26 to 2026-03-28 | Polaris 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/polaris-2026)
+- 2026-03-26 to 2026-03-28 | Polaris 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/polaris-2026)
 - 2026-03-26 to 2026-03-28 | SCIMUN 2026 | Shenzhen, China | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/scimun-2026)
 - 2026-03-26 to 2026-03-29 | MUNISS 2026 | Stuttgart, Germany | removed: duration-over-3-days | [page](https://mymun.com/conferences/muniss-2026)
 - 2026-03-26 to 2026-03-29 | UABMUN 2026 | Cerdanyola del Vallès (Barcelona), Spain | removed: duration-over-3-days | [page](https://mymun.com/conferences/uabmun-2026)
-- 2026-03-27 to 2026-03-28 | DreamMUN 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/dreammun-2026)
+- 2026-03-27 to 2026-03-28 | DreamMUN 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/dreammun-2026)
 - 2026-03-27 to 2026-03-28 | ramanujanmun 2026 | New Delhi, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/ramanujanmun-2026)
 - 2026-03-27 to 2026-03-29 | Dilijan Model United Nations 2026 | Dilijan, Armenia | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/dilijan-model-united-nations-2026)
 - 2026-03-27 to 2026-03-29 | GLASMUN 2026 | Glasgow, United Kingdom of Great Britain and Northern Ireland | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/glasmun-2026)
@@ -78,7 +79,7 @@
 - 2026-03-28 to 2026-03-29 | JMMUN 2026 | Kanagawa, Japan | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/jmmun-2026)
 - 2026-04-02 to 2026-04-05 | ISB MUN 2026 | Bucharest, Romania | removed: duration-over-3-days | [page](https://mymun.com/conferences/isb-mun-2026)
 - 2026-04-02 to 2026-04-05 | ISBMUN 2026 | Bucharest, Romania | removed: duration-over-3-days | [page](https://mymun.com/conferences/isbmun-2026)
-- 2026-04-03 to 2026-04-04 | ASRMUN 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/asrmun-2026)
+- 2026-04-03 to 2026-04-04 | ASRMUN 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/asrmun-2026)
 - 2026-04-03 to 2026-04-04 | bvmglobalmun 2026 | goa, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/bvmglobalmun-2026)
 - 2026-04-03 to 2026-04-05 | IPSEMUN 2026 | Dubai, United Arab Emirates | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/ipsemun-2026)
 - 2026-04-03 to 2026-04-05 | VOFMUN 2026 | Dubai, United Arab Emirates | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/vofmun-2026)
@@ -100,7 +101,7 @@
 - 2026-04-11 to 2026-04-12 | YUR MUN 2026 | Vadodara, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/yur-mun-2026)
 - 2026-04-15 to 2026-04-18 | LEIRION-MUN  2026 | Athens, Greece | removed: duration-over-3-days | [page](https://mymun.com/conferences/leirion-mun-2026)
 - 2026-04-17 to 2026-04-18 | Bellator  2026 | New Delhi, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/bellator-2026)
-- 2026-04-17 to 2026-04-19 | SEKRMUN 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/sekrmun-2026)
+- 2026-04-17 to 2026-04-19 | SEKRMUN 2026 | Riyadh, Saudi Arabia | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/sekrmun-2026)
 - 2026-04-17 to 2026-04-19 | SIMUN Chapter VII 2026 | Coimbatore, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/simun-chapter-vii-2026)
 - 2026-04-17 to 2026-04-20 | LUXMUN 2026 | Luxembourg City, Luxembourg | removed: duration-over-3-days | [page](https://mymun.com/conferences/luxmun-2026)
 - 2026-04-18 to 2026-04-18 | Diffmun one day 2026 | Cardiff, United Kingdom of Great Britain and Northern Ireland | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/diffmun-one-day-2026)
@@ -222,8 +223,7 @@
 - 2026-10-26 to 2026-10-29 | MUNOM 2026 | Malmö, Sweden | removed: duration-over-3-days | [page](https://mymun.com/conferences/munom-2026)
 - 2026-10-31 to 2026-11-01 | Aetheria MUn 2026 | roorkee, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/aetheria-mun-2026)
 - 2026-11-03 to 2026-11-06 | ClerMUN 2026 | Clermont-Fd, France | removed: duration-over-3-days | [page](https://mymun.com/conferences/clermun-2026)
-- 2026-11-12 to 2026-11-14 | TSS MUN 2026 | Seeb, Oman | removed: visa-category-is-eVisa or visa on arrival | [page](https://mymun.com/conferences/tss-mun-2026)
-- 2026-11-13 to 2026-11-14 | Kairos 2026 | Sharqiyah, Saudi Arabia | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/kairos-2026)
+- 2026-11-13 to 2026-11-14 | Kairos 2026 | Sharqiyah, Saudi Arabia | removed: visa-category-is-visa-required | [page](https://mymun.com/conferences/kairos-2026)
 - 2026-11-18 to 2026-11-20 | ssmun 2026 | vadodara, India | removed: visa-category-is-eVisa | [page](https://mymun.com/conferences/ssmun-2026)
 - 2026-11-21 to 2026-11-22 | BAYMUN XIX 2026 | Isa Town, Bahrain | removed: visa-category-is-eVisa or visa on arrival | [page](https://mymun.com/conferences/baymun-xix-2026)
 - 2026-12-03 to 2026-12-06 | SGMUN 2026 | St.Gallen, Switzerland | removed: duration-over-3-days | [page](https://mymun.com/conferences/sgmun-2026)
@@ -413,6 +413,7 @@
 - 2026-11-06 to 2026-11-08 | Independent Ostrava MUN 2026 | Ostrava, Czechia | destination: 🇨🇿 Czechia | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/independent-ostrava-mun-2026)
 - 2026-11-06 to 2026-11-08 | MUNISH 2026 | The Hague, Netherlands | destination: 🇳🇱 Netherlands | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/munish-2026)
 - 2026-11-06 to 2026-11-08 | PolHistMUN 2026 | Wrocław, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: zł199.99 | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/polhistmun-2026)
+- 2026-11-12 to 2026-11-14 | TSS MUN 2026 | Seeb, Oman | destination: 🇴🇲 Oman | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free | [page](https://mymun.com/conferences/tss-mun-2026)
 - 2026-11-13 to 2026-11-15 | IASMUN 2026 | Warsaw, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/iasmun-2026)
 - 2026-11-13 to 2026-11-15 | KAMUN: The Black Forest Summit 2026 | Karlsruhe, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/kamun-the-black-forest-summit-2026)
 - 2026-11-13 to 2026-11-15 | KleMUN 2026 | Kleve, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/klemun-2026)

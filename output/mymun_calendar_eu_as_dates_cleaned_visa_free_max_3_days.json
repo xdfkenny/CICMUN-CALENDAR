@@ -23,13 +23,13 @@
     ],
     "counts": {
       "baseCleaned": 356,
-      "filtered": 174,
-      "removedByStrictFilters": 182,
-      "destinations": 28
+      "filtered": 175,
+      "removedByStrictFilters": 181,
+      "destinations": 29
     },
     "removalSummary": {
       "durationOver3Days": 61,
-      "notVisaFree": 130
+      "notVisaFree": 129
     },
     "monthBreakdown": {
       "2026-03": 18,
@@ -40,7 +40,7 @@
       "2026-08": 5,
       "2026-09": 13,
       "2026-10": 16,
-      "2026-11": 16,
+      "2026-11": 17,
       "2026-12": 6,
       "2027-01": 4,
       "2027-02": 1,
@@ -3701,6 +3701,66 @@
               {
                 "label": "European Commission: EU visa policy",
                 "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "key": "oman",
+      "label": "Oman",
+      "flag": "🇴🇲",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": null,
+        "verifiedAt": "2026-03-24",
+        "passportOrigin": "Venezuela",
+        "note": "Royal Oman Police lists Venezuela among the countries that can enter Oman without a tourist visa. The official list page does not state the permitted stay length here, so reconfirm the maximum stay and documentary conditions before travel.",
+        "sources": [
+          {
+            "label": "Royal Oman Police: visa-free entry countries",
+            "url": "https://www.rop.gov.om/english/VisaExempt.aspx"
+          }
+        ]
+      },
+      "eventCount": 1,
+      "nextEventDate": "2026-11-12",
+      "lastEventDate": "2026-11-14",
+      "cities": [
+        "Seeb"
+      ],
+      "events": [
+        {
+          "id": "tss-mun-2026-2026-11-12",
+          "title": "TSS MUN 2026",
+          "startDate": "2026-11-12",
+          "endDate": "2026-11-14",
+          "startMonth": "2026-11",
+          "location": "Seeb, Oman",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": false,
+          "pageUrl": "https://mymun.com/conferences/tss-mun-2026",
+          "durationDays": 3,
+          "isCancelled": false,
+          "applicationStatus": "closed",
+          "city": "Seeb",
+          "destinationKey": "oman",
+          "destinationLabel": "Oman",
+          "destinationFlag": "🇴🇲",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": null,
+            "verifiedAt": "2026-03-24",
+            "passportOrigin": "Venezuela",
+            "note": "Royal Oman Police lists Venezuela among the countries that can enter Oman without a tourist visa. The official list page does not state the permitted stay length here, so reconfirm the maximum stay and documentary conditions before travel.",
+            "sources": [
+              {
+                "label": "Royal Oman Police: visa-free entry countries",
+                "url": "https://www.rop.gov.om/english/VisaExempt.aspx"
               }
             ]
           }
@@ -12486,6 +12546,39 @@
       }
     },
     {
+      "id": "tss-mun-2026-2026-11-12",
+      "title": "TSS MUN 2026",
+      "startDate": "2026-11-12",
+      "endDate": "2026-11-14",
+      "startMonth": "2026-11",
+      "location": "Seeb, Oman",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": false,
+      "pageUrl": "https://mymun.com/conferences/tss-mun-2026",
+      "durationDays": 3,
+      "isCancelled": false,
+      "applicationStatus": "closed",
+      "city": "Seeb",
+      "destinationKey": "oman",
+      "destinationLabel": "Oman",
+      "destinationFlag": "🇴🇲",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": null,
+        "verifiedAt": "2026-03-24",
+        "passportOrigin": "Venezuela",
+        "note": "Royal Oman Police lists Venezuela among the countries that can enter Oman without a tourist visa. The official list page does not state the permitted stay length here, so reconfirm the maximum stay and documentary conditions before travel.",
+        "sources": [
+          {
+            "label": "Royal Oman Police: visa-free entry countries",
+            "url": "https://www.rop.gov.om/english/VisaExempt.aspx"
+          }
+        ]
+      }
+    },
+    {
       "id": "iasmun-2026-2026-11-13",
       "title": "IASMUN 2026",
       "startDate": "2026-11-13",
@@ -13684,21 +13777,21 @@
       "destinationLabel": "Saudi Arabia",
       "destinationFlag": "🇸🇦",
       "visaPolicy": {
-        "category": "eVisa",
-        "label": "eVisa",
+        "category": "visa-required",
+        "label": "Visa required",
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Saudi Arabia's official tourist eVisa terms publish the eligible nationalities, and Venezuela is not on that list. Venezuelan ordinary passport holders should arrange a regular Saudi visa through official Saudi channels before travel.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Saudi eVisa: eligible countries terms",
+            "url": "https://visa.visitsaudi.com/Home/TermsConditions"
           }
         ]
       },
       "removalReasons": [
-        "visa-category-is-eVisa"
+        "visa-category-is-visa-required"
       ]
     },
     {
@@ -13836,21 +13929,21 @@
       "destinationLabel": "Saudi Arabia",
       "destinationFlag": "🇸🇦",
       "visaPolicy": {
-        "category": "eVisa",
-        "label": "eVisa",
+        "category": "visa-required",
+        "label": "Visa required",
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Saudi Arabia's official tourist eVisa terms publish the eligible nationalities, and Venezuela is not on that list. Venezuelan ordinary passport holders should arrange a regular Saudi visa through official Saudi channels before travel.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Saudi eVisa: eligible countries terms",
+            "url": "https://visa.visitsaudi.com/Home/TermsConditions"
           }
         ]
       },
       "removalReasons": [
-        "visa-category-is-eVisa"
+        "visa-category-is-visa-required"
       ]
     },
     {
@@ -14105,11 +14198,11 @@
         "stayLimit": "30 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Uzbekistan MFA guidance lists Venezuela among the countries eligible for simplified tourist e-visa issuance and states that the electronic entry visa is issued with a 30-day validity period.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Uzbekistan MFA: visa regulations and e-visa list",
+            "url": "https://oman.mfa.uz/page/736?language=en"
           }
         ]
       },
@@ -14141,11 +14234,11 @@
         "stayLimit": "30 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Uzbekistan MFA guidance lists Venezuela among the countries eligible for simplified tourist e-visa issuance and states that the electronic entry visa is issued with a 30-day validity period.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Uzbekistan MFA: visa regulations and e-visa list",
+            "url": "https://oman.mfa.uz/page/736?language=en"
           }
         ]
       },
@@ -14177,11 +14270,11 @@
         "stayLimit": "30 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Uzbekistan MFA guidance lists Venezuela among the countries eligible for simplified tourist e-visa issuance and states that the electronic entry visa is issued with a 30-day validity period.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Uzbekistan MFA: visa regulations and e-visa list",
+            "url": "https://oman.mfa.uz/page/736?language=en"
           }
         ]
       },
@@ -14360,21 +14453,21 @@
       "destinationLabel": "Saudi Arabia",
       "destinationFlag": "🇸🇦",
       "visaPolicy": {
-        "category": "eVisa",
-        "label": "eVisa",
+        "category": "visa-required",
+        "label": "Visa required",
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Saudi Arabia's official tourist eVisa terms publish the eligible nationalities, and Venezuela is not on that list. Venezuelan ordinary passport holders should arrange a regular Saudi visa through official Saudi channels before travel.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Saudi eVisa: eligible countries terms",
+            "url": "https://visa.visitsaudi.com/Home/TermsConditions"
           }
         ]
       },
       "removalReasons": [
-        "visa-category-is-eVisa"
+        "visa-category-is-visa-required"
       ]
     },
     {
@@ -14581,11 +14674,11 @@
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Azerbaijan's official ASAN Visa portal publishes the countries eligible for e-visa, and Venezuela is not listed there. Venezuelan ordinary passport holders should treat Azerbaijan as visa-required and confirm the application path with the nearest Azerbaijani mission before booking.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Azerbaijan ASAN Visa: countries eligible for e-visa",
+            "url": "https://evisa.gov.az/en/countries"
           }
         ]
       },
@@ -14653,11 +14746,11 @@
         "stayLimit": "30 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Uzbekistan MFA guidance lists Venezuela among the countries eligible for simplified tourist e-visa issuance and states that the electronic entry visa is issued with a 30-day validity period.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Uzbekistan MFA: visa regulations and e-visa list",
+            "url": "https://oman.mfa.uz/page/736?language=en"
           }
         ]
       },
@@ -15167,21 +15260,21 @@
       "destinationLabel": "Saudi Arabia",
       "destinationFlag": "🇸🇦",
       "visaPolicy": {
-        "category": "eVisa",
-        "label": "eVisa",
+        "category": "visa-required",
+        "label": "Visa required",
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Saudi Arabia's official tourist eVisa terms publish the eligible nationalities, and Venezuela is not on that list. Venezuelan ordinary passport holders should arrange a regular Saudi visa through official Saudi channels before travel.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Saudi eVisa: eligible countries terms",
+            "url": "https://visa.visitsaudi.com/Home/TermsConditions"
           }
         ]
       },
       "removalReasons": [
-        "visa-category-is-eVisa"
+        "visa-category-is-visa-required"
       ]
     },
     {
@@ -17237,11 +17330,11 @@
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Azerbaijan's official ASAN Visa portal publishes the countries eligible for e-visa, and Venezuela is not listed there. Venezuelan ordinary passport holders should treat Azerbaijan as visa-required and confirm the application path with the nearest Azerbaijani mission before booking.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Azerbaijan ASAN Visa: countries eligible for e-visa",
+            "url": "https://evisa.gov.az/en/countries"
           }
         ]
       },
@@ -18057,11 +18150,11 @@
         "stayLimit": "30 days",
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Uzbekistan MFA guidance lists Venezuela among the countries eligible for simplified tourist e-visa issuance and states that the electronic entry visa is issued with a 30-day validity period.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Uzbekistan MFA: visa regulations and e-visa list",
+            "url": "https://oman.mfa.uz/page/736?language=en"
           }
         ]
       },
@@ -19715,42 +19808,6 @@
       ]
     },
     {
-      "id": "tss-mun-2026-2026-11-12",
-      "title": "TSS MUN 2026",
-      "startDate": "2026-11-12",
-      "endDate": "2026-11-14",
-      "startMonth": "2026-11",
-      "location": "Seeb, Oman",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": false,
-      "pageUrl": "https://mymun.com/conferences/tss-mun-2026",
-      "durationDays": 3,
-      "isCancelled": false,
-      "applicationStatus": "closed",
-      "city": "Seeb",
-      "destinationKey": "oman",
-      "destinationLabel": "Oman",
-      "destinationFlag": "🇴🇲",
-      "visaPolicy": {
-        "category": "eVisa or visa on arrival",
-        "label": "eVisa or visa on arrival",
-        "stayLimit": "30 days",
-        "verifiedAt": "2026-03-24",
-        "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
-        "sources": [
-          {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
-          }
-        ]
-      },
-      "removalReasons": [
-        "visa-category-is-eVisa or visa on arrival"
-      ]
-    },
-    {
       "id": "kairos-2026-2026-11-13",
       "title": "Kairos 2026",
       "startDate": "2026-11-13",
@@ -19769,21 +19826,21 @@
       "destinationLabel": "Saudi Arabia",
       "destinationFlag": "🇸🇦",
       "visaPolicy": {
-        "category": "eVisa",
-        "label": "eVisa",
+        "category": "visa-required",
+        "label": "Visa required",
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Saudi Arabia's official tourist eVisa terms publish the eligible nationalities, and Venezuela is not on that list. Venezuelan ordinary passport holders should arrange a regular Saudi visa through official Saudi channels before travel.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Saudi eVisa: eligible countries terms",
+            "url": "https://visa.visitsaudi.com/Home/TermsConditions"
           }
         ]
       },
       "removalReasons": [
-        "visa-category-is-eVisa"
+        "visa-category-is-visa-required"
       ]
     },
     {
@@ -19922,11 +19979,11 @@
         "stayLimit": null,
         "verifiedAt": "2026-03-24",
         "passportOrigin": "Venezuela",
-        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "note": "Azerbaijan's official ASAN Visa portal publishes the countries eligible for e-visa, and Venezuela is not listed there. Venezuelan ordinary passport holders should treat Azerbaijan as visa-required and confirm the application path with the nearest Azerbaijani mission before booking.",
         "sources": [
           {
-            "label": "Passport Index: Venezuela passport dashboard",
-            "url": "https://www.passportindex.org/passport/venezuela/"
+            "label": "Azerbaijan ASAN Visa: countries eligible for e-visa",
+            "url": "https://evisa.gov.az/en/countries"
           }
         ]
       },
