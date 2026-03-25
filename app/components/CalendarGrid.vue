@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { CalendarEvent } from '~/types/calendar'
-import { formatDateISO, parseDate } from '~/utils/calendar'
+import { expandEvents, formatDateISO, parseDate } from '~/utils/calendar'
 
 interface Props {
   events: CalendarEvent[]
@@ -12,6 +12,7 @@ const props = defineProps<Props>()
 const emit = defineEmits(['dateSelect'])
 
 const today = new Date()
+const todayIso = formatDateISO(today)
 const currentMonth = ref(new Date(today.getFullYear(), today.getMonth(), 1))
 
 const year = computed(() => currentMonth.value.getFullYear())
@@ -59,25 +60,23 @@ const monthName = computed(() => currentMonth.value.toLocaleDateString("en-US", 
 
 const weekDays = ["Dom / Sun", "Lun / Mon", "Mar / Tue", "Mié / Wed", "Jue / Thu", "Vie / Fri", "Sáb / Sat"]
 
-// Get all unique events occurring in the current month
+const filteredEvents = computed(() =>
+  props.events.filter((event) => props.filteredModels.has(event.model)),
+)
+
+const expandedFilteredEvents = computed(() => expandEvents(filteredEvents.value))
+
 const eventsInCurrentMonth = computed(() => {
   const firstDayOfMonth = new Date(year.value, month.value, 1)
   const lastDayOfMonth = new Date(year.value, month.value + 1, 0)
-  
-  const monthEvents = props.events.filter((event) => {
+
+  const monthEvents = filteredEvents.value.filter((event) => {
     const start = parseDate(event.startDate)
     const end = parseDate(event.endDate)
-    
-    // Check if event overlaps with current month
-    const eventOverlapsMonth = start <= lastDayOfMonth && end >= firstDayOfMonth
-    
-    // Check if event's model is in filtered models
-    return eventOverlapsMonth && props.filteredModels.has(event.model)
+    return start <= lastDayOfMonth && end >= firstDayOfMonth
   })
-  
-  // Remove duplicates and sort by start date
-  const uniqueEvents = Array.from(new Map(monthEvents.map(e => [e.id, e])).values())
-  return uniqueEvents.sort((a, b) => parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime())
+
+  return [...monthEvents].sort((a, b) => parseDate(a.startDate).getTime() - parseDate(b.startDate).getTime())
 })
 
 // Format date range for display
@@ -92,39 +91,34 @@ const formatEventDates = (event: CalendarEvent) => {
   return `${start.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })} - ${end.toLocaleDateString('es-ES', { day: 'numeric', month: 'short' })}`
 }
 
-const getDayData = (dayNum: number) => {
-  let dateStr = ""
-  let isCurrentMonth = true
-  let isToday = false
+const dayCells = computed(() =>
+  calendarDays.value.map((dayNum) => {
+    let dateStr = ""
+    let isCurrentMonth = true
+    let isToday = false
 
-  if (dayNum > 0) {
-    dateStr = formatDateISO(new Date(year.value, month.value, dayNum))
-    isToday = dateStr === formatDateISO(today) && month.value === today.getMonth()
-  } else if (dayNum < -1000) {
-    const nextMonthDay = -dayNum - 1000
-    dateStr = formatDateISO(new Date(year.value, month.value + 1, nextMonthDay))
-    isCurrentMonth = false
-  } else {
-    const prevMonthDay = -dayNum
-    dateStr = formatDateISO(new Date(year.value, month.value - 1, prevMonthDay))
-    isCurrentMonth = false
-  }
+    if (dayNum > 0) {
+      dateStr = formatDateISO(new Date(year.value, month.value, dayNum))
+      isToday = dateStr === todayIso && month.value === today.getMonth() && year.value === today.getFullYear()
+    } else if (dayNum < -1000) {
+      const nextMonthDay = -dayNum - 1000
+      dateStr = formatDateISO(new Date(year.value, month.value + 1, nextMonthDay))
+      isCurrentMonth = false
+    } else {
+      const prevMonthDay = -dayNum
+      dateStr = formatDateISO(new Date(year.value, month.value - 1, prevMonthDay))
+      isCurrentMonth = false
+    }
 
-  const dayEvents = props.events.filter((event) => {
-    const start = parseDate(event.startDate)
-    const end = parseDate(event.endDate)
-    const date = parseDate(dateStr)
-    return date >= start && date <= end && props.filteredModels.has(event.model)
-  })
-
-  return {
-    dateStr,
-    dayNum: Math.abs(dayNum) > 1000 ? Math.abs(dayNum) - 1000 : Math.abs(dayNum),
-    isCurrentMonth,
-    isToday,
-    dayEvents
-  }
-}
+    return {
+      dateStr,
+      dayNum: Math.abs(dayNum) > 1000 ? Math.abs(dayNum) - 1000 : Math.abs(dayNum),
+      isCurrentMonth,
+      isToday,
+      dayEvents: expandedFilteredEvents.value[dateStr] ?? [],
+    }
+  }),
+)
 </script>
 
 <template>
@@ -177,12 +171,12 @@ const getDayData = (dayNum: number) => {
       <div class="border border-t-0 border-gray-300 rounded-b-md overflow-hidden">
         <div class="grid grid-cols-7 gap-0">
           <DayCell
-            v-for="(dayNum, idx) in calendarDays"
-            :key="idx"
-            v-bind="getDayData(dayNum!)"
-            :is-selected="selectedDate === getDayData(dayNum!).dateStr"
-            :events="getDayData(dayNum!).dayEvents"
-            @select="emit('dateSelect', getDayData(dayNum!).dateStr)"
+            v-for="day in dayCells"
+            :key="day.dateStr"
+            v-bind="day"
+            :is-selected="selectedDate === day.dateStr"
+            :events="day.dayEvents"
+            @select="emit('dateSelect', day.dateStr)"
             class="last:border-r-0"
           />
         </div>

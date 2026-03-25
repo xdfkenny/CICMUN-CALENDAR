@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { CalendarEvent } from '~/types/calendar'
-import { MODELS, MODEL_IDS } from '~/utils/models'
 
 interface Props {
   selectedModels: Set<string>
@@ -23,18 +22,22 @@ const languageCategories = [
 // Track which categories are expanded
 const expandedCategories = ref<Set<string>>(new Set())
 
-// Get events grouped by language
 const eventsByLanguage = computed(() => {
-  const grouped: Record<string, CalendarEvent[]> = {}
-  
-  languageCategories.forEach(cat => {
-    if (cat.isSchool) {
-      grouped[cat.value] = props.events.filter(event => event.model === 'S')
-    } else {
-      grouped[cat.value] = props.events.filter(event => event.language === cat.value && event.model !== 'S')
+  const grouped = Object.fromEntries(
+    languageCategories.map((category) => [category.value, [] as CalendarEvent[]]),
+  ) as Record<string, CalendarEvent[]>
+
+  for (const event of props.events) {
+    if (event.model === 'S') {
+      grouped.Colegio.push(event)
+      continue
     }
-  })
-  
+
+    if (event.language && grouped[event.language]) {
+      grouped[event.language].push(event)
+    }
+  }
+
   return grouped
 })
 
@@ -59,16 +62,6 @@ const toggleLanguage = (value: string) => {
   emit('languageToggle', value)
 }
 
-const filteredModelsList = computed(() => {
-  return MODEL_IDS.filter((modelId) => {
-    const model = MODELS[modelId]
-    if (!model) return false
-    return (
-      model.name.toLowerCase().includes(props.searchQuery.toLowerCase()) ||
-      modelId.toLowerCase().includes(props.searchQuery.toLowerCase())
-    )
-  })
-})
 </script>
 
 <template>

@@ -45,6 +45,8 @@ const languageFilteredEvents = computed(() => {
   })
 })
 
+const visibleEventCount = computed(() => languageFilteredEvents.value.filter(event => event.model !== 'S').length)
+
 const handleModelToggle = (modelId: string) => {
   const newFiltered = new Set(filteredModels.value)
   if (newFiltered.has(modelId)) {
@@ -108,6 +110,18 @@ const handleDateSelect = (date: string) => {
   selectedDate.value = date
   isModalOpen.value = true
 }
+
+const handleLanguageToggle = (language: string) => {
+  const nextSelectedLanguages = new Set(selectedLanguages.value)
+
+  if (nextSelectedLanguages.has(language)) {
+    nextSelectedLanguages.delete(language)
+  } else {
+    nextSelectedLanguages.add(language)
+  }
+
+  selectedLanguages.value = nextSelectedLanguages
+}
 </script>
 
 <template>
@@ -153,7 +167,7 @@ const handleDateSelect = (date: string) => {
             <button @click="handleSync" class="cicmun-button-secondary text-sm" aria-label="Sincronizar con últimas actualizaciones">Sync Latest Updates</button>
             <div class="flex-1" />
             <div class="text-sm font-semibold text-gray-700" aria-live="polite">
-              {{ languageFilteredEvents.filter(e => e.model !== 'S').length }} events
+              {{ visibleEventCount }} events
             </div>
           </div>
         </div>
@@ -172,15 +186,7 @@ const handleDateSelect = (date: string) => {
             @show-all="handleShowAll"
             @clear-all="handleClearAll"
             @search-change="searchQuery = $event"
-            @language-toggle="(lang) => {
-              const newSet = new Set(selectedLanguages)
-              if (newSet.has(lang)) {
-                newSet.delete(lang)
-              } else {
-                newSet.add(lang)
-              }
-              selectedLanguages = newSet
-            }"
+            @language-toggle="handleLanguageToggle"
           />
         </aside>
 
