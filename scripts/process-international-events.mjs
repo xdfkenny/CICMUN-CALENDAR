@@ -8,7 +8,14 @@ const STRICT_REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_c
 const STRICT_REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free_max_3_days.json');
 const APP_DATA_PATH = resolve('app/assets/data/international-events.json');
 const PASSPORT_ORIGIN = 'Venezuela';
-const VERIFIED_AT = new Date().toISOString().slice(0, 10);
+const formatLocalIsoDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const VERIFIED_AT = formatLocalIsoDate(new Date());
 const STRICT_DURATION_LIMIT = 3;
 const STRICT_VISA_CATEGORY = 'visa-free';
 const SHOULD_WRITE_APP_DATA = process.argv.includes('--sync-app-data');
@@ -31,6 +38,31 @@ const ukSource = {
 const koreaEtaSource = {
   label: 'Republic of Korea: K-ETA',
   url: 'https://www.k-eta.go.kr/portal/apply/index.do?locale=ES',
+};
+
+const armeniaSource = {
+  label: 'Armenia MFA: visa and e-visa guidance',
+  url: 'https://www.mfa.am/en/visa/',
+};
+
+const georgiaSource = {
+  label: 'Government of Georgia: visa-free countries ordinance',
+  url: 'https://gc-pfiles.mfa.gov.ge/DocFiles/2023/12/14/LegalAct/36/a4367a1a-acfa-42bf-88f6-bcf072712cfa.pdf',
+};
+
+const kazakhstanSource = {
+  label: 'Kazakhstan Government: e-visa eligibility',
+  url: 'https://www.gov.kz/memleket/entities/mfa-kuala-lumpur/press/article/details/139561',
+};
+
+const indonesiaSource = {
+  label: 'Indonesia Immigration: e-VOA eligibility list',
+  url: 'https://www.imigrasi.go.id/faq/visa/negara-mana-saja-yang-terdaftar-dalam-daftar-electronic-visa-on-arrival-e-voa',
+};
+
+const singaporeSource = {
+  label: 'Singapore ICA: entry visa requirements',
+  url: 'https://www.ica.gov.sg/enter-transit-depart/entering-singapore/visa_requirements',
 };
 
 const thailandSource = {
@@ -79,6 +111,34 @@ const makeDestination = (key, label, flag, aliases, visaPolicy) => ({
   aliases,
   visaPolicy,
 });
+
+const verifiedVisaPolicyOverrides = {
+  armenia: makeVisaPolicy('eVisa', '120 days', {
+    note:
+      'Armenia MFA states that holders of other national passports need an entry visa, and Venezuela is not in the invitation-only list. The MFA e-visa service is available online, with visas issued for up to 120 days.',
+    sources: [armeniaSource],
+  }),
+  georgia: makeVisaPolicy('visa-required', null, {
+    note:
+      'Georgia\'s official visa-free-country ordinance does not list Venezuela, so ordinary Venezuelan passport holders should treat Georgia as visa-required and reconfirm with the nearest Georgian mission before booking.',
+    sources: [georgiaSource],
+  }),
+  indonesia: makeVisaPolicy('eVisa or visa on arrival', '30 days', {
+    note:
+      'Indonesia Immigration lists Venezuela among the countries eligible for electronic visa on arrival. Reconfirm accepted entry points, onward-ticket requirements, and extension rules before travel.',
+    sources: [indonesiaSource],
+  }),
+  kazakhstan: makeVisaPolicy('eVisa', null, {
+    note:
+      'Kazakhstan\'s official e-visa guidance lists Venezuela among the countries eligible for an electronic single-entry visa for business, tourism, and medical travel. The traveler must also have an approved invitation number and use an eligible airport checkpoint.',
+    sources: [kazakhstanSource],
+  }),
+  singapore: makeVisaPolicy('visa-free', '30 days', {
+    note:
+      'Singapore ICA lists the travel documents that require an entry visa, and Venezuelan passports are not on that list. The final period of stay is determined at immigration clearance through the electronic visit pass.',
+    sources: [singaporeSource],
+  }),
+};
 
 const DESTINATIONS = [
   makeDestination('albania', 'Albania', '🇦🇱', ['Albania'], makeVisaPolicy('visa-free', '90 days')),
@@ -251,6 +311,13 @@ const DESTINATIONS = [
   ),
   makeDestination('uzbekistan', 'Uzbekistan', '🇺🇿', ['Uzbekistan'], makeVisaPolicy('eVisa', '30 days')),
 ];
+
+for (const destination of DESTINATIONS) {
+  const override = verifiedVisaPolicyOverrides[destination.key];
+  if (override) {
+    destination.visaPolicy = override;
+  }
+}
 
 const destinationByAlias = new Map();
 

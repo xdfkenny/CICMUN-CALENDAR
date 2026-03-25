@@ -3,7 +3,7 @@
 - Source file: C:\Users\xdfke\Desktop\CICMUN-CALENDAR\output\mymun_calendar_eu_as_dates.md
 - Source page: https://mymun.com/conferences/calendar?a=eu,as&s=fe&r=desc
 - Extraction date: 2026-03-24
-- Processed date: 2026-03-25
+- Processed date: 2026-03-24
 - Passport origin for visa review: Venezuela
 - Effective filters kept from the source: Europe + Asia (`a=eu,as`), in-person only, future conferences, sort by price descending (`s=fe&r=desc`).
 - Export method: full filtered conference list API pull for review: `https://mymun.com/api/conferences?filter_time=future&sb=fe&order=desc&filter_cont=eu&filter_cont=as&online_conf=false&page=1&per_page=500`
