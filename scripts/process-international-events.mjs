@@ -33,6 +33,16 @@ const koreaEtaSource = {
   url: 'https://www.k-eta.go.kr/portal/apply/index.do?locale=ES',
 };
 
+const thailandSource = {
+  label: 'Thailand MFA: visa on arrival / visa exemption lists',
+  url: 'https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf',
+};
+
+const uaeSource = {
+  label: 'UAE Government: visa exemptions and entry rules',
+  url: 'https://assets.u.ae/api/public/content/531126a24c2b4940acae0a9ecb5f89d9?v=79c19310',
+};
+
 const labelForVisaCategory = {
   'visa-free': 'Visa-free',
   'visa-required': 'Visa required',
@@ -212,7 +222,11 @@ const DESTINATIONS = [
     'Thailand',
     '🇹🇭',
     ['Thailand'],
-    makeVisaPolicy('eVisa or visa on arrival', '15 days'),
+    makeVisaPolicy('visa on arrival', '15 days', {
+      note:
+        'Ordinary passport holders from Venezuela should use Thailand\'s visa-on-arrival path for short stays and re-check airline boarding rules before travel.',
+      sources: [thailandSource],
+    }),
   ),
   makeDestination('turkiye', 'Türkiye', '🇹🇷', ['Türkiye', 'Turkey'], makeVisaPolicy('visa-free', '90 days')),
   makeDestination(
@@ -220,7 +234,11 @@ const DESTINATIONS = [
     'United Arab Emirates',
     '🇦🇪',
     ['United Arab Emirates'],
-    makeVisaPolicy('eVisa'),
+    makeVisaPolicy('visa-required', null, {
+      note:
+        'Venezuelan ordinary passport holders are not listed for UAE visa-free entry or visa on arrival. Arrange the required visa in advance through official UAE channels or an eligible sponsor before booking.',
+      sources: [uaeSource],
+    }),
   ),
   makeDestination(
     'united-kingdom',

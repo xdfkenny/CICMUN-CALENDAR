@@ -3,7 +3,7 @@
 - Source file: C:\Users\xdfke\Desktop\CICMUN-CALENDAR\output\mymun_calendar_eu_as_dates.md
 - Source page: https://mymun.com/conferences/calendar?a=eu,as&s=fe&r=desc
 - Extraction date: 2026-03-24
-- Processed date: 2026-03-24
+- Processed date: 2026-03-25
 - Passport origin for visa review: Venezuela
 - Effective filters kept from the source: Europe + Asia (`a=eu,as`), in-person only, future conferences, sort by price descending (`s=fe&r=desc`).
 - Export method: full filtered conference list API pull for review: `https://mymun.com/api/conferences?filter_time=future&sb=fe&order=desc&filter_cont=eu&filter_cont=as&online_conf=false&page=1&per_page=500`
@@ -77,9 +77,9 @@
 - 🇸🇪 Sweden | 2 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇨🇭 Switzerland | 8 events | visa: Visa-free | stay: 90 days within 180 days
 - 🇸🇾 Syria | 1 event | visa: eVisa
-- 🇹🇭 Thailand | 2 events | visa: eVisa or visa on arrival | stay: 15 days
+- 🇹🇭 Thailand | 2 events | visa: Visa on arrival | stay: 15 days
 - 🇹🇷 Türkiye | 14 events | visa: Visa-free | stay: 90 days
-- 🇦🇪 United Arab Emirates | 14 events | visa: eVisa
+- 🇦🇪 United Arab Emirates | 14 events | visa: Visa required
 - 🇬🇧 United Kingdom | 10 events | visa: Visa required
 - 🇺🇿 Uzbekistan | 5 events | visa: eVisa | stay: 30 days
 
@@ -112,7 +112,7 @@
 
 - 2026-03-25 to 2026-03-25 | Simulation parlementaire APH 2026 | Paris, France | destination: 🇫🇷 France | duration: 1 days | price: €0.00 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/simulation-parlementaire-aph-2026)
 - 2026-03-25 to 2026-03-27 | Chaumun 2026 | Chaumont, France | destination: 🇫🇷 France | duration: 3 days | price: €120.00 | verified: yes | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/chaumun-2026)
-- 2026-03-25 to 2026-03-27 | temun 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/temun-2026)
+- 2026-03-25 to 2026-03-27 | temun 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/temun-2026)
 - 2026-03-26 to 2026-03-27 | WitMUN 2026 | Warsaw, Poland | destination: 🇵🇱 Poland | duration: 2 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/witmun-2026)
 - 2026-03-26 to 2026-03-28 | GULFMUN 2026 | Mubarak Al-Abdullah, Kuwait | destination: 🇰🇼 Kuwait | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/gulfmun-2026)
 - 2026-03-26 to 2026-03-28 | Polaris 2026 | Riyadh, Saudi Arabia | destination: 🇸🇦 Saudi Arabia | duration: 3 days | price: $80.25 | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/polaris-2026)
@@ -155,12 +155,12 @@
 - 2026-04-02 to 2026-04-05 | ISBMUN 2026 | Bucharest, Romania | destination: 🇷🇴 Romania | duration: 4 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/isbmun-2026)
 - 2026-04-03 to 2026-04-04 | ASRMUN 2026 | Riyadh, Saudi Arabia | destination: 🇸🇦 Saudi Arabia | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/asrmun-2026)
 - 2026-04-03 to 2026-04-04 | bvmglobalmun 2026 | goa, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/bvmglobalmun-2026)
-- 2026-04-03 to 2026-04-05 | IPSEMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/ipsemun-2026)
+- 2026-04-03 to 2026-04-05 | IPSEMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/ipsemun-2026)
 - 2026-04-03 to 2026-04-05 | MUN Nineteen 2026 | Kyrenia, Cyprus | destination: 🇨🇾 Cyprus | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days) | [page](https://mymun.com/conferences/mun-nineteen-2026)
 - 2026-04-03 to 2026-04-05 | UNIC MUN 2026 | Nicosia, Cyprus | destination: 🇨🇾 Cyprus | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days) | [page](https://mymun.com/conferences/unic-mun-2026)
-- 2026-04-03 to 2026-04-05 | VOFMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/vofmun-2026)
+- 2026-04-03 to 2026-04-05 | VOFMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/vofmun-2026)
 - 2026-04-04 to 2026-04-04 | ASTMUN 2026 | Astana, Kazakhstan | destination: 🇰🇿 Kazakhstan | duration: 1 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/astmun-2026)
-- 2026-04-04 to 2026-04-04 | MUN@SGE 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 1 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/mun-sge-2026)
+- 2026-04-04 to 2026-04-04 | MUN@SGE 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/mun-sge-2026)
 - 2026-04-04 to 2026-04-04 | RFMUN 2026 | Lyon, France | destination: 🇫🇷 France | duration: 1 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/rfmun-2026)
 - 2026-04-04 to 2026-04-05 | ECIMUN    2026 | Baku, Azerbaijan | destination: 🇦🇿 Azerbaijan | duration: 2 days | price: $48.15 | verified: yes | applications open: yes | visa: Visa required | [page](https://mymun.com/conferences/ecimun-2026)
 - 2026-04-04 to 2026-04-05 | MUNWar 2026 | Paris, France | destination: 🇫🇷 France | duration: 2 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/munwar-2026)
@@ -181,7 +181,7 @@
 - 2026-04-10 to 2026-04-12 | MUNIMUN 2026 | Brno, Czechia | destination: 🇨🇿 Czechia | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/munimun-2026)
 - 2026-04-10 to 2026-04-12 | MUNSCE 2026 | Eindhoven, Netherlands | destination: 🇳🇱 Netherlands | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/munsce-2026)
 - 2026-04-10 to 2026-04-12 | RIMUN XV 2026 | Reims, France | destination: 🇫🇷 France | duration: 3 days | price: €85.00 | verified: yes | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/rimun-xv-2026)
-- 2026-04-10 to 2026-04-12 | SAFAMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/safamun-2026)
+- 2026-04-10 to 2026-04-12 | SAFAMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/safamun-2026)
 - 2026-04-10 to 2026-04-13 | SCINDIA MUN 2026 | Gwalior, India | destination: 🇮🇳 India | duration: 4 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/scindia-mun-2026)
 - 2026-04-11 to 2026-04-11 | SIAme 2026 | Paris, France | destination: 🇫🇷 France | duration: 1 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/siame-2026)
 - 2026-04-11 to 2026-04-12 | Auralis MUN 2026 | Ghaziabad-Noida, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/auralis-mun-2026)
@@ -226,7 +226,7 @@
 - 2026-04-24 to 2026-04-25 | IRIS-MUN Night Crisis 2026 | Paris, France | destination: 🇫🇷 France | duration: 2 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/iris-mun-night-crisis-2026)
 - 2026-04-24 to 2026-04-25 | TURAN MUN 2026 | Алматы, Kazakhstan | destination: 🇰🇿 Kazakhstan | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/turan-mun-2026)
 - 2026-04-24 to 2026-04-26 | BrusselsMUN Jr  2026 | Brussels, Belgium | destination: 🇧🇪 Belgium | duration: 3 days | price: €149.00 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/brusselsmun-jr-2026)
-- 2026-04-24 to 2026-04-26 | DIVE MUN 2026 | dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: eVisa | [page](https://mymun.com/conferences/dive-mun-2026)
+- 2026-04-24 to 2026-04-26 | DIVE MUN 2026 | dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa required | [page](https://mymun.com/conferences/dive-mun-2026)
 - 2026-04-24 to 2026-04-26 | MUN SL 2026 | Bruxelles, Belgium | destination: 🇧🇪 Belgium | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/mun-sl-2026)
 - 2026-04-24 to 2026-04-26 | TIMUN 2026 | Tilburg, Netherlands | destination: 🇳🇱 Netherlands | duration: 3 days | price: €40.00 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/timun-2026)
 - 2026-04-25 to 2026-04-25 | LLGIMUN 2026 | LYON, France | destination: 🇫🇷 France | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/llgimun-2026)
@@ -265,15 +265,15 @@
 - 2026-05-14 to 2026-05-17 | EuroMUN 2026 | Maastricht, Netherlands | destination: 🇳🇱 Netherlands | duration: 4 days | price: €150.00 | verified: yes | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/euromun-2026)
 - 2026-05-15 to 2026-05-17 | I’MUN 2026 | Faridabad, India | destination: 🇮🇳 India | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/imun-2026)
 - 2026-05-15 to 2026-05-17 | ModaMUN 2026 | Mersin, Türkiye | destination: 🇹🇷 Türkiye | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days) | [page](https://mymun.com/conferences/modamun-2026)
-- 2026-05-15 to 2026-05-17 | RSGC GYS  2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/rsgc-gys-2026)
-- 2026-05-15 to 2026-05-17 | UOSMUN 2026 | Sharjah, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: د.إ170.00 | verified: yes | applications open: yes | visa: eVisa | [page](https://mymun.com/conferences/uosmun-2026)
+- 2026-05-15 to 2026-05-17 | RSGC GYS  2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/rsgc-gys-2026)
+- 2026-05-15 to 2026-05-17 | UOSMUN 2026 | Sharjah, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: د.إ170.00 | verified: yes | applications open: yes | visa: Visa required | [page](https://mymun.com/conferences/uosmun-2026)
 - 2026-05-15 to 2026-05-17 | WitkacyMUN 2026 | Warsaw, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/witkacymun-2026)
 - 2026-05-16 to 2026-05-17 | Emacity MUN 2026 | Pune, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/emacity-mun-2026)
 - 2026-05-16 to 2026-05-17 | Hydra Mun  2026 | Delhi, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/hydra-mun-2026)
 - 2026-05-19 to 2026-05-21 | MUN MADRID 2026 | Madrid, Spain | destination: 🇪🇸 Spain | duration: 3 days | price: n/a | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/mun-madrid-2026)
 - 2026-05-20 to 2026-05-23 | LyonMUN 2026 | Lyon, France | destination: 🇫🇷 France | duration: 4 days | price: €90.00 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/lyonmun-2026)
 - 2026-05-21 to 2026-05-24 | elbMUN 2026 | Dresden, Germany | destination: 🇩🇪 Germany | duration: 4 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/elbmun-2026)
-- 2026-05-22 to 2026-05-24 | PPSMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: eVisa | [page](https://mymun.com/conferences/ppsmun-2026)
+- 2026-05-22 to 2026-05-24 | PPSMUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa required | [page](https://mymun.com/conferences/ppsmun-2026)
 - 2026-05-22 to 2026-05-24 | unicaMUN 2026 | Nice, France | destination: 🇫🇷 France | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/unicamun-2026)
 - 2026-05-23 to 2026-05-23 | SGMiniMUN 2026 | St. Gallen, Switzerland | destination: 🇨🇭 Switzerland | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/sgminimun-2026)
 - 2026-05-23 to 2026-05-24 | Trimurti MUN 2026 | Dehradun, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/trimurti-mun-2026)
@@ -311,7 +311,7 @@
 - 2026-06-05 to 2026-06-07 | LUBMUN 2026 | Lublin, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: zł220.00 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/lubmun-2026)
 - 2026-06-05 to 2026-06-07 | MUN-THWS 2026 | Schweinfurt, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/mun-thws-2026)
 - 2026-06-05 to 2026-06-07 | SOTONMUN 2026 | Southampton, United Kingdom of Great Britain and Northern Ireland | destination: 🇬🇧 United Kingdom | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/sotonmun-2026)
-- 2026-06-06 to 2026-06-06 | NISMUN IV 2026 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 1 days | price: n/a | verified: no | applications open: no | visa: eVisa or visa on arrival (15 days) | [page](https://mymun.com/conferences/nismun-iv-2026)
+- 2026-06-06 to 2026-06-06 | NISMUN IV 2026 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa on arrival (15 days) | [page](https://mymun.com/conferences/nismun-iv-2026)
 - 2026-06-06 to 2026-06-07 | ISHMUN 2026 | Hilversum, Netherlands | destination: 🇳🇱 Netherlands | duration: 2 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/ishmun-2026)
 - 2026-06-06 to 2026-06-07 | MUNIO 2026 | İstanbul, Türkiye | destination: 🇹🇷 Türkiye | duration: 2 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days) | [page](https://mymun.com/conferences/munio-2026)
 - 2026-06-11 to 2026-06-13 | ISOMUN 2026 | Amman, Jordan | destination: 🇯🇴 Jordan | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa or visa on arrival (30 days) | [page](https://mymun.com/conferences/isomun-2026)
@@ -333,8 +333,8 @@
 - 2026-06-24 to 2026-06-27 | JlgMUN 2026 | Berlin, Germany | destination: 🇩🇪 Germany | duration: 4 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/jlgmun-2026)
 - 2026-06-25 to 2026-06-28 | GALMUN 2026 | Sofia, Bulgaria | destination: 🇧🇬 Bulgaria | duration: 4 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/galmun-2027)
 - 2026-06-25 to 2026-06-28 | GoeMUN 2026 | Göttingen, Germany | destination: 🇩🇪 Germany | duration: 4 days | price: n/a | verified: yes | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/goemun-2026)
-- 2026-06-26 to 2026-06-28 | GFSMUN VI 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/gfsmun-vi-2026)
-- 2026-06-26 to 2026-06-28 | NLCSD MUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/nlcsd-mun-2026)
+- 2026-06-26 to 2026-06-28 | GFSMUN VI 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/gfsmun-vi-2026)
+- 2026-06-26 to 2026-06-28 | NLCSD MUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/nlcsd-mun-2026)
 - 2026-06-26 to 2026-06-28 | TPCMUN 2026 | Delhi, India | destination: 🇮🇳 India | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: eVisa (30 days) | [page](https://mymun.com/conferences/tpcmun-2026)
 - 2026-06-27 to 2026-06-28 | NUMUN 2026 | Nagoya City, Japan | destination: 🇯🇵 Japan | duration: 2 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/numun-2026)
 - 2026-06-27 to 2026-06-28 | Vortexo 2026 | New Delhi, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/vortexo-2026)
@@ -342,13 +342,13 @@
 
 ### 2026-07
 
-- 2026-07-03 to 2026-07-05 | HDMUN III 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa | [page](https://mymun.com/conferences/hdmun-iii-2026)
+- 2026-07-03 to 2026-07-05 | HDMUN III 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa required | [page](https://mymun.com/conferences/hdmun-iii-2026)
 - 2026-07-03 to 2026-07-05 | KielMUN 2026 | Kiel, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/kielmun-2026)
 - 2026-07-04 to 2026-07-05 | SEHRIYO MUN 2026 | Tashkent, Uzbekistan | destination: 🇺🇿 Uzbekistan | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/sehriyo-mun-2026)
 - 2026-07-04 to 2026-07-05 | VSECMUN 2026 | Kanpur, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/vsecmun-2026)
 - 2026-07-04 to 2026-07-05 | YLS MUN 2026 | Gurgaon, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/yls-mun-2026)
 - 2026-07-04 to 2026-07-05 | YLSMUN 2026 | Delhi, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: yes | visa: eVisa (30 days) | [page](https://mymun.com/conferences/ylsmun-2026)
-- 2026-07-06 to 2026-07-08 | AMDMUN 2026 | Sharjah, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: eVisa | [page](https://mymun.com/conferences/amdmun-2026)
+- 2026-07-06 to 2026-07-08 | AMDMUN 2026 | Sharjah, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa required | [page](https://mymun.com/conferences/amdmun-2026)
 - 2026-07-10 to 2026-07-12 | DADYAMUN 2026 | Datça/Muğla, Türkiye | destination: 🇹🇷 Türkiye | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days) | [page](https://mymun.com/conferences/dadyamun-2026)
 - 2026-07-11 to 2026-07-12 | INVMUN 2026 | Pune, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/invmun-2026)
 - 2026-07-11 to 2026-07-12 | Where youth rebuilds what the world broke  2026 | Lucknow, India | destination: 🇮🇳 India | duration: 2 days | price: n/a | verified: no | applications open: no | visa: eVisa (30 days) | [page](https://mymun.com/conferences/where-youth-rebuilds-what-the-world-broke-2026)
@@ -384,7 +384,7 @@
 - 2026-09-02 to 2026-09-04 | TriMUN 2026 | Gdynia, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/trimun-2026)
 - 2026-09-03 to 2026-09-06 | SOFIMUN 2026 | Sofia, Bulgaria | destination: 🇧🇬 Bulgaria | duration: 4 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/sofimun-2026)
 - 2026-09-04 to 2026-09-06 | TEVMUN  2026 | Warsaw, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: zł210.00 | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/tevmun-2026)
-- 2026-09-05 to 2026-09-06 | GYA MUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 2 days | price: n/a | verified: no | applications open: yes | visa: eVisa | [page](https://mymun.com/conferences/gya-mun-2026)
+- 2026-09-05 to 2026-09-06 | GYA MUN 2026 | Dubai, United Arab Emirates | destination: 🇦🇪 United Arab Emirates | duration: 2 days | price: n/a | verified: no | applications open: yes | visa: Visa required | [page](https://mymun.com/conferences/gya-mun-2026)
 - 2026-09-06 to 2026-09-09 | AGORAMUN apex edition 2026 | Lahore, Pakistan | destination: 🇵🇰 Pakistan | duration: 4 days | price: n/a | verified: no | applications open: yes | visa: eVisa | [page](https://mymun.com/conferences/agoramun-apex-edition-2026)
 - 2026-09-07 to 2026-09-07 | PBMUN 2026 | Paris, France | destination: 🇫🇷 France | duration: 1 days | price: €26.99 | verified: yes | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/pbmun-2026)
 - 2026-09-09 to 2026-09-11 | PlocMUN  2026 | Płock, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: n/a | verified: no | applications open: yes | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/plocmun-2026)
@@ -480,7 +480,7 @@
 - 2027-01-15 to 2027-01-17 | KOSZMUN 2027 | Koszalin, Poland | destination: 🇵🇱 Poland | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/koszmun-2027)
 - 2027-01-16 to 2027-01-16 | ACMUN 2027 | Barcelona, Spain | destination: 🇪🇸 Spain | duration: 1 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/acmun-2027)
 - 2027-01-22 to 2027-01-24 | BayernMUN - MUN in the heart of Europe 2027 | Nuremberg, Germany | destination: 🇩🇪 Germany | duration: 3 days | price: n/a | verified: no | applications open: no | visa: Visa-free (90 days within 180 days) | [page](https://mymun.com/conferences/bayernmun-mun-in-the-heart-of-europe-2027)
-- 2027-01-23 to 2027-01-24 | SEAMUN I 2027 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 2 days | price: $85.00 | verified: yes | applications open: no | visa: eVisa or visa on arrival (15 days) | [page](https://mymun.com/conferences/seamun-i-2027)
+- 2027-01-23 to 2027-01-24 | SEAMUN I 2027 | Bangkok, Thailand | destination: 🇹🇭 Thailand | duration: 2 days | price: $85.00 | verified: yes | applications open: no | visa: Visa on arrival (15 days) | [page](https://mymun.com/conferences/seamun-i-2027)
 - 2027-01-28 to 2027-01-30 | Economix MUN 2027 | Jakarta, Indonesia | destination: 🇮🇩 Indonesia | duration: 3 days | price: n/a | verified: no | applications open: no | visa: eVisa or visa on arrival (30 days) | [page](https://mymun.com/conferences/economix-mun-2027)
 
 ### 2027-02
