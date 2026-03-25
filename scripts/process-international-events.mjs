@@ -75,6 +75,16 @@ const omanSource = {
   url: 'https://www.rop.gov.om/english/VisaExempt.aspx',
 };
 
+const omanFmSource = {
+  label: 'Oman Foreign Ministry: entry visas',
+  url: 'https://www.fm.gov.om/en/visitors/entry-visas/',
+};
+
+const omanEvisaSource = {
+  label: 'Royal Oman Police: eVisa portal',
+  url: 'https://evisa.rop.gov.om/',
+};
+
 const saudiVisaSource = {
   label: 'Saudi eVisa: eligible countries terms',
   url: 'https://visa.visitsaudi.com/Home/TermsConditions',
@@ -88,6 +98,16 @@ const thailandSource = {
 const thailandLimaSource = {
   label: 'Royal Thai Embassy Lima: visa application and e-Visa guidance',
   url: 'https://lima.thaiembassy.org/en/publicservice/applying-for-a-visa-at-the-royal-thai-embassy-in-l?page=5d846a0415e39c31dc006001&menu=5d846a0415e39c31dc006002',
+};
+
+const vietnamEvisaSource = {
+  label: 'Vietnam Immigration Department: electronic visa portal',
+  url: 'https://evisa.xuatnhapcanh.gov.vn/trang-chu-ttdt',
+};
+
+const vietnamNationListSource = {
+  label: 'Vietnam Immigration Department: e-visa nationality list',
+  url: 'https://evisa.xuatnhapcanh.gov.vn/documents/20181/117155/Vietnam-Evisa-nation-list-Vi.pdf/7611c905-0370-45e9-8080-cd0dec11df95',
 };
 
 const uaeSource = {
@@ -163,10 +183,10 @@ const verifiedVisaPolicyOverrides = {
       'Kazakhstan\'s official e-visa guidance lists Venezuela among the countries eligible for an electronic single-entry visa for business, tourism, and medical travel. The traveler must also have an approved invitation number and use an eligible airport checkpoint.',
     sources: [kazakhstanSource],
   }),
-  oman: makeVisaPolicy('visa-free', null, {
+  oman: makeVisaPolicy('visa-free', '14 days', {
     note:
-      'Royal Oman Police lists Venezuela among the countries that can enter Oman without a tourist visa. The official list page does not state the permitted stay length here, so reconfirm the maximum stay and documentary conditions before travel.',
-    sources: [omanSource],
+      'Oman waives entry visas for Venezuelan ordinary passports on tourist stays up to 14 days if the traveler meets the published conditions. For stays longer than 14 days, or where the exemption does not apply, use the official Royal Oman Police eVisa system before travel.',
+    sources: [omanFmSource, omanSource, omanEvisaSource],
   }),
   'saudi-arabia': makeVisaPolicy('visa-required', null, {
     note:
@@ -233,6 +253,7 @@ const DESTINATIONS = [
     ['Hong Kong SAR China', 'Hong Kong, China', 'Hong Kong'],
     makeVisaPolicy('visa-free', '90 days'),
   ),
+  makeDestination('hungary', 'Hungary', '🇭🇺', ['Hungary'], makeSchengenVisaFreePolicy()),
   makeDestination('india', 'India', '🇮🇳', ['India'], makeVisaPolicy('eVisa', '30 days')),
   makeDestination(
     'indonesia',
@@ -357,6 +378,17 @@ const DESTINATIONS = [
     ['United Kingdom of Great Britain and Northern Ireland', 'United Kingdom'],
     makeVisaPolicy('visa-required', null, {
       sources: [passportIndexSource, ukSource],
+    }),
+  ),
+  makeDestination(
+    'vietnam',
+    'Viet Nam',
+    '🇻🇳',
+    ['Viet Nam', 'Vietnam'],
+    makeVisaPolicy('eVisa', '90 days', {
+      note:
+        'Vietnam Immigration states that electronic visas can be issued for up to 90 days, and the official nationality list includes Venezuela among the eligible passports. Reconfirm entry-point and document requirements before travel.',
+      sources: [vietnamEvisaSource, vietnamNationListSource],
     }),
   ),
   makeDestination('uzbekistan', 'Uzbekistan', '🇺🇿', ['Uzbekistan'], makeVisaPolicy('eVisa', '30 days')),

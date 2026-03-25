@@ -1,4 +1,4 @@
-import globalDatasetRaw from '~~/output/mymun_calendar_eu_as_dates_cleaned.json'
+import globalDatasetRaw from '~/assets/data/international-events.json'
 
 import type { InternationalDataset, InternationalDestination, InternationalEvent } from '~/types/international'
 
@@ -19,6 +19,7 @@ const E_VISA_CATEGORIES = new Set(['eVisa', 'visa on arrival', 'eVisa or visa on
 const VISA_REQUIRED_CATEGORIES = new Set(['visa-required'])
 
 const sourceDataset = globalDatasetRaw as InternationalDataset
+const sourceEvents = (sourceDataset.events ?? sourceDataset.destinations.flatMap((destination) => destination.events))
 
 const sortDestinations = (destinations: InternationalDestination[]) => [...destinations].sort((left, right) => {
   if (right.eventCount !== left.eventCount) {
@@ -74,7 +75,7 @@ const buildDestinations = (events: InternationalEvent[]) => {
 }
 
 const visibleEvents = sortEvents(
-  (sourceDataset.events ?? []).filter((event) =>
+  sourceEvents.filter((event) =>
     event.durationDays <= MAX_EVENT_DURATION_DAYS &&
     (
       VISA_FREE_CATEGORIES.has(event.visaPolicy.category) ||

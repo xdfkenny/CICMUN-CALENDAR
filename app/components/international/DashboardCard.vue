@@ -43,26 +43,20 @@ const regionLabel = computed(() => getRegionLabel(props.destination.key))
 <template>
   <button
     type="button"
-    class="group rounded-[26px] border border-white/70 bg-white/88 p-5 text-left shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-all duration-200 hover:-translate-y-1 hover:border-sky-200/80 hover:shadow-[0_24px_60px_rgba(15,23,42,0.12)] focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 dark:border-white/8 dark:bg-slate-900/82 dark:hover:border-sky-500/20 dark:shadow-[0_18px_50px_rgba(2,6,23,0.42)] dark:hover:shadow-[0_24px_60px_rgba(2,6,23,0.52)]"
+    class="group rounded-[26px] border border-white/70 bg-white/92 p-5 text-left shadow-[0_14px_34px_rgba(15,23,42,0.08)] transition-colors duration-150 hover:border-sky-200/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-400/60 dark:border-white/8 dark:bg-slate-900/88 dark:hover:border-sky-500/20 dark:shadow-[0_18px_42px_rgba(2,6,23,0.4)]"
     @click="emit('select', destination.key)"
   >
     <div v-if="viewMode === 'grid'" class="flex h-[248px] flex-col">
       <div class="flex items-start justify-between gap-3">
         <div class="flex min-w-0 items-start gap-3.5">
           <div class="flex size-[3.25rem] shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,rgba(15,23,42,0.08),rgba(14,165,233,0.16))] p-1.5 dark:bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(14,165,233,0.16))]">
-            <span
-              v-if="flagCode"
-              :class="['fi', 'fis', `fi-${flagCode}`]"
-              class="block size-full rounded-full bg-cover bg-center shadow-[0_10px_22px_rgba(15,23,42,0.14)]"
-              aria-hidden="true"
+            <GlobalSpriteFlag
+              :destination-key="destination.key"
+              :emoji-flag="destination.flag"
+              wrapper-class="size-full rounded-full border border-slate-200 bg-white dark:bg-slate-800"
+              sprite-scale-class="scale-[1.42]"
+              emoji-class="text-2xl"
             />
-            <span
-              v-else
-              class="grid size-full place-items-center rounded-full bg-white text-2xl dark:bg-slate-800"
-              aria-hidden="true"
-            >
-              {{ destination.flag }}
-            </span>
           </div>
 
           <div class="min-w-0 space-y-1">
@@ -119,19 +113,13 @@ const regionLabel = computed(() => getRegionLabel(props.destination.key))
     <div v-else class="grid min-h-[176px] grid-cols-1 gap-4 md:grid-cols-[auto,minmax(0,1fr),auto] md:items-center md:gap-5">
       <div class="flex items-center gap-3.5">
         <div class="flex size-14 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,rgba(15,23,42,0.08),rgba(14,165,233,0.16))] p-1.5 dark:bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(14,165,233,0.16))]">
-          <span
-            v-if="flagCode"
-            :class="['fi', 'fis', `fi-${flagCode}`]"
-            class="block size-full rounded-full bg-cover bg-center shadow-[0_10px_22px_rgba(15,23,42,0.14)]"
-            aria-hidden="true"
+          <GlobalSpriteFlag
+            :destination-key="destination.key"
+            :emoji-flag="destination.flag"
+            wrapper-class="size-full rounded-full border border-slate-200 bg-white dark:bg-slate-800"
+            sprite-scale-class="scale-[1.5]"
+            emoji-class="text-2xl"
           />
-          <span
-            v-else
-            class="grid size-full place-items-center rounded-full bg-white text-2xl dark:bg-slate-800"
-            aria-hidden="true"
-          >
-            {{ destination.flag }}
-          </span>
         </div>
 
         <div class="min-w-0 space-y-1">

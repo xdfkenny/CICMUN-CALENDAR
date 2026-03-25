@@ -5,8 +5,10 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "fetch:international": "node scripts/fetch-international-source.mjs",
     "generate": "nuxt generate",
-    "process:international": "node scripts/process-international-events.mjs",
+    "process:international": "node scripts/process-international-events.mjs --sync-app-data",
+    "refresh:international": "npm run fetch:international && npm run process:international",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
@@ -17,7 +19,6 @@
     "axios": "^1.13.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "flag-icons": "^7.5.0",
     "lucide-vue-next": "^0.563.0",
     "nanoid": "^5.1.7",
     "nuxt": "^4.4.2",

@@ -6,7 +6,7 @@ export type DateRangeFilter = 'all' | '30' | '90' | '180' | '365'
 export type SortOption = 'date' | 'country' | 'status'
 export type ViewMode = 'grid' | 'list'
 
-export const FLAG_CODE_BY_DESTINATION_KEY: Record<string, string> = {
+export const PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY: Record<string, string | null> = {
   albania: 'al',
   armenia: 'am',
   austria: 'at',
@@ -25,13 +25,14 @@ export const FLAG_CODE_BY_DESTINATION_KEY: Record<string, string> = {
   germany: 'de',
   greece: 'gr',
   'hong-kong': 'hk',
+  hungary: 'hu',
   india: 'in',
   indonesia: 'id',
   italy: 'it',
   japan: 'jp',
   jordan: 'jo',
   kazakhstan: 'kz',
-  kosovo: 'xk',
+  kosovo: 'rk',
   kuwait: 'kw',
   lebanon: 'lb',
   luxembourg: 'lu',
@@ -62,7 +63,10 @@ export const FLAG_CODE_BY_DESTINATION_KEY: Record<string, string> = {
   'united-arab-emirates': 'ae',
   'united-kingdom': 'gb',
   uzbekistan: 'uz',
+  vietnam: 'vn',
 }
+
+export const FLAG_CODE_BY_DESTINATION_KEY = PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY
 
 const EUROPE_DESTINATION_KEYS = new Set([
   'albania',
@@ -76,6 +80,7 @@ const EUROPE_DESTINATION_KEYS = new Set([
   'france',
   'germany',
   'greece',
+  'hungary',
   'italy',
   'kosovo',
   'luxembourg',

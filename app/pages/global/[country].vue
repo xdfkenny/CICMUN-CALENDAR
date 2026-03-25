@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
 
+import GlobalLoadingScreen from '~/components/global/GlobalLoadingScreen.vue'
 import type { InternationalEvent } from '~/types/international'
-import { FLAG_CODE_BY_DESTINATION_KEY, countdownLabel, formatDate, formatDateRange, formatPrice, formatVisaLabel, getNextEvent, getStayWindowGuidance } from '~/utils/international-dashboard'
+import { countdownLabel, formatDate, formatDateRange, formatPrice, formatVisaLabel, getNextEvent, getStayWindowGuidance } from '~/utils/international-dashboard'
 
 import EventInfoModal from '~/components/global/EventInfoModal.vue'
 import StatusBadge from '~/components/international/StatusBadge.vue'
@@ -30,6 +31,37 @@ const todayIso = new Date().toISOString().slice(0, 10)
 const selectedEvent = ref<InternationalEvent | null>(null)
 const selectedYear = ref<'all' | string>('all')
 const showOpenOnly = ref(false)
+const isPageReady = ref(false)
+
+const waitForRouteReady = async () => {
+  const afterPaint = new Promise<void>((resolve) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => resolve()))
+  })
+
+  const idleTime = new Promise<void>((resolve) => {
+    const requestIdleCallback = (window as typeof window & {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number
+    }).requestIdleCallback
+
+    if (requestIdleCallback) {
+      requestIdleCallback(() => resolve(), { timeout: 400 })
+      return
+    }
+
+    window.setTimeout(() => resolve(), 0)
+  })
+
+  const minimumDelay = new Promise<void>((resolve) => {
+    window.setTimeout(() => resolve(), 260)
+  })
+
+  await Promise.all([afterPaint, idleTime, minimumDelay])
+  isPageReady.value = true
+}
+
+onMounted(() => {
+  void waitForRouteReady()
+})
 
 const groupedByYear = computed(() => {
   const groups = new Map<string, InternationalEvent[]>()
@@ -87,13 +119,17 @@ const visaTone = computed(() => {
 
   return 'visa' as const
 })
-
-const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.key] ?? null)
 </script>
 
 <template>
   <main class="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.14),_transparent_28%),radial-gradient(circle_at_top_right,_rgba(14,165,233,0.16),_transparent_30%),linear-gradient(180deg,#f8fafc_0%,#f8fafc_42%,#eff6ff_100%)] px-4 py-8 md:px-6 md:py-10">
-    <div class="mx-auto max-w-6xl">
+    <GlobalLoadingScreen
+      v-if="!isPageReady"
+      :title="`Preparing ${destination!.label}`"
+      subtitle="Loading country details, yearly groups, and quick-look data."
+    />
+
+    <div v-else class="mx-auto max-w-6xl">
       <NuxtLink
         to="/global"
         class="mb-5 inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/85 px-4 py-2 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-slate-300 hover:text-slate-950"
@@ -102,21 +138,17 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
         Back to flags
       </NuxtLink>
 
-      <header class="overflow-hidden rounded-[34px] border border-white/70 bg-[linear-gradient(135deg,rgba(8,47,73,0.96),rgba(15,23,42,0.96))] px-6 py-7 text-white shadow-[0_32px_90px_rgba(15,23,42,0.18)] md:px-8 md:py-8">
+      <header class="global-panel overflow-hidden rounded-[32px] bg-[linear-gradient(135deg,#082f49,#0f172a)] px-6 py-7 text-white md:px-8 md:py-8">
         <div class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div class="flex items-start gap-4">
-            <div class="flag-avatar-shell grid size-20 place-items-center rounded-full bg-white/12 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur">
-              <span v-if="flagCode" class="flag-avatar size-14 shadow-[0_14px_28px_rgba(15,23,42,0.24)]">
-                <span
-                  :class="['fi', 'fis', `fi-${flagCode}`]"
-                  class="flag-avatar-flag"
-                  aria-hidden="true"
-                />
-              </span>
-              <span v-else class="text-5xl" aria-hidden="true">
-                {{ destination!.flag }}
-              </span>
-            </div>
+            <GlobalSpriteFlag
+              :destination-key="destination!.key"
+              :emoji-flag="destination!.flag"
+              wrapper-class="global-flag-frame h-16 aspect-[4/3] sm:h-20"
+              image-class="object-cover"
+              emoji-class="text-5xl"
+              loading="eager"
+            />
 
             <div class="space-y-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-sky-100/70">
@@ -148,7 +180,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
         </div>
 
         <div class="mt-7 grid gap-3 md:grid-cols-4">
-          <article class="rounded-[24px] border border-white/10 bg-white/8 p-4 backdrop-blur">
+          <article class="rounded-[24px] border border-white/10 bg-white/10 p-4">
             <div class="flex items-center justify-between gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-100/70">
                 Open now
@@ -162,7 +194,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
             </p>
           </article>
 
-          <article class="rounded-[24px] border border-white/10 bg-white/8 p-4 backdrop-blur">
+          <article class="rounded-[24px] border border-white/10 bg-white/10 p-4">
             <div class="flex items-center justify-between gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-100/70">
                 Closed now
@@ -176,7 +208,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
             </p>
           </article>
 
-          <article class="rounded-[24px] border border-white/10 bg-white/8 p-4 backdrop-blur">
+          <article class="rounded-[24px] border border-white/10 bg-white/10 p-4">
             <div class="flex items-center justify-between gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-100/70">
                 First year
@@ -190,7 +222,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
             </p>
           </article>
 
-          <article class="rounded-[24px] border border-white/10 bg-white/8 p-4 backdrop-blur">
+          <article class="rounded-[24px] border border-white/10 bg-white/10 p-4">
             <div class="flex items-center justify-between gap-3">
               <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-sky-100/70">
                 Last year
@@ -208,7 +240,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
 
       <section
         v-if="nextEvent"
-        class="mt-6 rounded-[30px] border border-white/70 bg-[linear-gradient(135deg,rgba(14,165,233,0.12),rgba(255,255,255,0.94),rgba(16,185,129,0.12))] p-5 shadow-[0_20px_44px_rgba(15,23,42,0.08)] backdrop-blur md:p-6"
+        class="global-panel mt-6 rounded-[28px] bg-[linear-gradient(135deg,rgba(14,165,233,0.1),rgba(255,255,255,0.96),rgba(16,185,129,0.08))] p-5 md:p-6"
       >
         <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div class="space-y-3">
@@ -277,7 +309,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
 
       <section class="mt-8 grid gap-6 lg:grid-cols-[320px,1fr]">
         <aside class="space-y-4">
-          <article class="rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+          <article class="global-panel rounded-[24px] bg-white/96 p-5">
             <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
               Entry Guidance
             </p>
@@ -292,7 +324,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
             </p>
           </article>
 
-          <article class="rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+          <article class="global-panel rounded-[24px] bg-white/96 p-5">
             <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
               Hosting cities
             </p>
@@ -307,7 +339,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
             </div>
           </article>
 
-          <article class="rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+          <article class="global-panel rounded-[24px] bg-white/96 p-5">
             <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
               Verification links
             </p>
@@ -331,7 +363,7 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
         </aside>
 
         <section class="space-y-6">
-          <div class="rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+          <div class="global-panel rounded-[24px] bg-white/96 p-5">
             <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
@@ -384,7 +416,8 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
           <div
             v-for="yearGroup in visibleYearGroups"
             :key="yearGroup.year"
-            class="rounded-[30px] border border-white/70 bg-white/82 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur md:p-6"
+            class="global-panel render-section rounded-[28px] bg-white/96 p-5 md:p-6"
+            v-memo="[yearGroup.year, yearGroup.events.length, selectedYear, showOpenOnly]"
           >
             <div class="mb-5 flex items-center justify-between gap-4">
               <div>
@@ -405,8 +438,9 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
                 v-for="event in yearGroup.events"
                 :key="event.id"
                 type="button"
-                class="group rounded-[26px] border border-slate-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(248,250,252,0.95))] p-5 text-left transition duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_36px_rgba(15,23,42,0.1)]"
+                class="global-card render-card group rounded-[24px] p-5 text-left transition-colors duration-150 hover:border-slate-300"
                 @click="selectedEvent = event"
+                v-memo="[event.id, event.applicationsOpen, event.verified, event.visaPolicy.category]"
               >
                 <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                   <div class="space-y-3">

@@ -39,17 +39,25 @@ If you change the seed file, existing users will only receive those admin change
 
 ### Source Of Truth
 
+- Script: `scripts/fetch-international-source.mjs`
 - Script: `scripts/process-international-events.mjs`
 - Source markdown: `output/mymun_calendar_eu_as_dates.md`
 - Active processed output: `output/mymun_calendar_eu_as_dates_cleaned.json`
 
 ### What The Script Does
 
-The script is the entire ETL pipeline for the `/global` experience.
+The `/global` ETL is split into two steps.
 
-It:
+`scripts/fetch-international-source.mjs`:
 
-1. Reads a markdown export of MyMUN conference entries.
+1. Calls the MyMUN filtered conference list API directly.
+2. Applies a source-side MUN relevance filter using conference slug/title/name.
+3. Sorts the kept rows chronologically.
+4. Writes the markdown snapshot at `output/mymun_calendar_eu_as_dates.md`.
+
+`scripts/process-international-events.mjs` then:
+
+1. Reads the generated markdown export of MyMUN conference entries.
 2. Extracts metadata from the header section.
 3. Parses each conference line with a regex.
 4. Calculates inclusive event duration.
@@ -174,6 +182,8 @@ Defined in `app/types/international.ts`:
 ```powershell
 npm run dev
 npm run build
+npm run fetch:international
+npm run refresh:international
 npm run process:international
 node scripts/process-international-events.mjs --sync-app-data
 ```

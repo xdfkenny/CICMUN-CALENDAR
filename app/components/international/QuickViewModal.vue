@@ -4,7 +4,6 @@ import { Clock3, ExternalLink, MapPin, X } from 'lucide-vue-next'
 import type { InternationalDestination } from '~/types/international'
 import {
   countdownLabel,
-  FLAG_CODE_BY_DESTINATION_KEY,
   formatDate,
   formatDateRange,
   formatPrice,
@@ -41,11 +40,6 @@ const visaMeta = computed(() => {
   return { label: formatVisaLabel(category), tone: 'visa' as const }
 })
 
-const flagCode = computed(() => {
-  if (!props.destination) return null
-  return FLAG_CODE_BY_DESTINATION_KEY[props.destination.key] ?? null
-})
-
 const nextEvent = computed(() => {
   if (!props.destination) return null
   return getNextEvent(props.destination, props.todayIso)
@@ -62,28 +56,23 @@ const nextEvent = computed(() => {
       :aria-labelledby="destination ? `country-title-${destination.key}` : undefined"
     >
       <button
-        class="absolute inset-0 border-0 bg-slate-950/30 backdrop-blur-sm"
+        class="absolute inset-0 border-0 bg-slate-950/30"
         aria-label="Close details"
         @click="emit('close')"
       />
 
-      <article class="relative z-10 flex max-h-[calc(100vh-2rem)] w-full max-w-[1180px] flex-col overflow-hidden rounded-[30px] border border-white/70 bg-white/92 shadow-[0_30px_90px_rgba(15,23,42,0.18)] backdrop-blur-xl dark:border-white/8 dark:bg-slate-900/90 dark:shadow-[0_30px_90px_rgba(2,6,23,0.5)]">
+      <article class="relative z-10 flex max-h-[calc(100vh-2rem)] w-full max-w-[1180px] flex-col overflow-hidden rounded-[30px] border border-white/70 bg-white/95 shadow-[0_20px_60px_rgba(15,23,42,0.16)] dark:border-white/8 dark:bg-slate-900/92 dark:shadow-[0_24px_64px_rgba(2,6,23,0.42)]">
         <header class="flex flex-col gap-5 border-b border-slate-200/70 px-5 py-5 dark:border-white/8 md:flex-row md:items-start md:justify-between md:px-6 md:py-6">
           <div class="flex items-start gap-4">
             <div class="flex size-16 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,rgba(15,23,42,0.08),rgba(14,165,233,0.16))] p-1.5 dark:bg-[linear-gradient(135deg,rgba(59,130,246,0.18),rgba(14,165,233,0.16))]">
-              <span
-                v-if="flagCode"
-                :class="['fi', 'fis', `fi-${flagCode}`]"
-                class="block size-full rounded-full bg-cover bg-center shadow-[0_10px_22px_rgba(15,23,42,0.14)]"
-                aria-hidden="true"
+              <GlobalSpriteFlag
+                :destination-key="destination.key"
+                :emoji-flag="destination.flag"
+                wrapper-class="size-full rounded-full border border-slate-200 bg-white dark:bg-slate-800"
+                sprite-scale-class="scale-[1.62]"
+                emoji-class="text-3xl"
+                loading="eager"
               />
-              <span
-                v-else
-                class="grid size-full place-items-center rounded-full bg-white text-3xl dark:bg-slate-800"
-                aria-hidden="true"
-              >
-                {{ destination.flag }}
-              </span>
             </div>
 
             <div class="space-y-2">
@@ -228,7 +217,7 @@ const nextEvent = computed(() => {
                 :key="group.month"
                 class="grid gap-3"
               >
-                <div class="sticky top-0 z-10 w-fit rounded-full border border-slate-200/70 bg-white/95 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 shadow-sm dark:border-white/8 dark:bg-slate-900/92 dark:text-slate-400">
+                <div class="sticky top-0 z-10 w-fit rounded-full border border-slate-200/70 bg-white px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500 shadow-sm dark:border-white/8 dark:bg-slate-900/92 dark:text-slate-400">
                   {{ group.label }}
                 </div>
 

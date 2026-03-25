@@ -32,8 +32,10 @@ Then use the older focused docs when needed:
 - Build scripts:
   - `npm run dev`
   - `npm run build`
+  - `npm run fetch:international`
   - `npm run generate`
   - `npm run process:international`
+  - `npm run refresh:international`
 - There are no lint or test scripts in `package.json` as of March 24, 2026.
 
 ## Recommended Agent Workflow
@@ -44,7 +46,10 @@ Then use the older focused docs when needed:
 4. If the change touches visa or destination logic, inspect both:
    - `app/composables/useGlobalDataset.ts`
    - `scripts/process-international-events.mjs`
-5. Run `npm run build` after changes whenever possible.
+5. If the change refreshes the MyMUN source export, run:
+   - `npm run fetch:international`
+   - `npm run process:international`
+6. Run `npm run build` after changes whenever possible.
 
 ## Folder Map
 

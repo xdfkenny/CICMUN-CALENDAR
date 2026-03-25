@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/vue'
 
 import type { InternationalEvent } from '~/types/international'
-import { FLAG_CODE_BY_DESTINATION_KEY, formatDate, formatDateRange, formatPrice, formatVisaLabel } from '~/utils/international-dashboard'
+import { formatDate, formatDateRange, formatPrice, formatVisaLabel } from '~/utils/international-dashboard'
 
 import StatusBadge from '~/components/international/StatusBadge.vue'
 
@@ -27,11 +27,6 @@ const visaTone = computed(() => {
 })
 
 const applicationTone = computed(() => (props.event?.applicationsOpen ? 'open' : 'closed'))
-
-const flagCode = computed(() => {
-  if (!props.event) return null
-  return FLAG_CODE_BY_DESTINATION_KEY[props.event.destinationKey] ?? null
-})
 </script>
 
 <template>
@@ -45,13 +40,13 @@ const flagCode = computed(() => {
     >
       <button
         type="button"
-        class="absolute inset-0 bg-slate-950/55 backdrop-blur-sm"
+        class="absolute inset-0 bg-slate-950/55"
         aria-label="Close event details"
         @click="emit('close')"
       />
 
       <div class="relative z-10 w-full max-w-3xl">
-        <article class="flex max-h-[calc(100vh-2rem)] w-full flex-col overflow-hidden rounded-[28px] border border-white/30 bg-[linear-gradient(180deg,rgba(255,252,245,0.98),rgba(248,250,252,0.96))] shadow-[0_28px_90px_rgba(15,23,42,0.28)] md:max-h-[calc(100vh-3rem)]">
+        <article class="global-panel flex max-h-[calc(100vh-2rem)] w-full flex-col overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,rgba(255,252,245,0.98),rgba(248,250,252,0.96))] md:max-h-[calc(100vh-3rem)]">
         <header class="shrink-0 border-b border-slate-200/80 px-5 py-5 md:px-7">
           <div class="flex items-start justify-between gap-4">
             <div class="space-y-2">
@@ -59,16 +54,14 @@ const flagCode = computed(() => {
                 Event Quick Look
               </p>
               <div class="flex items-center gap-3">
-                <span v-if="flagCode" class="flag-avatar-shell flag-avatar size-10 shadow-[0_10px_24px_rgba(15,23,42,0.18)]">
-                  <span
-                    :class="['fi', 'fis', `fi-${flagCode}`]"
-                    class="flag-avatar-flag"
-                    aria-hidden="true"
-                  />
-                </span>
-                <span v-else class="text-3xl" aria-hidden="true">
-                  {{ event.destinationFlag }}
-                </span>
+                <GlobalSpriteFlag
+                  :destination-key="event.destinationKey"
+                  :emoji-flag="event.destinationFlag"
+                  wrapper-class="global-flag-frame h-8 aspect-[4/3]"
+                  image-class="object-cover"
+                  emoji-class="text-2xl"
+                  loading="eager"
+                />
                 <span class="text-sm font-medium text-slate-500">
                   {{ event.destinationLabel }}
                 </span>
