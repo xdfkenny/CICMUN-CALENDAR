@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/vue'
 
 import type { InternationalEvent } from '~/types/international'
-import { FLAG_CODE_BY_DESTINATION_KEY, countdownLabel, formatDate, formatDateRange, formatPrice, formatVisaLabel, getStayWindowGuidance } from '~/utils/international-dashboard'
+import { FLAG_CODE_BY_DESTINATION_KEY, countdownLabel, formatDate, formatDateRange, formatPrice, formatVisaLabel, getNextEvent, getStayWindowGuidance } from '~/utils/international-dashboard'
 
 import EventInfoModal from '~/components/global/EventInfoModal.vue'
 import StatusBadge from '~/components/international/StatusBadge.vue'
@@ -28,6 +28,8 @@ useSeoMeta({
 
 const todayIso = new Date().toISOString().slice(0, 10)
 const selectedEvent = ref<InternationalEvent | null>(null)
+const selectedYear = ref<'all' | string>('all')
+const showOpenOnly = ref(false)
 
 const groupedByYear = computed(() => {
   const groups = new Map<string, InternationalEvent[]>()
@@ -39,16 +41,30 @@ const groupedByYear = computed(() => {
     groups.set(year, existing)
   }
 
-  return [...groups.entries()].map(([year, events]) => ({
-    year,
-    events,
-  }))
+  return [...groups.entries()]
+    .map(([year, events]) => ({
+      year,
+      events,
+    }))
+    .sort((left, right) => right.year.localeCompare(left.year))
 })
 
 const openCount = computed(() => destination.value!.events.filter((event) => event.applicationsOpen).length)
 const closedCount = computed(() => destination.value!.events.length - openCount.value)
 const firstYear = computed(() => destination.value!.events[0]?.startDate.slice(0, 4) ?? 'TBD')
 const lastYear = computed(() => destination.value!.events.at(-1)?.startDate.slice(0, 4) ?? 'TBD')
+const nextEvent = computed(() => getNextEvent(destination.value!, todayIso))
+const availableYears = computed(() => groupedByYear.value.map((group) => group.year))
+const visibleYearGroups = computed(() => groupedByYear.value
+  .filter((group) => selectedYear.value === 'all' || group.year === selectedYear.value)
+  .map((group) => ({
+    ...group,
+    events: showOpenOnly.value
+      ? group.events.filter((event) => event.applicationsOpen)
+      : group.events,
+  }))
+  .filter((group) => group.events.length > 0))
+const visibleEventCount = computed(() => visibleYearGroups.value.reduce((total, group) => total + group.events.length, 0))
 const visaCategory = computed(() => destination.value!.visaPolicy.category)
 const requiresVisaAction = computed(() => visaCategory.value !== 'visa-free')
 const stayWindowGuidance = computed(() => getStayWindowGuidance(destination.value!.visaPolicy.stayLimit))
@@ -191,6 +207,51 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
       </header>
 
       <section
+        v-if="nextEvent"
+        class="mt-6 rounded-[30px] border border-white/70 bg-[linear-gradient(135deg,rgba(14,165,233,0.12),rgba(255,255,255,0.94),rgba(16,185,129,0.12))] p-5 shadow-[0_20px_44px_rgba(15,23,42,0.08)] backdrop-blur md:p-6"
+      >
+        <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div class="space-y-3">
+            <p class="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+              Next Event Highlight
+            </p>
+            <h2 class="text-3xl font-semibold tracking-[-0.05em] text-slate-950">
+              {{ nextEvent.title }}
+            </h2>
+            <div class="flex flex-wrap items-center gap-2 text-sm text-slate-600">
+              <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 font-medium text-sky-900 ring-1 ring-inset ring-sky-100">
+                <Icon icon="solar:calendar-date-bold-duotone" class="size-4 text-sky-600" />
+                {{ formatDateRange(nextEvent.startDate, nextEvent.endDate) }}
+              </span>
+              <span class="inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1.5 font-medium text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
+                <Icon icon="solar:routing-3-bold-duotone" class="size-4 text-fuchsia-600" />
+                {{ nextEvent.city }}
+              </span>
+              <span class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 font-medium text-emerald-900 ring-1 ring-inset ring-emerald-100">
+                <Icon icon="solar:wallet-money-bold-duotone" class="size-4 text-emerald-600" />
+                {{ formatPrice(nextEvent.price) }}
+              </span>
+            </div>
+            <p class="text-sm leading-7 text-slate-600">
+              {{ countdownLabel(nextEvent.startDate, todayIso) }} | {{ nextEvent.applicationsOpen ? 'Applications are open.' : 'Applications are currently closed.' }}
+            </p>
+          </div>
+
+          <div class="flex flex-wrap gap-3">
+            <StatusBadge :label="nextEvent.applicationsOpen ? 'Open' : 'Closed'" :tone="nextEvent.applicationsOpen ? 'open' : 'closed'" size="md" />
+            <button
+              type="button"
+              class="inline-flex items-center gap-2 rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+              @click="selectedEvent = nextEvent"
+            >
+              <Icon icon="solar:eye-bold-duotone" class="size-4" />
+              Open quick look
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section
         v-if="requiresVisaAction"
         class="mt-6 rounded-[28px] px-5 py-5 shadow-[0_18px_40px_rgba(15,23,42,0.08)]"
         :class="isRegularVisaCountry
@@ -270,8 +331,58 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
         </aside>
 
         <section class="space-y-6">
+          <div class="rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div>
+                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                  Browse Events
+                </p>
+                <p class="mt-2 text-sm text-slate-600">
+                  Showing {{ visibleEventCount }} of {{ destination!.eventCount }} events
+                </p>
+              </div>
+
+              <button
+                type="button"
+                class="inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition"
+                :class="showOpenOnly
+                  ? 'border-emerald-200 bg-emerald-50 text-emerald-800'
+                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-950'"
+                @click="showOpenOnly = !showOpenOnly"
+              >
+                <Icon :icon="showOpenOnly ? 'solar:check-circle-bold-duotone' : 'solar:filter-bold-duotone'" class="size-4" />
+                {{ showOpenOnly ? 'Open only enabled' : 'Show open only' }}
+              </button>
+            </div>
+
+            <div class="mt-4 flex flex-wrap gap-2">
+              <button
+                type="button"
+                class="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold transition"
+                :class="selectedYear === 'all'
+                  ? 'border-slate-900 bg-slate-900 text-white'
+                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-950'"
+                @click="selectedYear = 'all'"
+              >
+                All years
+              </button>
+              <button
+                v-for="year in availableYears"
+                :key="year"
+                type="button"
+                class="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold transition"
+                :class="selectedYear === year
+                  ? 'border-slate-900 bg-slate-900 text-white'
+                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-950'"
+                @click="selectedYear = year"
+              >
+                {{ year }}
+              </button>
+            </div>
+          </div>
+
           <div
-            v-for="yearGroup in groupedByYear"
+            v-for="yearGroup in visibleYearGroups"
             :key="yearGroup.year"
             class="rounded-[30px] border border-white/70 bg-white/82 p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)] backdrop-blur md:p-6"
           >
@@ -378,6 +489,18 @@ const flagCode = computed(() => FLAG_CODE_BY_DESTINATION_KEY[destination.value!.
               </button>
             </div>
           </div>
+
+          <article
+            v-if="visibleYearGroups.length === 0"
+            class="rounded-[30px] border border-dashed border-slate-300 bg-white/75 p-8 text-center shadow-[0_18px_50px_rgba(15,23,42,0.05)]"
+          >
+            <p class="text-lg font-semibold tracking-[-0.03em] text-slate-900">
+              No events match this view.
+            </p>
+            <p class="mt-2 text-sm leading-7 text-slate-500">
+              Try another year or disable the open-only filter.
+            </p>
+          </article>
         </section>
       </section>
     </div>
