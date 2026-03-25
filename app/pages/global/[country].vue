@@ -3,7 +3,7 @@ import { Icon } from '@iconify/vue'
 
 import GlobalLoadingScreen from '~/components/global/GlobalLoadingScreen.vue'
 import type { InternationalEvent } from '~/types/international'
-import { countdownLabel, formatDate, formatDateRange, formatPrice, formatVisaLabel, getNextEvent, getStayWindowGuidance } from '~/utils/international-dashboard'
+import { countdownLabel, formatDate, formatDateRange, formatPrice, formatVisaLabel, getNextEvent, getStayWindowGuidance, getWeekendTimingMeta, type WeekendTimingMeta } from '~/utils/international-dashboard'
 
 import EventInfoModal from '~/components/global/EventInfoModal.vue'
 import StatusBadge from '~/components/international/StatusBadge.vue'
@@ -13,6 +13,7 @@ const { getDestinationByKey } = useGlobalDataset()
 
 const countryKey = computed(() => String(route.params.country ?? ''))
 const destination = computed(() => getDestinationByKey(countryKey.value))
+const GLOBAL_PAGE_TITLE = 'International MUN Access Guide'
 
 if (!destination.value) {
   throw createError({
@@ -22,16 +23,27 @@ if (!destination.value) {
 }
 
 useSeoMeta({
-  title: `${destination.value.label} | Global`,
-  description: `Hidden country page for ${destination.value.label} international MUN events.`,
+  title: `${destination.value.label} | ${GLOBAL_PAGE_TITLE}`,
+  description: `${destination.value.label} entry and event guide for short international MUN trips.`,
   robots: 'noindex, nofollow',
 })
 
 const todayIso = new Date().toISOString().slice(0, 10)
 const selectedEvent = ref<InternationalEvent | null>(null)
+const searchQuery = ref('')
 const selectedYear = ref<'all' | string>('all')
 const showOpenOnly = ref(false)
+const showWeekendFriendlyOnly = ref(false)
 const isPageReady = ref(false)
+
+type EventWithWeekendTiming = InternationalEvent & {
+  weekendTiming: WeekendTimingMeta | null
+}
+
+const enrichEvent = (event: InternationalEvent): EventWithWeekendTiming => ({
+  ...event,
+  weekendTiming: getWeekendTimingMeta(event.startDate, event.endDate),
+})
 
 const waitForRouteReady = async () => {
   const afterPaint = new Promise<void>((resolve) => {
@@ -64,12 +76,13 @@ onMounted(() => {
 })
 
 const groupedByYear = computed(() => {
-  const groups = new Map<string, InternationalEvent[]>()
+  const groups = new Map<string, EventWithWeekendTiming[]>()
 
   for (const event of destination.value!.events) {
+    const enrichedEvent = enrichEvent(event)
     const year = event.startDate.slice(0, 4)
     const existing = groups.get(year) ?? []
-    existing.push(event)
+    existing.push(enrichedEvent)
     groups.set(year, existing)
   }
 
@@ -85,28 +98,50 @@ const openCount = computed(() => destination.value!.events.filter((event) => eve
 const closedCount = computed(() => destination.value!.events.length - openCount.value)
 const firstYear = computed(() => destination.value!.events[0]?.startDate.slice(0, 4) ?? 'TBD')
 const lastYear = computed(() => destination.value!.events.at(-1)?.startDate.slice(0, 4) ?? 'TBD')
-const nextEvent = computed(() => getNextEvent(destination.value!, todayIso))
+const nextEvent = computed<EventWithWeekendTiming | null>(() => {
+  const event = getNextEvent(destination.value!, todayIso)
+  return event ? enrichEvent(event) : null
+})
+const normalizedSearchQuery = computed(() => searchQuery.value.trim().toLowerCase())
 const availableYears = computed(() => groupedByYear.value.map((group) => group.year))
 const visibleYearGroups = computed(() => groupedByYear.value
   .filter((group) => selectedYear.value === 'all' || group.year === selectedYear.value)
   .map((group) => ({
     ...group,
-    events: showOpenOnly.value
-      ? group.events.filter((event) => event.applicationsOpen)
-      : group.events,
+    events: group.events.filter((event) => {
+      if (showOpenOnly.value && !event.applicationsOpen) return false
+      if (showWeekendFriendlyOnly.value && !event.weekendTiming) return false
+      if (normalizedSearchQuery.value) {
+        const searchableText = `${event.title} ${event.city}`.toLowerCase()
+        if (!searchableText.includes(normalizedSearchQuery.value)) return false
+      }
+      return true
+    }),
   }))
   .filter((group) => group.events.length > 0))
 const visibleEventCount = computed(() => visibleYearGroups.value.reduce((total, group) => total + group.events.length, 0))
+const visibleWeekendFriendlyCount = computed(() => visibleYearGroups.value.reduce(
+  (total, group) => total + group.events.filter((event) => event.weekendTiming).length,
+  0,
+))
+const citySummary = computed(() => {
+  const cities = destination.value!.cities
+
+  if (cities.length === 0) return 'No host cities listed'
+  if (cities.length <= 3) return cities.join(', ')
+
+  return `${cities.slice(0, 3).join(', ')} +${cities.length - 3} more`
+})
 const visaCategory = computed(() => destination.value!.visaPolicy.category)
 const requiresVisaAction = computed(() => visaCategory.value !== 'visa-free')
 const stayWindowGuidance = computed(() => getStayWindowGuidance(destination.value!.visaPolicy.stayLimit))
 const isRegularVisaCountry = computed(() => visaCategory.value === 'visa-required')
-const advisoryEyebrow = computed(() => (isRegularVisaCountry.value ? 'Visa Required' : 'E-Visa Advisory'))
-const advisoryTitle = computed(() => (isRegularVisaCountry.value ? 'This country needs a regular visa' : 'This country still needs visa processing'))
+const advisoryEyebrow = computed(() => (isRegularVisaCountry.value ? 'Regular Visa Required' : 'Extra Entry Step'))
+const advisoryTitle = computed(() => (isRegularVisaCountry.value ? 'This country still requires a standard visa' : 'This country still requires visa processing'))
 const advisoryCopy = computed(() => (
   isRegularVisaCountry.value
-    ? 'These events are shown for planning, but entry is not easy-access for the filtered passport. You need to secure the regular visa before traveling and re-check consular requirements before booking.'
-    : 'These events are shown in the E-Visa section because entry is not visa-free for the filtered passport. Complete the eVisa flow or the visa-on-arrival process before travel and re-check the airline and official visa portal before booking.'
+    ? 'These events are visible for planning, but you still need to secure the regular visa before traveling. Re-check consular timing and document requirements before booking.'
+    : 'These events are not visa-free for the selected passport. Complete the eVisa, eTA, or visa-on-arrival process before travel and verify the latest entry rules before booking.'
 ))
 
 const visaTone = computed(() => {
@@ -263,6 +298,15 @@ const visaTone = computed(() => {
                 <Icon icon="solar:wallet-money-bold-duotone" class="size-4 text-emerald-600" />
                 {{ formatPrice(nextEvent.price) }}
               </span>
+              <span
+                v-if="nextEvent.weekendTiming"
+                class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-medium ring-1 ring-inset"
+                :class="nextEvent.weekendTiming.badgeClasses"
+                :title="nextEvent.weekendTiming.description"
+              >
+                <Icon :icon="nextEvent.weekendTiming.icon" class="size-4" />
+                {{ nextEvent.weekendTiming.label }}
+              </span>
             </div>
             <p class="text-sm leading-7 text-slate-600">
               {{ countdownLabel(nextEvent.startDate, todayIso) }} | {{ nextEvent.applicationsOpen ? 'Applications are open.' : 'Applications are currently closed.' }}
@@ -307,235 +351,297 @@ const visaTone = computed(() => {
         </p>
       </section>
 
-      <section class="mt-8 grid gap-6 lg:grid-cols-[320px,1fr]">
-        <aside class="space-y-4">
-          <article class="global-panel rounded-[24px] bg-white/96 p-5">
-            <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              Entry Guidance
-            </p>
-            <div class="mt-4">
-              <StatusBadge :label="formatVisaLabel(destination!.visaPolicy.category)" :tone="visaTone" size="md" />
-            </div>
-            <p class="mt-4 text-sm leading-7 text-slate-600">
-              {{ destination!.visaPolicy.note }}
-            </p>
-            <p v-if="destination!.visaPolicy.stayLimit" class="mt-3 text-sm font-medium text-slate-500">
-              Stay window: {{ destination!.visaPolicy.stayLimit }}
-            </p>
-          </article>
-
-          <article class="global-panel rounded-[24px] bg-white/96 p-5">
-            <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              Hosting cities
-            </p>
-            <div class="mt-4 flex flex-wrap gap-2">
-              <span
-                v-for="city in destination!.cities"
-                :key="city"
-                class="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-700"
-              >
-                {{ city }}
-              </span>
-            </div>
-          </article>
-
-          <article class="global-panel rounded-[24px] bg-white/96 p-5">
-            <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              Verification links
-            </p>
-            <div class="mt-4 grid gap-2">
-              <a
-                v-for="source in destination!.visaPolicy.sources"
-                :key="source.url"
-                :href="source.url"
-                target="_blank"
-                rel="noreferrer"
-                class="inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white hover:text-slate-950"
-              >
-                <span class="truncate">{{ source.label }}</span>
-                <Icon icon="solar:square-top-down-line-duotone" class="size-[15px]" />
-              </a>
-            </div>
-            <p class="mt-3 text-xs text-slate-500">
-              Verified {{ formatDate(destination!.visaPolicy.verifiedAt) }}
-            </p>
-          </article>
-        </aside>
-
-        <section class="space-y-6">
-          <div class="global-panel rounded-[24px] bg-white/96 p-5">
-            <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div>
-                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  Browse Events
-                </p>
-                <p class="mt-2 text-sm text-slate-600">
-                  Showing {{ visibleEventCount }} of {{ destination!.eventCount }} events
-                </p>
+      <section class="mt-8 space-y-6">
+        <article class="global-panel rounded-[28px] bg-white/96 p-5 md:p-6">
+          <div class="grid gap-6 lg:grid-cols-[minmax(0,1.05fr),minmax(260px,0.95fr)]">
+            <div class="space-y-4">
+              <div class="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    Travel Snapshot
+                  </p>
+                  <h2 class="mt-1 text-2xl font-semibold tracking-[-0.04em] text-slate-950">
+                    Entry & stay
+                  </h2>
+                </div>
+                <StatusBadge :label="formatVisaLabel(destination!.visaPolicy.category)" :tone="visaTone" size="md" />
               </div>
 
+              <p class="text-sm leading-7 text-slate-600">
+                {{ destination!.visaPolicy.note }}
+              </p>
+
+              <div class="grid gap-3 sm:grid-cols-2">
+                <article class="rounded-[22px] border border-slate-200/80 bg-slate-50/85 p-4">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    Stay window
+                  </p>
+                  <p class="mt-2 text-lg font-semibold tracking-[-0.03em] text-slate-950">
+                    {{ destination!.visaPolicy.stayLimit ?? 'Verify manually' }}
+                  </p>
+                </article>
+
+                <article class="rounded-[22px] border border-slate-200/80 bg-slate-50/85 p-4">
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500">
+                    Verification date
+                  </p>
+                  <p class="mt-2 text-lg font-semibold tracking-[-0.03em] text-slate-950">
+                    {{ formatDate(destination!.visaPolicy.verifiedAt) }}
+                  </p>
+                </article>
+              </div>
+            </div>
+
+            <div class="space-y-3">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                    Verification links
+                  </p>
+                  <p class="mt-1 text-sm text-slate-500">
+                    Official references behind this entry rule.
+                  </p>
+                </div>
+                <span class="grid size-11 place-items-center rounded-2xl bg-slate-100 text-slate-700 ring-1 ring-inset ring-slate-200">
+                  <Icon icon="solar:link-round-angle-bold-duotone" class="size-5" />
+                </span>
+              </div>
+
+              <div class="grid gap-2">
+                <a
+                  v-for="source in destination!.visaPolicy.sources"
+                  :key="source.url"
+                  :href="source.url"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-white hover:text-slate-950"
+                >
+                  <span class="truncate">{{ source.label }}</span>
+                  <Icon icon="solar:square-top-down-line-duotone" class="size-[15px]" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="global-panel rounded-[28px] bg-white/96 p-4 md:p-5">
+          <div class="flex flex-col gap-4 lg:flex-row lg:items-center">
+            <label class="relative min-w-0 flex-1">
+              <span class="sr-only">Search events or cities</span>
+              <input
+                v-model="searchQuery"
+                type="search"
+                placeholder="Search event title or city"
+                class="h-12 w-full rounded-[20px] border border-slate-200/80 bg-slate-50/90 px-4 pr-20 text-sm text-slate-900 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100"
+              >
+              <button
+                v-if="searchQuery"
+                type="button"
+                class="absolute right-2 top-1/2 inline-flex -translate-y-1/2 items-center rounded-full bg-slate-900 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-slate-800"
+                @click="searchQuery = ''"
+              >
+                Clear
+              </button>
+            </label>
+
+            <div class="flex flex-wrap items-center gap-2">
               <button
                 type="button"
-                class="inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition"
+                class="inline-flex h-12 items-center justify-center gap-2 rounded-[20px] border px-4 text-sm font-semibold transition"
                 :class="showOpenOnly
                   ? 'border-emerald-200 bg-emerald-50 text-emerald-800'
                   : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-950'"
                 @click="showOpenOnly = !showOpenOnly"
               >
                 <Icon :icon="showOpenOnly ? 'solar:check-circle-bold-duotone' : 'solar:filter-bold-duotone'" class="size-4" />
-                {{ showOpenOnly ? 'Open only enabled' : 'Show open only' }}
+                Open only
               </button>
-            </div>
 
-            <div class="mt-4 flex flex-wrap gap-2">
               <button
                 type="button"
-                class="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold transition"
-                :class="selectedYear === 'all'
-                  ? 'border-slate-900 bg-slate-900 text-white'
+                class="inline-flex h-12 items-center justify-center gap-2 rounded-[20px] border px-4 text-sm font-semibold transition"
+                :class="showWeekendFriendlyOnly
+                  ? 'border-violet-200 bg-violet-50 text-violet-800'
                   : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-950'"
-                @click="selectedYear = 'all'"
+                title="Includes Saturday or Sunday, or touches Friday or Monday."
+                @click="showWeekendFriendlyOnly = !showWeekendFriendlyOnly"
               >
-                All years
+                <Icon :icon="showWeekendFriendlyOnly ? 'solar:check-circle-bold-duotone' : 'solar:calendar-search-bold-duotone'" class="size-4" />
+                Weekend
               </button>
-              <button
-                v-for="year in availableYears"
-                :key="year"
-                type="button"
-                class="inline-flex items-center rounded-full border px-4 py-2 text-sm font-semibold transition"
-                :class="selectedYear === year
-                  ? 'border-slate-900 bg-slate-900 text-white'
-                  : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300 hover:bg-white hover:text-slate-950'"
-                @click="selectedYear = year"
-              >
-                {{ year }}
-              </button>
+
+              <label class="min-w-[144px]">
+                <span class="sr-only">Browse by year</span>
+                <select
+                  v-model="selectedYear"
+                  aria-label="Browse by year"
+                  class="h-12 w-full rounded-[20px] border border-slate-200/80 bg-slate-50/90 px-4 text-sm font-semibold text-slate-700 outline-none transition focus:border-sky-300 focus:bg-white focus:ring-4 focus:ring-sky-100"
+                >
+                  <option value="all">
+                    All years
+                  </option>
+                  <option
+                    v-for="year in availableYears"
+                    :key="year"
+                    :value="year"
+                  >
+                    {{ year }}
+                  </option>
+                </select>
+              </label>
             </div>
           </div>
 
-          <div
-            v-for="yearGroup in visibleYearGroups"
-            :key="yearGroup.year"
-            class="global-panel render-section rounded-[28px] bg-white/96 p-5 md:p-6"
-            v-memo="[yearGroup.year, yearGroup.events.length, selectedYear, showOpenOnly]"
-          >
-            <div class="mb-5 flex items-center justify-between gap-4">
-              <div>
-                <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-                  Event year
-                </p>
-                <h2 class="mt-1 text-3xl font-semibold tracking-[-0.05em] text-slate-950">
-                  {{ yearGroup.year }}
-                </h2>
-              </div>
-              <span class="inline-flex items-center rounded-full bg-slate-900 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white">
-                {{ yearGroup.events.length }} item{{ yearGroup.events.length === 1 ? '' : 's' }}
-              </span>
+          <div class="mt-3 flex flex-wrap items-center gap-2">
+            <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-200">
+              <Icon icon="solar:buildings-2-bold-duotone" class="size-4 text-slate-500" />
+              {{ destination!.cities.length === 1 ? 'City' : 'Cities' }}: {{ citySummary }}
+            </span>
+            <span class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-200">
+              <Icon icon="solar:calendar-mark-bold-duotone" class="size-4 text-sky-600" />
+              {{ visibleEventCount }} of {{ destination!.eventCount }} events
+            </span>
+            <span
+              class="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-700 ring-1 ring-inset ring-slate-200"
+              title="Weekend-friendly includes Saturday or Sunday, or touches Friday or Monday."
+            >
+              <Icon icon="solar:calendar-search-bold-duotone" class="size-4 text-violet-600" />
+              {{ visibleWeekendFriendlyCount }} weekend-friendly
+            </span>
+          </div>
+        </article>
+
+        <div
+          v-for="yearGroup in visibleYearGroups"
+          :key="yearGroup.year"
+          class="global-panel render-section rounded-[28px] bg-white/96 p-5 md:p-6"
+          v-memo="[yearGroup.year, yearGroup.events.length, selectedYear, showOpenOnly, showWeekendFriendlyOnly, normalizedSearchQuery]"
+        >
+          <div class="mb-5 flex items-center justify-between gap-4">
+            <div>
+              <p class="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+                Event year
+              </p>
+              <h2 class="mt-1 text-3xl font-semibold tracking-[-0.05em] text-slate-950">
+                {{ yearGroup.year }}
+              </h2>
             </div>
+            <span class="inline-flex items-center rounded-full bg-slate-900 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white">
+              {{ yearGroup.events.length }} item{{ yearGroup.events.length === 1 ? '' : 's' }}
+            </span>
+          </div>
 
-            <div class="grid gap-4">
-              <button
-                v-for="event in yearGroup.events"
-                :key="event.id"
-                type="button"
-                class="global-card render-card group rounded-[24px] p-5 text-left transition-colors duration-150 hover:border-slate-300"
-                @click="selectedEvent = event"
-                v-memo="[event.id, event.applicationsOpen, event.verified, event.visaPolicy.category]"
-              >
-                <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
-                  <div class="space-y-3">
-                    <div class="flex flex-wrap items-center gap-2">
-                      <span class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-800">
-                        {{ event.startDate.slice(0, 4) }}
-                      </span>
-                      <StatusBadge :label="event.applicationsOpen ? 'Open' : 'Closed'" :tone="event.applicationsOpen ? 'open' : 'closed'" />
-                    </div>
-
-                    <h3 class="text-2xl font-semibold tracking-[-0.04em] text-slate-950">
-                      {{ event.title }}
-                    </h3>
-
-                    <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-600">
-                      <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 font-medium text-sky-900 ring-1 ring-inset ring-sky-100">
-                        <Icon icon="solar:calendar-date-bold-duotone" class="size-[16px] text-sky-600" />
-                        {{ formatDateRange(event.startDate, event.endDate) }}
-                      </span>
-                      <span class="inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1.5 font-medium text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
-                        <Icon icon="solar:routing-3-bold-duotone" class="size-[16px] text-fuchsia-600" />
-                        {{ event.city }}
-                      </span>
-                      <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 font-semibold text-amber-950 ring-1 ring-inset ring-amber-100">
-                        <Icon icon="solar:stopwatch-bold-duotone" class="size-[15px] text-amber-600" />
-                        Event duration: {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }}
-                      </span>
-                    </div>
+          <div class="grid gap-4">
+            <button
+              v-for="event in yearGroup.events"
+              :key="event.id"
+              type="button"
+              class="global-card render-card group rounded-[24px] p-5 text-left transition-colors duration-150 hover:border-slate-300"
+              @click="selectedEvent = event"
+              v-memo="[event.id, event.applicationsOpen, event.verified, event.visaPolicy.category, event.weekendTiming?.key]"
+            >
+              <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+                <div class="space-y-3">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber-800">
+                      {{ event.startDate.slice(0, 4) }}
+                    </span>
+                    <StatusBadge :label="event.applicationsOpen ? 'Open' : 'Closed'" :tone="event.applicationsOpen ? 'open' : 'closed'" />
+                    <span
+                      v-if="event.weekendTiming"
+                      class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] ring-1 ring-inset"
+                      :class="event.weekendTiming.badgeClasses"
+                      :title="event.weekendTiming.description"
+                    >
+                      <Icon :icon="event.weekendTiming.icon" class="size-3.5" />
+                      {{ event.weekendTiming.shortLabel }}
+                    </span>
                   </div>
 
-                  <div class="flex flex-col items-start gap-3 lg:items-end">
-                    <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 ring-1 ring-inset ring-emerald-200">
-                      {{ countdownLabel(event.startDate, todayIso) }}
+                  <h3 class="text-2xl font-semibold tracking-[-0.04em] text-slate-950">
+                    {{ event.title }}
+                  </h3>
+
+                  <div class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-slate-600">
+                    <span class="inline-flex items-center gap-2 rounded-full bg-sky-50 px-3 py-1.5 font-medium text-sky-900 ring-1 ring-inset ring-sky-100">
+                      <Icon icon="solar:calendar-date-bold-duotone" class="size-[16px] text-sky-600" />
+                      {{ formatDateRange(event.startDate, event.endDate) }}
+                    </span>
+                    <span class="inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1.5 font-medium text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
+                      <Icon icon="solar:routing-3-bold-duotone" class="size-[16px] text-fuchsia-600" />
+                      {{ event.city }}
+                    </span>
+                    <span class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1.5 font-semibold text-amber-950 ring-1 ring-inset ring-amber-100">
+                      <Icon icon="solar:stopwatch-bold-duotone" class="size-[15px] text-amber-600" />
+                      Event duration: {{ event.durationDays }} day{{ event.durationDays === 1 ? '' : 's' }}
                     </span>
                   </div>
                 </div>
 
-                <div class="mt-4 grid gap-3 border-t border-slate-200/80 pt-4 md:grid-cols-3">
-                  <p class="inline-flex items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-900 ring-1 ring-inset ring-emerald-100">
-                    <Icon icon="solar:wallet-money-bold-duotone" class="size-4 text-emerald-600" />
-                    Price: {{ formatPrice(event.price) }}
-                  </p>
-                  <p
-                    class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold ring-1 ring-inset"
-                    :class="event.verified
-                      ? 'bg-sky-50 text-sky-900 ring-sky-100'
-                      : 'bg-slate-100 text-slate-700 ring-slate-200'"
-                  >
-                    <Icon
-                      :icon="event.verified ? 'solar:verified-check-bold-duotone' : 'solar:shield-cross-bold-duotone'"
-                      class="size-4"
-                      :class="event.verified ? 'text-sky-600' : 'text-slate-500'"
-                    />
-                    Verified: {{ event.verified ? 'Yes' : 'No' }}
-                  </p>
-                  <p
-                    class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold ring-1 ring-inset"
-                    :class="event.visaPolicy.category === 'visa-free'
-                      ? 'bg-emerald-50 text-emerald-900 ring-emerald-100'
-                      : event.visaPolicy.category === 'visa-required'
-                        ? 'bg-rose-50 text-rose-900 ring-rose-100'
-                        : 'bg-amber-50 text-amber-950 ring-amber-100'"
-                  >
-                    <Icon
-                      :icon="event.visaPolicy.category === 'visa-free'
-                        ? 'solar:shield-check-bold-duotone'
-                        : event.visaPolicy.category === 'visa-required'
-                          ? 'solar:danger-circle-bold-duotone'
-                          : 'solar:passport-bold-duotone'"
-                      class="size-4"
-                      :class="event.visaPolicy.category === 'visa-free'
-                        ? 'text-emerald-600'
-                        : event.visaPolicy.category === 'visa-required'
-                          ? 'text-rose-600'
-                          : 'text-amber-600'"
-                    />
-                    Visa: {{ formatVisaLabel(event.visaPolicy.category) }}
-                  </p>
+                <div class="flex flex-col items-start gap-3 lg:items-end">
+                  <span class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-emerald-700 ring-1 ring-inset ring-emerald-200">
+                    {{ countdownLabel(event.startDate, todayIso) }}
+                  </span>
                 </div>
-              </button>
-            </div>
-          </div>
+              </div>
 
-          <article
-            v-if="visibleYearGroups.length === 0"
-            class="rounded-[30px] border border-dashed border-slate-300 bg-white/75 p-8 text-center shadow-[0_18px_50px_rgba(15,23,42,0.05)]"
-          >
-            <p class="text-lg font-semibold tracking-[-0.03em] text-slate-900">
-              No events match this view.
-            </p>
-            <p class="mt-2 text-sm leading-7 text-slate-500">
-              Try another year or disable the open-only filter.
-            </p>
-          </article>
-        </section>
+              <div class="mt-4 grid gap-3 border-t border-slate-200/80 pt-4 md:grid-cols-3">
+                <p class="inline-flex items-center gap-2 rounded-2xl bg-emerald-50 px-3 py-2 text-sm font-semibold text-emerald-900 ring-1 ring-inset ring-emerald-100">
+                  <Icon icon="solar:wallet-money-bold-duotone" class="size-4 text-emerald-600" />
+                  Price: {{ formatPrice(event.price) }}
+                </p>
+                <p
+                  class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold ring-1 ring-inset"
+                  :class="event.verified
+                    ? 'bg-sky-50 text-sky-900 ring-sky-100'
+                    : 'bg-slate-100 text-slate-700 ring-slate-200'"
+                >
+                  <Icon
+                    :icon="event.verified ? 'solar:verified-check-bold-duotone' : 'solar:shield-cross-bold-duotone'"
+                    class="size-4"
+                    :class="event.verified ? 'text-sky-600' : 'text-slate-500'"
+                  />
+                  Verified: {{ event.verified ? 'Yes' : 'No' }}
+                </p>
+                <p
+                  class="inline-flex items-center gap-2 rounded-2xl px-3 py-2 text-sm font-semibold ring-1 ring-inset"
+                  :class="event.visaPolicy.category === 'visa-free'
+                    ? 'bg-emerald-50 text-emerald-900 ring-emerald-100'
+                    : event.visaPolicy.category === 'visa-required'
+                      ? 'bg-rose-50 text-rose-900 ring-rose-100'
+                      : 'bg-amber-50 text-amber-950 ring-amber-100'"
+                >
+                  <Icon
+                    :icon="event.visaPolicy.category === 'visa-free'
+                      ? 'solar:shield-check-bold-duotone'
+                      : event.visaPolicy.category === 'visa-required'
+                        ? 'solar:danger-circle-bold-duotone'
+                        : 'solar:passport-bold-duotone'"
+                    class="size-4"
+                    :class="event.visaPolicy.category === 'visa-free'
+                      ? 'text-emerald-600'
+                      : event.visaPolicy.category === 'visa-required'
+                        ? 'text-rose-600'
+                        : 'text-amber-600'"
+                  />
+                  Visa: {{ formatVisaLabel(event.visaPolicy.category) }}
+                </p>
+              </div>
+            </button>
+          </div>
+        </div>
+
+        <article
+          v-if="visibleYearGroups.length === 0"
+          class="rounded-[30px] border border-dashed border-slate-300 bg-white/75 p-8 text-center shadow-[0_18px_50px_rgba(15,23,42,0.05)]"
+        >
+          <p class="text-lg font-semibold tracking-[-0.03em] text-slate-900">
+            No events match this search.
+          </p>
+          <p class="mt-2 text-sm leading-7 text-slate-500">
+            Try another city, year, or filter combination.
+          </p>
+        </article>
       </section>
     </div>
 

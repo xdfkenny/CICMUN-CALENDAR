@@ -2,7 +2,7 @@
 import { Icon } from '@iconify/vue'
 
 import type { InternationalEvent } from '~/types/international'
-import { formatDate, formatDateRange, formatPrice, formatVisaLabel } from '~/utils/international-dashboard'
+import { formatDate, formatDateRange, formatPrice, formatVisaLabel, getWeekendTimingMeta } from '~/utils/international-dashboard'
 
 import StatusBadge from '~/components/international/StatusBadge.vue'
 
@@ -27,6 +27,11 @@ const visaTone = computed(() => {
 })
 
 const applicationTone = computed(() => (props.event?.applicationsOpen ? 'open' : 'closed'))
+const weekendTiming = computed(() => (
+  props.event
+    ? getWeekendTimingMeta(props.event.startDate, props.event.endDate)
+    : null
+))
 </script>
 
 <template>
@@ -77,6 +82,15 @@ const applicationTone = computed(() => (props.event?.applicationsOpen ? 'open' :
                 <span class="inline-flex items-center gap-2 rounded-full bg-fuchsia-50 px-3 py-1.5 font-medium text-fuchsia-900 ring-1 ring-inset ring-fuchsia-100">
                   <Icon icon="solar:routing-3-bold-duotone" class="size-[15px] text-fuchsia-600" />
                   {{ event.location }}
+                </span>
+                <span
+                  v-if="weekendTiming"
+                  class="inline-flex items-center gap-2 rounded-full px-3 py-1.5 font-medium ring-1 ring-inset"
+                  :class="weekendTiming.badgeClasses"
+                  :title="weekendTiming.description"
+                >
+                  <Icon :icon="weekendTiming.icon" class="size-[15px]" />
+                  {{ weekendTiming.label }}
                 </span>
               </p>
             </div>
@@ -136,6 +150,14 @@ const applicationTone = computed(() => (props.event?.applicationsOpen ? 'open' :
                 <div class="mt-3">
                   <StatusBadge :label="event.applicationsOpen ? 'Open' : 'Closed'" :tone="applicationTone" size="md" />
                 </div>
+                <p
+                  v-if="weekendTiming"
+                  class="mt-3 inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold ring-1 ring-inset"
+                  :class="weekendTiming.badgeClasses"
+                >
+                  <Icon :icon="weekendTiming.icon" class="size-4" />
+                  {{ weekendTiming.description }}
+                </p>
                 <p class="mt-3 text-sm text-slate-500">
                   Some future conferences may reopen later.
                 </p>

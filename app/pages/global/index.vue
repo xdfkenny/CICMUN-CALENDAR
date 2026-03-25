@@ -2,13 +2,14 @@
 import { Icon } from '@iconify/vue'
 
 import GlobalLoadingScreen from '~/components/global/GlobalLoadingScreen.vue'
-import { formatDate, formatVisaLabel, getDestinationStatus, getNextEvent, getStayWindowGuidance, sortDestinations } from '~/utils/international-dashboard'
+import { formatDate, formatVisaLabel, getDestinationStatus, getNextEvent, getStayWindowGuidance, getWeekendTimingMeta, sortDestinations } from '~/utils/international-dashboard'
 
 const { dataset, sections, visaFreeDestinations, eVisaDestinations, visaRequiredDestinations } = useGlobalDataset()
+const GLOBAL_PAGE_TITLE = 'International MUN Access Guide'
 
 useSeoMeta({
-  title: 'Global',
-  description: 'Hidden country selector for the international MUN dataset.',
+  title: GLOBAL_PAGE_TITLE,
+  description: 'Visa-aware country guide for short international MUN events.',
   robots: 'noindex, nofollow',
 })
 
@@ -55,10 +56,12 @@ const preparedSections = computed(() => sections.map((section) => ({
   destinations: sortDestinations(section.destinations, 'status', todayIso).map((destination) => {
     const nextEvent = getNextEvent(destination, todayIso)
     const status = getDestinationStatus(destination, todayIso)
+    const nextEventWeekendTiming = nextEvent ? getWeekendTimingMeta(nextEvent.startDate, nextEvent.endDate) : null
 
     return {
       ...destination,
       nextEventDateLabel: nextEvent ? formatDate(nextEvent.startDate) : 'No upcoming date',
+      nextEventWeekendTiming,
       stayLabel: getStayWindowGuidance(destination.visaPolicy.stayLimit).shortLabel,
       visaLabel: formatVisaLabel(destination.visaPolicy.category),
       statusLabel: status === 'open' ? 'Open now' : status === 'upcoming' ? 'Upcoming' : 'Closed',
@@ -94,7 +97,7 @@ const sectionLinks = computed(() => preparedSections.value.map((section) => ({
   <main class="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(251,191,36,0.22),_transparent_30%),linear-gradient(180deg,#f8fafc_0%,#fffaf0_48%,#eef2ff_100%)] px-4 py-8 text-slate-950 md:px-6 md:py-10">
     <GlobalLoadingScreen
       v-if="!isPageReady"
-      title="Preparing Global Guide"
+      :title="`Preparing ${GLOBAL_PAGE_TITLE}`"
       subtitle="Rendering countries and route details before the page becomes interactive."
     />
 
@@ -102,7 +105,7 @@ const sectionLinks = computed(() => preparedSections.value.map((section) => ({
       <header class="global-panel rounded-[32px] bg-white/95 px-6 py-8 md:px-8">
         <div class="max-w-3xl space-y-4">
           <h1 class="text-4xl font-extrabold tracking-[-0.06em] text-slate-950 md:text-6xl">
-            Global
+            {{ GLOBAL_PAGE_TITLE }}
           </h1>
           <p class="max-w-2xl text-base leading-7 text-slate-600 md:text-lg">
             Explore countries hosting short events, check how easy entry is with a Venezuelan passport, and open each flag for dates, cities, stay limits, and extra travel details.
@@ -309,6 +312,15 @@ const sectionLinks = computed(() => preparedSections.value.map((section) => ({
                 </p>
                 <p class="mt-2 text-[11px] font-medium text-slate-600">
                   Next event: {{ destination.nextEventDateLabel }}
+                </p>
+                <p
+                  v-if="destination.nextEventWeekendTiming"
+                  class="mt-1 inline-flex items-center gap-1.5 rounded-full px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] ring-1 ring-inset"
+                  :class="destination.nextEventWeekendTiming.badgeClasses"
+                  :title="destination.nextEventWeekendTiming.description"
+                >
+                  <Icon :icon="destination.nextEventWeekendTiming.icon" class="size-3.5" />
+                  {{ destination.nextEventWeekendTiming.shortLabel }}
                 </p>
                 <p class="mt-1 text-[11px] font-medium text-slate-600">
                   {{ destination.stayLabel }}

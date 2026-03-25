@@ -3,7 +3,7 @@ withDefaults(defineProps<{
   title?: string
   subtitle?: string
 }>(), {
-  title: 'Preparing Global View',
+  title: 'Preparing International MUN Access Guide',
   subtitle: 'Loading destinations, visa notes, and event cards.',
 })
 </script>
@@ -16,7 +16,7 @@ withDefaults(defineProps<{
       <span />
     </div>
     <p class="mt-6 text-[11px] font-semibold uppercase tracking-[0.2em] text-sky-700">
-      Global Route
+      International Route
     </p>
     <h1 class="mt-3 text-3xl font-extrabold tracking-[-0.05em] text-slate-950 md:text-5xl">
       {{ title }}

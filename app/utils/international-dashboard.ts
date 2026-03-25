@@ -5,6 +5,16 @@ export type RegionFilter = 'all' | 'europe' | 'asia'
 export type DateRangeFilter = 'all' | '30' | '90' | '180' | '365'
 export type SortOption = 'date' | 'country' | 'status'
 export type ViewMode = 'grid' | 'list'
+export type WeekendTimingKey = 'weekend' | 'near-weekend'
+
+export interface WeekendTimingMeta {
+  key: WeekendTimingKey
+  label: string
+  shortLabel: string
+  description: string
+  badgeClasses: string
+  icon: string
+}
 
 export const PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY: Record<string, string | null> = {
   albania: 'al',
@@ -119,6 +129,13 @@ const monthFormatter = new Intl.DateTimeFormat('en-US', {
   year: 'numeric',
 })
 
+const DAY_IN_MS = 86400000
+
+const dateFromIso = (value: string) => new Date(`${value}T12:00:00Z`)
+
+const isWeekendDay = (dayOfWeek: number) => dayOfWeek === 0 || dayOfWeek === 6
+const isWeekendAdjacentDay = (dayOfWeek: number) => dayOfWeek === 1 || dayOfWeek === 5
+
 export const formatDate = (value: string | null) => {
   if (!value) return 'TBD'
   return dateFormatter.format(new Date(`${value}T00:00:00`))
@@ -200,6 +217,60 @@ export const countdownLabel = (value: string | null, todayIso: string) => {
   if (difference === 1) return '1 day left'
   if (difference < 0) return 'In progress'
   return `${difference} days left`
+}
+
+export const getWeekendTimingMeta = (
+  startDate: string | null,
+  endDate: string | null,
+): WeekendTimingMeta | null => {
+  if (!startDate || !endDate) return null
+
+  const start = dateFromIso(startDate)
+  const end = dateFromIso(endDate)
+
+  let includesWeekend = false
+  let nearWeekend = false
+
+  for (let cursor = start.getTime(); cursor <= end.getTime(); cursor += DAY_IN_MS) {
+    const dayOfWeek = new Date(cursor).getUTCDay()
+
+    if (isWeekendDay(dayOfWeek)) {
+      includesWeekend = true
+      break
+    }
+
+    if (isWeekendAdjacentDay(dayOfWeek)) {
+      nearWeekend = true
+    }
+  }
+
+  if (includesWeekend) {
+    return {
+      key: 'weekend',
+      label: 'Weekend',
+      shortLabel: 'Weekend',
+      description: 'Includes Saturday or Sunday.',
+      badgeClasses: 'bg-violet-50 text-violet-800 ring-violet-200',
+      icon: 'solar:calendar-bold-duotone',
+    }
+  }
+
+  if (nearWeekend) {
+    return {
+      key: 'near-weekend',
+      label: 'Near weekend',
+      shortLabel: 'Near weekend',
+      description: 'Touches Friday or Monday.',
+      badgeClasses: 'bg-indigo-50 text-indigo-800 ring-indigo-200',
+      icon: 'solar:calendar-search-bold-duotone',
+    }
+  }
+
+  return null
+}
+
+export const isWeekendFriendlyEvent = (event: Pick<InternationalEvent, 'startDate' | 'endDate'>) => {
+  return Boolean(getWeekendTimingMeta(event.startDate, event.endDate))
 }
 
 export const getRegionForDestination = (destinationKey: string): Exclude<RegionFilter, 'all'> => {
