@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { toast } from 'vue-sonner'
-import { MODEL_IDS } from '~/utils/models'
+import { MODEL_IDS, MODELS } from '~/utils/models'
 import { filterEventsByCommittee } from '~/utils/committees'
 
 useHead({
-  title: 'Calendario MUN 2025-2026 América Latina',
+  title: 'Calendario MUN 2026-2027 América Latina',
   meta: [
-    { name: 'description', content: 'Calendario completo de eventos Model United Nations en América Latina. Encuentra conferencias MUN en español, inglés y eventos bilingües para el año escolar 2025-2026.' },
-    { name: 'keywords', content: 'MUN, Model United Nations, calendario, América Latina, conferencias, eventos MUN, 2025, 2026, español, inglés' },
-    { property: 'og:title', content: 'MUN Calendar 2025-2026 | Eventos en América Latina' },
+    { name: 'description', content: 'Calendario completo de eventos Model United Nations en América Latina. Encuentra conferencias MUN en español, inglés y eventos bilingües para el año escolar 2026-2027.' },
+    { name: 'keywords', content: 'MUN, Model United Nations, calendario, América Latina, conferencias, eventos MUN, 2026, 2027, español, inglés' },
+    { property: 'og:title', content: 'MUN Calendar 2026-2027 | Eventos en América Latina' },
     { property: 'og:description', content: 'Calendario completo de eventos Model United Nations en América Latina. Encuentra conferencias MUN en español, inglés y eventos bilingües.' },
     { property: 'og:url', content: 'https://mun-calendar.vercel.app' },
     { property: 'og:image', content: 'https://mun-calendar.vercel.app/LOGO.png' },
-    { name: 'twitter:title', content: 'MUN Calendar 2025-2026 | Eventos en América Latina' },
+    { name: 'twitter:title', content: 'MUN Calendar 2026-2027 | Eventos en América Latina' },
     { name: 'twitter:description', content: 'Calendario completo de eventos Model United Nations en América Latina.' },
     { name: 'twitter:image', content: 'https://mun-calendar.vercel.app/LOGO.png' }
   ]
@@ -39,13 +39,25 @@ const selectedLanguages = ref<Set<string>>(new Set(['Español', 'Inglés', 'Bili
 // Filter events by selected languages
 const languageFilteredEvents = computed(() => {
   if (selectedLanguages.value.size === 0) return []
-  return events.value.filter(event => {
+  let filtered = events.value.filter(event => {
     if (event.model === 'S' && selectedLanguages.value.has('Colegio')) return true
     return event.language && selectedLanguages.value.has(event.language)
   })
+
+  // Apply search filter
+  if (searchQuery.value.trim()) {
+    const query = searchQuery.value.toLowerCase()
+    filtered = filtered.filter(event =>
+      event.title.toLowerCase().includes(query) ||
+      event.notes?.toLowerCase().includes(query) ||
+      event.language?.toLowerCase().includes(query)
+    )
+  }
+
+  return filtered
 })
 
-const visibleEventCount = computed(() => languageFilteredEvents.value.filter(event => event.model !== 'S').length)
+const visibleEventCount = computed(() => events.value.filter(event => event.model !== 'S').length)
 
 const handleModelToggle = (modelId: string) => {
   const newFiltered = new Set(filteredModels.value)
@@ -148,7 +160,7 @@ const handleLanguageToggle = (language: string) => {
             />
             <div>
               <h1 class="text-2xl font-bold">
-                MUN Calendar 2025–2026
+                MUN Calendar 2026–2027
               </h1>
               <p class="text-sm opacity-90">
                 Model United Nations events across Latin America
@@ -167,7 +179,7 @@ const handleLanguageToggle = (language: string) => {
             <button @click="handleSync" class="cicmun-button-secondary text-sm" aria-label="Sincronizar con últimas actualizaciones">Sync Latest Updates</button>
             <div class="flex-1" />
             <div class="text-sm font-semibold text-gray-700" aria-live="polite">
-              {{ visibleEventCount }} events
+              {{ visibleEventCount }} eventos / events (2026–2027)
             </div>
           </div>
         </div>

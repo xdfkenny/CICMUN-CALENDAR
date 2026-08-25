@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CalendarEvent } from '~/types/calendar'
+import { MODELS } from '~/utils/models'
 
 interface Props {
   selectedModels: Set<string>
@@ -22,12 +23,21 @@ const languageCategories = [
 // Track which categories are expanded
 const expandedCategories = ref<Set<string>>(new Set())
 
+// Search filtered events
+const searchFilteredEvents = computed(() => {
+  if (!props.searchQuery.trim()) return props.events
+  const query = props.searchQuery.toLowerCase()
+  return props.events.filter((event) =>
+    event.title.toLowerCase().includes(query)
+  )
+})
+
 const eventsByLanguage = computed(() => {
   const grouped = Object.fromEntries(
     languageCategories.map((category) => [category.value, [] as CalendarEvent[]]),
   ) as Record<string, CalendarEvent[]>
 
-  for (const event of props.events) {
+  for (const event of searchFilteredEvents.value) {
     if (event.model === 'S') {
       grouped.Colegio.push(event)
       continue
@@ -62,6 +72,17 @@ const toggleLanguage = (value: string) => {
   emit('languageToggle', value)
 }
 
+// Toggle model filter
+const toggleModel = (modelId: string) => {
+  const newFiltered = new Set(props.selectedModels)
+  if (newFiltered.has(modelId)) {
+    newFiltered.delete(modelId)
+  } else {
+    newFiltered.add(modelId)
+  }
+  emit('modelToggle', modelId)
+}
+
 </script>
 
 <template>
@@ -74,6 +95,18 @@ const toggleLanguage = (value: string) => {
     </div>
 
     <div class="cicmun-card-body space-y-4">
+      <!-- Search -->
+      <div class="cicmun-input w-full mb-4 relative">
+        <input
+          :value="searchQuery"
+          @input="emit('searchChange', ($event.target as HTMLInputElement).value)"
+          placeholder="Buscar eventos / Search events..."
+          class="w-full p-2 rounded border border-gray-300"
+          aria-label="Search events"
+        />
+        <span v-if="searchQuery" class="absolute right-2 top-2 text-gray-400 cursor-pointer text-sm" @click="emit('searchChange', '')">×</span>
+      </div>
+
       <!-- Language Categories -->
       <div>
         <div class="space-y-2">
@@ -125,6 +158,7 @@ const toggleLanguage = (value: string) => {
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>

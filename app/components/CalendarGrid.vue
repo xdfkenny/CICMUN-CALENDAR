@@ -53,12 +53,12 @@ const goToToday = () => {
   currentMonth.value = new Date(today.getFullYear(), today.getMonth(), 1)
 }
 
-const monthName = computed(() => currentMonth.value.toLocaleDateString("en-US", {
+const monthName = computed(() => currentMonth.value.toLocaleDateString("es-ES", {
   month: "long",
   year: "numeric",
 }))
 
-const weekDays = ["Dom / Sun", "Lun / Mon", "Mar / Tue", "Mié / Wed", "Jue / Thu", "Vie / Fri", "Sáb / Sat"]
+const weekDays = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"]
 
 const filteredEvents = computed(() =>
   props.events.filter((event) => props.filteredModels.has(event.model)),
@@ -123,45 +123,43 @@ const dayCells = computed(() =>
 
 <template>
   <div class="cicmun-card">
-    <!-- Title bar -->
+    <!-- Merged header with month name + navigation -->
     <div class="cicmun-card-header">
-      <h2 class="text-xl font-bold">
-        {{ monthName }}
-      </h2>
-    </div>
-
-    <div class="cicmun-card-body">
-      <!-- Navigation buttons -->
-      <div class="flex gap-2 mb-4">
+      <div class="flex items-center justify-between gap-3">
         <button
           @click="previousMonth"
-          class="cicmun-button-secondary text-sm px-4"
+          class="text-white hover:text-gray-200 text-lg font-bold w-8 h-8 flex items-center justify-center rounded hover:bg-white/20 transition-colors"
           aria-label="Previous month"
         >
           ←
         </button>
+        <h2 class="text-xl font-bold flex-1 text-center">
+          {{ monthName }}
+        </h2>
         <button
           @click="goToToday"
-          class="cicmun-button-primary text-sm flex-1"
+          class="text-white hover:text-gray-200 text-xs font-semibold px-3 py-1 rounded hover:bg-white/20 transition-colors"
           aria-label="Go to today"
         >
-          Hoy / Today
+          Hoy
         </button>
         <button
           @click="nextMonth"
-          class="cicmun-button-secondary text-sm px-4"
+          class="text-white hover:text-gray-200 text-lg font-bold w-8 h-8 flex items-center justify-center rounded hover:bg-white/20 transition-colors"
           aria-label="Next month"
         >
           →
         </button>
       </div>
+    </div>
 
+    <div class="cicmun-card-body">
       <!-- Weekday headers -->
       <div class="grid grid-cols-7 gap-0 border border-gray-300 rounded-t-md overflow-hidden mb-0">
         <div
           v-for="day in weekDays"
           :key="day"
-          class="text-center text-sm font-semibold text-gray-700 bg-gray-100 border-r border-gray-300 py-2 last:border-r-0"
+          class="text-center text-xs font-semibold text-gray-700 bg-gray-100 border-r border-gray-300 py-2 last:border-r-0"
         >
           {{ day }}
         </div>
@@ -180,6 +178,19 @@ const dayCells = computed(() =>
             class="last:border-r-0"
           />
         </div>
+      </div>
+
+      <!-- Empty state when no events in current month -->
+      <div v-if="eventsInCurrentMonth.length === 0" class="mt-4 p-6 text-center bg-gray-50 rounded-md border border-gray-200">
+        <div class="text-gray-400 text-lg mb-2">📅</div>
+        <p class="text-gray-600 text-sm font-semibold mb-1">Sin eventos este mes</p>
+        <p class="text-gray-500 text-xs">No events scheduled for this month</p>
+        <button
+          @click="nextMonth"
+          class="mt-3 cicmun-button-primary text-xs px-4 py-1.5"
+        >
+          Ver próximo mes →
+        </button>
       </div>
 
       <!-- Monthly Event List -->

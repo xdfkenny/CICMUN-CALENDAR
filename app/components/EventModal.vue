@@ -106,18 +106,34 @@ const handleClose = () => {
   editingId.value = null
   emit('close')
 }
+
+// Escape key handler
+const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape' && props.isOpen) {
+    handleClose()
+  }
+}
+
+// Add event listener for Escape
+onMounted(() => {
+  document.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  document.removeEventListener('keydown', handleKeydown)
+})
 </script>
 
 <template>
-  <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="handleClose"></div>
     
     <!-- Modal content -->
-    <div class="cicmun-card max-w-md w-full max-h-[90vh] overflow-y-auto z-10 shadow-2xl">
+    <div class="cicmun-card max-w-md w-full max-h-[90vh] overflow-y-auto z-10 shadow-2xl" :aria-labelledby="selectedDate ? 'modal-title' : ''">
       <div class="cicmun-card-header flex justify-between items-center">
-        <h3 class="text-xl font-bold">
-          {{ selectedDate ? `Events: ${formatDateDisplay(selectedDate)}` : "Events" }}
+        <h3 id="modal-title" class="text-xl font-bold">
+          {{ selectedDate ? formatDateDisplay(selectedDate) : "Eventos / Events" }}
         </h3>
         <button @click="handleClose" class="text-white hover:text-gray-200 text-2xl font-bold w-8 h-8 flex items-center justify-center rounded hover:bg-white/20 transition-colors">×</button>
       </div>
@@ -161,7 +177,7 @@ const handleClose = () => {
                 </button>
                 <button
                   @click="emit('deleteEvent', event.id)"
-                  class="cicmun-button-primary text-xs px-3 py-1"
+                  class="cicmun-button-secondary text-xs px-3 py-1"
                   aria-label="Delete event"
                 >
                   Delete

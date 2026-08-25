@@ -21,6 +21,12 @@ const selectedClasses = computed(() => props.isSelected ? "bg-red-50" : "")
 const isBlocked = computed(() => props.events.some(e => e.isBlocked))
 const blockedClasses = computed(() => isBlocked.value ? "blocked-day-pattern" : "")
 
+// New: truncate helper for event titles
+const truncateTitle = (title: string, maxLength: number = 20) => {
+  if (title.length <= maxLength) return title
+  return title.slice(0, maxLength - 1) + "..."
+}
+
 const getModelColor = (modelId: string) => {
   return MODELS[modelId]?.color || "#999"
 }
@@ -37,24 +43,29 @@ const getModelColor = (modelId: string) => {
       {{ dayNum }}
     </div>
 
-    <!-- Event badges or BLOCK text -->
-    <div class="flex flex-wrap gap-1 flex-1 content-start overflow-hidden">
+    <!-- Event name labels -->
+    <div v-if="events.length > 0" class="flex flex-wrap gap-1 flex-1 content-start overflow-hidden text-[9px]">
       <template v-if="isBlocked">
-        <div class="text-[9px] font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-1 rounded-sm border border-slate-200">
+        <span class="font-bold text-slate-500 uppercase tracking-wider bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
           Bloqueado
-        </div>
+        </span>
       </template>
       <template v-else>
-        <div
-          v-for="(event, idx) in events.slice(0, 6)"
-          :key="`${event.id}-${idx}`"
-          class="w-2 h-2 rounded-sm"
-          :style="{ backgroundColor: getModelColor(event.model) }"
-          :title="event.title"
-        />
-        <div v-if="events.length > 6" class="text-[10px] text-gray-600 font-semibold leading-none">
-          +{{ events.length - 6 }}
-        </div>
+        <template v-for="(event, idx) in events.slice(0, 4)" :key="`event-${idx}`">
+          <span
+            class="px-1.5 py-0.5 rounded font-medium"
+            :style="{ 
+              backgroundColor: getModelColor(event.model) + '20',
+              color: getModelColor(event.model)
+            }"
+            :title="event.title"
+          >
+            {{ truncateTitle(event.title, 20) }}
+          </span>
+        </template>
+        <template v-if="events.length > 4">
+          <span class="text-gray-500">+{{ events.length - 4 }}</span>
+        </template>
       </template>
     </div>
   </button>
