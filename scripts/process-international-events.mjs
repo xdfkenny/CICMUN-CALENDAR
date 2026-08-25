@@ -90,6 +90,16 @@ const saudiVisaSource = {
   url: 'https://visa.visitsaudi.com/Home/TermsConditions',
 };
 
+const malaysiaArrivalCardSource = {
+  label: 'Malaysia Immigration: Digital Arrival Card (MDAC)',
+  url: 'https://imigresen-online.imi.gov.my/mdac/main',
+};
+
+const singaporeArrivalCardSource = {
+  label: 'Singapore ICA: SG Arrival Card',
+  url: 'https://eservices.ica.gov.sg/sgarrivalcard/',
+};
+
 const thailandSource = {
   label: 'Thailand MFA: visa on arrival / visa exemption lists',
   url: 'https://image.mfa.go.th/mfa/0/s2rU96ODpR/03062022/visa/240715_VE_VOA.pdf',
@@ -195,8 +205,8 @@ const verifiedVisaPolicyOverrides = {
   }),
   singapore: makeVisaPolicy('visa-free', '30 days', {
     note:
-      'Singapore ICA lists the travel documents that require an entry visa, and Venezuelan passports are not on that list. The final period of stay is determined at immigration clearance through the electronic visit pass.',
-      sources: [singaporeSource],
+      'Singapore ICA lists the travel documents that require an entry visa, and Venezuelan passports are not on that list. All foreign visitors must submit the SG Arrival Card online within three days before arrival, and the final period of stay is determined at immigration clearance through the electronic visit pass.',
+    sources: [passportIndexSource, singaporeSource, singaporeArrivalCardSource],
   }),
   thailand: makeVisaPolicy('eVisa or visa on arrival', '15 days', {
     note:
@@ -282,7 +292,11 @@ const DESTINATIONS = [
   makeDestination('kuwait', 'Kuwait', '🇰🇼', ['Kuwait'], makeVisaPolicy('visa-required')),
   makeDestination('lebanon', 'Lebanon', '🇱🇧', ['Lebanon'], makeVisaPolicy('visa on arrival', '30 days')),
   makeDestination('luxembourg', 'Luxembourg', '🇱🇺', ['Luxembourg'], makeSchengenVisaFreePolicy()),
-  makeDestination('malaysia', 'Malaysia', '🇲🇾', ['Malaysia'], makeVisaPolicy('visa-free', '30 days')),
+  makeDestination('malaysia', 'Malaysia', '🇲🇾', ['Malaysia'], makeVisaPolicy('visa-free', '30 days', {
+    note:
+      'Malaysia waives visas for Venezuelan ordinary passports for stays up to 30 days, but all foreign visitors must submit the Malaysia Digital Arrival Card (MDAC) online within three days before arrival.',
+    sources: [passportIndexSource, malaysiaArrivalCardSource],
+  })),
   makeDestination('malta', 'Malta', '🇲🇹', ['Malta'], makeSchengenVisaFreePolicy()),
   makeDestination(
     'moldova',
@@ -329,6 +343,7 @@ const DESTINATIONS = [
   makeDestination('serbia', 'Serbia', '🇷🇸', ['Serbia'], makeVisaPolicy('visa-free', '90 days')),
   makeDestination('singapore', 'Singapore', '🇸🇬', ['Singapore'], makeVisaPolicy('visa-free', '30 days')),
   makeDestination('slovakia', 'Slovakia', '🇸🇰', ['Slovakia'], makeSchengenVisaFreePolicy()),
+  makeDestination('slovenia', 'Slovenia', '🇸🇮', ['Slovenia'], makeSchengenVisaFreePolicy()),
   makeDestination(
     'south-korea',
     'South Korea',

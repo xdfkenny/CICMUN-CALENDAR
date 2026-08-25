@@ -9,6 +9,17 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  runtimeConfig: {
+    amadeusBaseUrl: process.env.AMADEUS_BASE_URL ?? 'https://test.api.amadeus.com',
+    amadeusClientId: process.env.AMADEUS_CLIENT_ID ?? '',
+    amadeusClientSecret: process.env.AMADEUS_CLIENT_SECRET ?? '',
+    public: {
+      travelOriginLabel: process.env.NUXT_PUBLIC_TRAVEL_ORIGIN_LABEL ?? 'Caracas, Venezuela',
+      travelOriginIata: process.env.NUXT_PUBLIC_TRAVEL_ORIGIN_IATA ?? 'CCS',
+      travelArrivalBufferDays: Number(process.env.NUXT_PUBLIC_TRAVEL_ARRIVAL_BUFFER_DAYS ?? '1'),
+    },
+  },
+
   vite: {
     plugins: [
       tailwindcss(),
