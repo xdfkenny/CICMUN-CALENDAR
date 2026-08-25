@@ -4,24 +4,46 @@ import seedEvents from "~/assets/data/events.json";
 
 const STORAGE_KEY = "mun-calendar-events";
 const SEED_IDS_KEY = "mun-calendar-seed-ids";
+const GITHUB_RAW_URL = "https://raw.githubusercontent.com/xdfkenny/CICMUN-CALENDAR/main/app/assets/data/events.json";
 
 export const useEvents = () => {
     const events = useLocalStorage<CalendarEvent[]>(STORAGE_KEY, seedEvents);
     const seedIds = useLocalStorage<string[]>(SEED_IDS_KEY, seedEvents.map(e => e.id));
-    const isLoading = ref(false); // With useLocalStorage, it's immediately available on client
+    const isLoading = ref(false);
 
-    // Auto-sync on initialization: merge latest admin events with user-created events
-    const syncWithLatestUpdates = () => {
-        const currentSeedIds = seedEvents.map(e => e.id);
+    // Fetch latest events from GitHub
+    const fetchLatestFromGitHub = async (): Promise<CalendarEvent[] | null> => {
+        try {
+            const response = await fetch(GITHUB_RAW_URL + "?t=" + Date.now());
+            if (!response.ok) throw new Error("Failed to fetch");
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                return data as CalendarEvent[];
+            }
+        } catch (error) {
+            console.error("GitHub fetch failed:", error);
+        }
+        return null;
+    };
 
-        // Find user-created events (events not in the original seed data)
-        const userCreatedEvents = events.value.filter(event => !seedIds.value.includes(event.id));
+    // Sync with GitHub (fetches latest from repo)
+    const syncWithLatestUpdates = async () => {
+        isLoading.value = true;
+        try {
+            const latestEvents = await fetchLatestFromGitHub();
+            if (latestEvents) {
+                // Find user-created events (events not in the seed data)
+                const userCreatedEvents = events.value.filter(
+                    event => !seedIds.value.includes(event.id)
+                );
 
-        // Merge: latest admin events + user-created events
-        events.value = [...seedEvents, ...userCreatedEvents];
-
-        // Update the seed IDs to the current seed
-        seedIds.value = currentSeedIds;
+                // Merge: latest from GitHub + user-created events
+                events.value = [...latestEvents, ...userCreatedEvents];
+                seedIds.value = latestEvents.map(e => e.id);
+            }
+        } finally {
+            isLoading.value = false;
+        }
     };
 
     // Auto-sync on first load

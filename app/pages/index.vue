@@ -111,10 +111,10 @@ const handleImport = () => {
   input.click()
 }
 
-const handleSync = () => {
-  if (window.confirm("Sync with latest admin updates? Your custom events will be preserved.")) {
-    syncWithLatestUpdates()
-    toast.success("Calendar synced with latest updates")
+const handleSync = async () => {
+  if (window.confirm("Sync with latest GitHub updates? Your custom events will be preserved.")) {
+    await syncWithLatestUpdates()
+    toast.success("Calendar synced with latest GitHub updates")
   }
 }
 
@@ -176,7 +176,7 @@ const handleLanguageToggle = (language: string) => {
           <div class="flex flex-wrap gap-3 items-center">
             <button @click="handleExport" class="cicmun-button-primary text-sm" aria-label="Exportar eventos">Export</button>
             <button @click="handleImport" class="cicmun-button-primary text-sm" aria-label="Importar eventos">Import</button>
-            <button @click="handleSync" class="cicmun-button-secondary text-sm" aria-label="Sincronizar con últimas actualizaciones">Sync Latest Updates</button>
+            <button @click="handleSync" class="cicmun-button-secondary text-sm" aria-label="Sincronizar con GitHub">Sync from GitHub</button>
             <div class="flex-1" />
             <div class="text-sm font-semibold text-gray-700" aria-live="polite">
               {{ visibleEventCount }} eventos / events (2026–2027)
