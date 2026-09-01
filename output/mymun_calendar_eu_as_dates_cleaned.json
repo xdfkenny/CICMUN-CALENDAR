@@ -17,29 +17,27 @@
     "visaVerificationDate": "2026-09-01",
     "cleaningRules": [
       "Removed entries marked as cancelled/canceled in the title.",
-      "Removed conferences with inclusive duration longer than 4 days.",
       "Removed malformed records whose end date is earlier than the start date."
     ],
     "counts": {
       "original": 354,
-      "cleaned": 344,
-      "removed": 10,
+      "cleaned": 353,
+      "removed": 1,
       "destinations": 61
     },
     "removalSummary": {
       "cancelled": 0,
-      "durationOver4Days": 9,
       "invalidDateRanges": 1
     },
     "monthBreakdown": {
       "2026-09": 56,
-      "2026-10": 76,
+      "2026-10": 78,
       "2026-11": 72,
-      "2026-12": 23,
-      "2027-01": 24,
-      "2027-02": 28,
+      "2026-12": 25,
+      "2027-01": 26,
+      "2027-02": 29,
       "2027-03": 25,
-      "2027-04": 17,
+      "2027-04": 18,
       "2027-05": 7,
       "2027-06": 7,
       "2027-07": 3,
@@ -47,6 +45,7 @@
       "2027-09": 1,
       "2027-10": 1,
       "2027-11": 1,
+      "2029-02": 1,
       "2029-06": 2
     }
   },
@@ -327,7 +326,7 @@
           }
         ]
       },
-      "eventCount": 3,
+      "eventCount": 4,
       "nextEventDate": "2026-09-19",
       "lastEventDate": "2027-02-14",
       "cities": [
@@ -381,6 +380,39 @@
           "durationDays": 2,
           "isCancelled": false,
           "applicationStatus": "open",
+          "city": "Baku",
+          "destinationKey": "azerbaijan",
+          "destinationLabel": "Azerbaijan",
+          "destinationFlag": "🇦🇿",
+          "visaPolicy": {
+            "category": "visa-required",
+            "label": "Visa required",
+            "stayLimit": null,
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Azerbaijan's official ASAN Visa portal publishes the countries eligible for e-visa, and Venezuela is not listed there. Venezuelan ordinary passport holders should treat Azerbaijan as visa-required and confirm the application path with the nearest Azerbaijani mission before booking.",
+            "sources": [
+              {
+                "label": "Azerbaijan ASAN Visa: countries eligible for e-visa",
+                "url": "https://evisa.gov.az/en/countries"
+              }
+            ]
+          }
+        },
+        {
+          "id": "sbsmun-2026-2026-12-22",
+          "title": "SBSMUN 2026",
+          "startDate": "2026-12-22",
+          "endDate": "2026-12-29",
+          "startMonth": "2026-12",
+          "location": "Baku, Azerbaijan",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": false,
+          "pageUrl": "https://mymun.com/conferences/sbsmun-2026",
+          "durationDays": 8,
+          "isCancelled": false,
+          "applicationStatus": "closed",
           "city": "Baku",
           "destinationKey": "azerbaijan",
           "destinationLabel": "Azerbaijan",
@@ -2964,11 +2996,12 @@
           }
         ]
       },
-      "eventCount": 20,
+      "eventCount": 21,
       "nextEventDate": "2026-09-11",
       "lastEventDate": "2027-06-15",
       "cities": [
         "Berlin",
+        "Bonn",
         "Bremen",
         "Frankfurt am Main",
         "Friedrichshafen",
@@ -3185,6 +3218,43 @@
           "isCancelled": false,
           "applicationStatus": "open",
           "city": "Berlin",
+          "destinationKey": "germany",
+          "destinationLabel": "Germany",
+          "destinationFlag": "🇩🇪",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": "90 days within 180 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              },
+              {
+                "label": "European Commission: EU visa policy",
+                "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+              }
+            ]
+          }
+        },
+        {
+          "id": "bimun-sinub-2026-2026-10-21",
+          "title": "BIMUN/SINUB 2026",
+          "startDate": "2026-10-21",
+          "endDate": "2026-10-25",
+          "startMonth": "2026-10",
+          "location": "Bonn, Germany",
+          "price": "€99.00",
+          "verified": true,
+          "applicationsOpen": true,
+          "pageUrl": "https://mymun.com/conferences/bimun-sinub-2026",
+          "durationDays": 5,
+          "isCancelled": false,
+          "applicationStatus": "open",
+          "city": "Bonn",
           "destinationKey": "germany",
           "destinationLabel": "Germany",
           "destinationFlag": "🇩🇪",
@@ -4236,7 +4306,7 @@
           }
         ]
       },
-      "eventCount": 44,
+      "eventCount": 46,
       "nextEventDate": "2026-09-05",
       "lastEventDate": "2027-08-01",
       "cities": [
@@ -5480,6 +5550,72 @@
           "isCancelled": false,
           "applicationStatus": "open",
           "city": "Jodhpur",
+          "destinationKey": "india",
+          "destinationLabel": "India",
+          "destinationFlag": "🇮🇳",
+          "visaPolicy": {
+            "category": "eVisa",
+            "label": "eVisa",
+            "stayLimit": "30 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              }
+            ]
+          }
+        },
+        {
+          "id": "unsc-hmr-2027-2027-01-09",
+          "title": "UNSC (HMR) 2027",
+          "startDate": "2027-01-09",
+          "endDate": "2027-01-19",
+          "startMonth": "2027-01",
+          "location": "Bangalore, India",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": false,
+          "pageUrl": "https://mymun.com/conferences/unsc-hmr-2027",
+          "durationDays": 11,
+          "isCancelled": false,
+          "applicationStatus": "closed",
+          "city": "Bangalore",
+          "destinationKey": "india",
+          "destinationLabel": "India",
+          "destinationFlag": "🇮🇳",
+          "visaPolicy": {
+            "category": "eVisa",
+            "label": "eVisa",
+            "stayLimit": "30 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              }
+            ]
+          }
+        },
+        {
+          "id": "unsc-hmrmun-2027-2027-01-09",
+          "title": "UNSC (HMRMUN) 2027",
+          "startDate": "2027-01-09",
+          "endDate": "2027-01-19",
+          "startMonth": "2027-01",
+          "location": "Bangalore, India",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": false,
+          "pageUrl": "https://mymun.com/conferences/unsc-hmrmun-2027",
+          "durationDays": 11,
+          "isCancelled": false,
+          "applicationStatus": "closed",
+          "city": "Bangalore",
           "destinationKey": "india",
           "destinationLabel": "India",
           "destinationFlag": "🇮🇳",
@@ -11597,12 +11733,13 @@
           }
         ]
       },
-      "eventCount": 13,
+      "eventCount": 15,
       "nextEventDate": "2026-09-17",
       "lastEventDate": "2027-04-24",
       "cities": [
         "Barcelona",
         "Madrid",
+        "Salamanca",
         "Zaragoza"
       ],
       "events": [
@@ -11903,6 +12040,43 @@
           }
         },
         {
+          "id": "imunbp-2026-2026-12-09",
+          "title": "IMUNBP 2026",
+          "startDate": "2026-12-09",
+          "endDate": "2026-12-13",
+          "startMonth": "2026-12",
+          "location": "Barcelona, Spain",
+          "price": "€120.00",
+          "verified": true,
+          "applicationsOpen": true,
+          "pageUrl": "https://mymun.com/conferences/imunbp-2026",
+          "durationDays": 5,
+          "isCancelled": false,
+          "applicationStatus": "open",
+          "city": "Barcelona",
+          "destinationKey": "spain",
+          "destinationLabel": "Spain",
+          "destinationFlag": "🇪🇸",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": "90 days within 180 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              },
+              {
+                "label": "European Commission: EU visa policy",
+                "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+              }
+            ]
+          }
+        },
+        {
           "id": "acmun-2027-2027-01-16",
           "title": "ACMUN 2027",
           "startDate": "2027-01-16",
@@ -12028,6 +12202,43 @@
           "isCancelled": false,
           "applicationStatus": "closed",
           "city": "Madrid",
+          "destinationKey": "spain",
+          "destinationLabel": "Spain",
+          "destinationFlag": "🇪🇸",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": "90 days within 180 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              },
+              {
+                "label": "European Commission: EU visa policy",
+                "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+              }
+            ]
+          }
+        },
+        {
+          "id": "munusal-2027-2027-04-12",
+          "title": "MUNUSAL 2027",
+          "startDate": "2027-04-12",
+          "endDate": "2027-04-16",
+          "startMonth": "2027-04",
+          "location": "Salamanca, Spain",
+          "price": "n/a",
+          "verified": true,
+          "applicationsOpen": true,
+          "pageUrl": "https://mymun.com/conferences/munusal-2027",
+          "durationDays": 5,
+          "isCancelled": false,
+          "applicationStatus": "open",
+          "city": "Salamanca",
           "destinationKey": "spain",
           "destinationLabel": "Spain",
           "destinationFlag": "🇪🇸",
@@ -12216,12 +12427,13 @@
           }
         ]
       },
-      "eventCount": 9,
+      "eventCount": 11,
       "nextEventDate": "2026-10-15",
       "lastEventDate": "2027-10-31",
       "cities": [
         "Basel",
         "Geneva",
+        "Geneve",
         "Lugano",
         "St.Gallen",
         "Zug",
@@ -12280,6 +12492,43 @@
           "isCancelled": false,
           "applicationStatus": "closed",
           "city": "Zurich",
+          "destinationKey": "switzerland",
+          "destinationLabel": "Switzerland",
+          "destinationFlag": "🇨🇭",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": "90 days within 180 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              },
+              {
+                "label": "European Commission: EU visa policy",
+                "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+              }
+            ]
+          }
+        },
+        {
+          "id": "ayimun-2026-2026-10-26",
+          "title": "AYIMUN 2026",
+          "startDate": "2026-10-26",
+          "endDate": "2026-10-30",
+          "startMonth": "2026-10",
+          "location": "Geneve, Switzerland",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": false,
+          "pageUrl": "https://mymun.com/conferences/ayimun-2026",
+          "durationDays": 5,
+          "isCancelled": false,
+          "applicationStatus": "closed",
+          "city": "Geneve",
           "destinationKey": "switzerland",
           "destinationLabel": "Switzerland",
           "destinationFlag": "🇨🇭",
@@ -12464,6 +12713,43 @@
           "durationDays": 4,
           "isCancelled": false,
           "applicationStatus": "closed",
+          "city": "Geneva",
+          "destinationKey": "switzerland",
+          "destinationLabel": "Switzerland",
+          "destinationFlag": "🇨🇭",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": "90 days within 180 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              },
+              {
+                "label": "European Commission: EU visa policy",
+                "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+              }
+            ]
+          }
+        },
+        {
+          "id": "gimun-2027-2027-02-01",
+          "title": "GIMUN 2027",
+          "startDate": "2027-02-01",
+          "endDate": "2027-02-05",
+          "startMonth": "2027-02",
+          "location": "Geneva, Switzerland",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": true,
+          "pageUrl": "https://mymun.com/conferences/gimun-2027",
+          "durationDays": 5,
+          "isCancelled": false,
+          "applicationStatus": "open",
           "city": "Geneva",
           "destinationKey": "switzerland",
           "destinationLabel": "Switzerland",
@@ -12798,11 +13084,12 @@
           }
         ]
       },
-      "eventCount": 7,
+      "eventCount": 8,
       "nextEventDate": "2026-09-24",
-      "lastEventDate": "2027-08-29",
+      "lastEventDate": "2029-02-18",
       "cities": [
         "Adana",
+        "Ankara",
         "Antalya",
         "Belconti Resort Hotel, Antalya",
         "Istanbul",
@@ -13024,6 +13311,39 @@
           "isCancelled": false,
           "applicationStatus": "closed",
           "city": "kayseri",
+          "destinationKey": "turkiye",
+          "destinationLabel": "Türkiye",
+          "destinationFlag": "🇹🇷",
+          "visaPolicy": {
+            "category": "visa-free",
+            "label": "Visa-free",
+            "stayLimit": "90 days",
+            "verifiedAt": "2026-09-01",
+            "passportOrigin": "Venezuela",
+            "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+            "sources": [
+              {
+                "label": "Passport Index: Venezuela passport dashboard",
+                "url": "https://www.passportindex.org/passport/venezuela/"
+              }
+            ]
+          }
+        },
+        {
+          "id": "munmun-2029-2029-02-10",
+          "title": "munmun 2029",
+          "startDate": "2029-02-10",
+          "endDate": "2029-02-18",
+          "startMonth": "2029-02",
+          "location": "Ankara, Türkiye",
+          "price": "n/a",
+          "verified": false,
+          "applicationsOpen": false,
+          "pageUrl": "https://mymun.com/conferences/munmun-2029",
+          "durationDays": 9,
+          "isCancelled": false,
+          "applicationStatus": "closed",
+          "city": "Ankara",
           "destinationKey": "turkiye",
           "destinationLabel": "Türkiye",
           "destinationFlag": "🇹🇷",
@@ -17958,6 +18278,43 @@
       }
     },
     {
+      "id": "bimun-sinub-2026-2026-10-21",
+      "title": "BIMUN/SINUB 2026",
+      "startDate": "2026-10-21",
+      "endDate": "2026-10-25",
+      "startMonth": "2026-10",
+      "location": "Bonn, Germany",
+      "price": "€99.00",
+      "verified": true,
+      "applicationsOpen": true,
+      "pageUrl": "https://mymun.com/conferences/bimun-sinub-2026",
+      "durationDays": 5,
+      "isCancelled": false,
+      "applicationStatus": "open",
+      "city": "Bonn",
+      "destinationKey": "germany",
+      "destinationLabel": "Germany",
+      "destinationFlag": "🇩🇪",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": "90 days within 180 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          },
+          {
+            "label": "European Commission: EU visa policy",
+            "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+          }
+        ]
+      }
+    },
+    {
       "id": "blackseamun-2026-2026-10-22",
       "title": "BlackSeaMUN 2026",
       "startDate": "2026-10-22",
@@ -18535,6 +18892,43 @@
       "destinationKey": "sweden",
       "destinationLabel": "Sweden",
       "destinationFlag": "🇸🇪",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": "90 days within 180 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          },
+          {
+            "label": "European Commission: EU visa policy",
+            "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ayimun-2026-2026-10-26",
+      "title": "AYIMUN 2026",
+      "startDate": "2026-10-26",
+      "endDate": "2026-10-30",
+      "startMonth": "2026-10",
+      "location": "Geneve, Switzerland",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": false,
+      "pageUrl": "https://mymun.com/conferences/ayimun-2026",
+      "durationDays": 5,
+      "isCancelled": false,
+      "applicationStatus": "closed",
+      "city": "Geneve",
+      "destinationKey": "switzerland",
+      "destinationLabel": "Switzerland",
+      "destinationFlag": "🇨🇭",
       "visaPolicy": {
         "category": "visa-free",
         "label": "Visa-free",
@@ -22007,6 +22401,43 @@
       }
     },
     {
+      "id": "imunbp-2026-2026-12-09",
+      "title": "IMUNBP 2026",
+      "startDate": "2026-12-09",
+      "endDate": "2026-12-13",
+      "startMonth": "2026-12",
+      "location": "Barcelona, Spain",
+      "price": "€120.00",
+      "verified": true,
+      "applicationsOpen": true,
+      "pageUrl": "https://mymun.com/conferences/imunbp-2026",
+      "durationDays": 5,
+      "isCancelled": false,
+      "applicationStatus": "open",
+      "city": "Barcelona",
+      "destinationKey": "spain",
+      "destinationLabel": "Spain",
+      "destinationFlag": "🇪🇸",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": "90 days within 180 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          },
+          {
+            "label": "European Commission: EU visa policy",
+            "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+          }
+        ]
+      }
+    },
+    {
       "id": "naplesmun-2026-2026-12-10",
       "title": "NAPLESMUN 2026",
       "startDate": "2026-12-10",
@@ -22320,6 +22751,39 @@
       }
     },
     {
+      "id": "sbsmun-2026-2026-12-22",
+      "title": "SBSMUN 2026",
+      "startDate": "2026-12-22",
+      "endDate": "2026-12-29",
+      "startMonth": "2026-12",
+      "location": "Baku, Azerbaijan",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": false,
+      "pageUrl": "https://mymun.com/conferences/sbsmun-2026",
+      "durationDays": 8,
+      "isCancelled": false,
+      "applicationStatus": "closed",
+      "city": "Baku",
+      "destinationKey": "azerbaijan",
+      "destinationLabel": "Azerbaijan",
+      "destinationFlag": "🇦🇿",
+      "visaPolicy": {
+        "category": "visa-required",
+        "label": "Visa required",
+        "stayLimit": null,
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Azerbaijan's official ASAN Visa portal publishes the countries eligible for e-visa, and Venezuela is not listed there. Venezuelan ordinary passport holders should treat Azerbaijan as visa-required and confirm the application path with the nearest Azerbaijani mission before booking.",
+        "sources": [
+          {
+            "label": "Azerbaijan ASAN Visa: countries eligible for e-visa",
+            "url": "https://evisa.gov.az/en/countries"
+          }
+        ]
+      }
+    },
+    {
       "id": "umnun-2026-2026-12-26",
       "title": "UMNUN 2026",
       "startDate": "2026-12-26",
@@ -22455,6 +22919,72 @@
           {
             "label": "UAE Government: visa exemptions and entry rules",
             "url": "https://assets.u.ae/api/public/content/531126a24c2b4940acae0a9ecb5f89d9?v=79c19310"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unsc-hmr-2027-2027-01-09",
+      "title": "UNSC (HMR) 2027",
+      "startDate": "2027-01-09",
+      "endDate": "2027-01-19",
+      "startMonth": "2027-01",
+      "location": "Bangalore, India",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": false,
+      "pageUrl": "https://mymun.com/conferences/unsc-hmr-2027",
+      "durationDays": 11,
+      "isCancelled": false,
+      "applicationStatus": "closed",
+      "city": "Bangalore",
+      "destinationKey": "india",
+      "destinationLabel": "India",
+      "destinationFlag": "🇮🇳",
+      "visaPolicy": {
+        "category": "eVisa",
+        "label": "eVisa",
+        "stayLimit": "30 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unsc-hmrmun-2027-2027-01-09",
+      "title": "UNSC (HMRMUN) 2027",
+      "startDate": "2027-01-09",
+      "endDate": "2027-01-19",
+      "startMonth": "2027-01",
+      "location": "Bangalore, India",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": false,
+      "pageUrl": "https://mymun.com/conferences/unsc-hmrmun-2027",
+      "durationDays": 11,
+      "isCancelled": false,
+      "applicationStatus": "closed",
+      "city": "Bangalore",
+      "destinationKey": "india",
+      "destinationLabel": "India",
+      "destinationFlag": "🇮🇳",
+      "visaPolicy": {
+        "category": "eVisa",
+        "label": "eVisa",
+        "stayLimit": "30 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
           }
         ]
       }
@@ -23216,6 +23746,43 @@
           {
             "label": "Malaysia Immigration: Digital Arrival Card (MDAC)",
             "url": "https://imigresen-online.imi.gov.my/mdac/main"
+          }
+        ]
+      }
+    },
+    {
+      "id": "gimun-2027-2027-02-01",
+      "title": "GIMUN 2027",
+      "startDate": "2027-02-01",
+      "endDate": "2027-02-05",
+      "startMonth": "2027-02",
+      "location": "Geneva, Switzerland",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": true,
+      "pageUrl": "https://mymun.com/conferences/gimun-2027",
+      "durationDays": 5,
+      "isCancelled": false,
+      "applicationStatus": "open",
+      "city": "Geneva",
+      "destinationKey": "switzerland",
+      "destinationLabel": "Switzerland",
+      "destinationFlag": "🇨🇭",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": "90 days within 180 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          },
+          {
+            "label": "European Commission: EU visa policy",
+            "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
           }
         ]
       }
@@ -25417,6 +25984,43 @@
       }
     },
     {
+      "id": "munusal-2027-2027-04-12",
+      "title": "MUNUSAL 2027",
+      "startDate": "2027-04-12",
+      "endDate": "2027-04-16",
+      "startMonth": "2027-04",
+      "location": "Salamanca, Spain",
+      "price": "n/a",
+      "verified": true,
+      "applicationsOpen": true,
+      "pageUrl": "https://mymun.com/conferences/munusal-2027",
+      "durationDays": 5,
+      "isCancelled": false,
+      "applicationStatus": "open",
+      "city": "Salamanca",
+      "destinationKey": "spain",
+      "destinationLabel": "Spain",
+      "destinationFlag": "🇪🇸",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": "90 days within 180 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Schengen short stays follow the 90/180-day rule. Verify airline and consular requirements before travel.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          },
+          {
+            "label": "European Commission: EU visa policy",
+            "url": "https://home-affairs.ec.europa.eu/policies/schengen-borders-and-visa/visa-policy_en"
+          }
+        ]
+      }
+    },
+    {
       "id": "sovereign-mun-2027-2027-04-16",
       "title": "SOVEREIGN MUN 2027",
       "startDate": "2027-04-16",
@@ -26532,6 +27136,39 @@
       }
     },
     {
+      "id": "munmun-2029-2029-02-10",
+      "title": "munmun 2029",
+      "startDate": "2029-02-10",
+      "endDate": "2029-02-18",
+      "startMonth": "2029-02",
+      "location": "Ankara, Türkiye",
+      "price": "n/a",
+      "verified": false,
+      "applicationsOpen": false,
+      "pageUrl": "https://mymun.com/conferences/munmun-2029",
+      "durationDays": 9,
+      "isCancelled": false,
+      "applicationStatus": "closed",
+      "city": "Ankara",
+      "destinationKey": "turkiye",
+      "destinationLabel": "Türkiye",
+      "destinationFlag": "🇹🇷",
+      "visaPolicy": {
+        "category": "visa-free",
+        "label": "Visa-free",
+        "stayLimit": "90 days",
+        "verifiedAt": "2026-09-01",
+        "passportOrigin": "Venezuela",
+        "note": "Verify the latest rule with the airline and the destination consulate before booking.",
+        "sources": [
+          {
+            "label": "Passport Index: Venezuela passport dashboard",
+            "url": "https://www.passportindex.org/passport/venezuela/"
+          }
+        ]
+      }
+    },
+    {
       "id": "kvartmun-2029-2029-06-01",
       "title": "KvartMUN 2029",
       "startDate": "2029-06-01",
@@ -26608,166 +27245,6 @@
   ],
   "removedEvents": [
     {
-      "id": "bimun-sinub-2026-2026-10-21",
-      "title": "BIMUN/SINUB 2026",
-      "startDate": "2026-10-21",
-      "endDate": "2026-10-25",
-      "startMonth": "2026-10",
-      "location": "Bonn, Germany",
-      "price": "€99.00",
-      "verified": true,
-      "applicationsOpen": true,
-      "pageUrl": "https://mymun.com/conferences/bimun-sinub-2026",
-      "durationDays": 5,
-      "isCancelled": false,
-      "destinationKey": "germany",
-      "destinationLabel": "Germany",
-      "city": "Bonn",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "ayimun-2026-2026-10-26",
-      "title": "AYIMUN 2026",
-      "startDate": "2026-10-26",
-      "endDate": "2026-10-30",
-      "startMonth": "2026-10",
-      "location": "Geneve, Switzerland",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": false,
-      "pageUrl": "https://mymun.com/conferences/ayimun-2026",
-      "durationDays": 5,
-      "isCancelled": false,
-      "destinationKey": "switzerland",
-      "destinationLabel": "Switzerland",
-      "city": "Geneve",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "imunbp-2026-2026-12-09",
-      "title": "IMUNBP 2026",
-      "startDate": "2026-12-09",
-      "endDate": "2026-12-13",
-      "startMonth": "2026-12",
-      "location": "Barcelona, Spain",
-      "price": "€120.00",
-      "verified": true,
-      "applicationsOpen": true,
-      "pageUrl": "https://mymun.com/conferences/imunbp-2026",
-      "durationDays": 5,
-      "isCancelled": false,
-      "destinationKey": "spain",
-      "destinationLabel": "Spain",
-      "city": "Barcelona",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "sbsmun-2026-2026-12-22",
-      "title": "SBSMUN 2026",
-      "startDate": "2026-12-22",
-      "endDate": "2026-12-29",
-      "startMonth": "2026-12",
-      "location": "Baku, Azerbaijan",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": false,
-      "pageUrl": "https://mymun.com/conferences/sbsmun-2026",
-      "durationDays": 8,
-      "isCancelled": false,
-      "destinationKey": "azerbaijan",
-      "destinationLabel": "Azerbaijan",
-      "city": "Baku",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "unsc-hmr-2027-2027-01-09",
-      "title": "UNSC (HMR) 2027",
-      "startDate": "2027-01-09",
-      "endDate": "2027-01-19",
-      "startMonth": "2027-01",
-      "location": "Bangalore, India",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": false,
-      "pageUrl": "https://mymun.com/conferences/unsc-hmr-2027",
-      "durationDays": 11,
-      "isCancelled": false,
-      "destinationKey": "india",
-      "destinationLabel": "India",
-      "city": "Bangalore",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "unsc-hmrmun-2027-2027-01-09",
-      "title": "UNSC (HMRMUN) 2027",
-      "startDate": "2027-01-09",
-      "endDate": "2027-01-19",
-      "startMonth": "2027-01",
-      "location": "Bangalore, India",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": false,
-      "pageUrl": "https://mymun.com/conferences/unsc-hmrmun-2027",
-      "durationDays": 11,
-      "isCancelled": false,
-      "destinationKey": "india",
-      "destinationLabel": "India",
-      "city": "Bangalore",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "gimun-2027-2027-02-01",
-      "title": "GIMUN 2027",
-      "startDate": "2027-02-01",
-      "endDate": "2027-02-05",
-      "startMonth": "2027-02",
-      "location": "Geneva, Switzerland",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": true,
-      "pageUrl": "https://mymun.com/conferences/gimun-2027",
-      "durationDays": 5,
-      "isCancelled": false,
-      "destinationKey": "switzerland",
-      "destinationLabel": "Switzerland",
-      "city": "Geneva",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
-      "id": "munusal-2027-2027-04-12",
-      "title": "MUNUSAL 2027",
-      "startDate": "2027-04-12",
-      "endDate": "2027-04-16",
-      "startMonth": "2027-04",
-      "location": "Salamanca, Spain",
-      "price": "n/a",
-      "verified": true,
-      "applicationsOpen": true,
-      "pageUrl": "https://mymun.com/conferences/munusal-2027",
-      "durationDays": 5,
-      "isCancelled": false,
-      "destinationKey": "spain",
-      "destinationLabel": "Spain",
-      "city": "Salamanca",
-      "removalReasons": [
-        "duration-over-4-days"
-      ]
-    },
-    {
       "id": "sigmun-2024-2027-11-15",
       "title": "SigMUN 2027",
       "startDate": "2027-11-15",
@@ -26785,26 +27262,6 @@
       "city": "Toruń",
       "removalReasons": [
         "invalid-date-range"
-      ]
-    },
-    {
-      "id": "munmun-2029-2029-02-10",
-      "title": "munmun 2029",
-      "startDate": "2029-02-10",
-      "endDate": "2029-02-18",
-      "startMonth": "2029-02",
-      "location": "Ankara, Türkiye",
-      "price": "n/a",
-      "verified": false,
-      "applicationsOpen": false,
-      "pageUrl": "https://mymun.com/conferences/munmun-2029",
-      "durationDays": 9,
-      "isCancelled": false,
-      "destinationKey": "turkiye",
-      "destinationLabel": "Türkiye",
-      "city": "Ankara",
-      "removalReasons": [
-        "duration-over-4-days"
       ]
     }
   ]

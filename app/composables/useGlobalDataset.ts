@@ -13,7 +13,6 @@ type GlobalSection = {
   eventCount: number
 }
 
-const MAX_EVENT_DURATION_DAYS = 3
 const VISA_FREE_CATEGORIES = new Set(['visa-free'])
 const E_VISA_CATEGORIES = new Set(['eVisa', 'visa on arrival', 'eVisa or visa on arrival', 'eTA'])
 const VISA_REQUIRED_CATEGORIES = new Set(['visa-required'])
@@ -76,7 +75,6 @@ const buildDestinations = (events: InternationalEvent[]) => {
 
 const visibleEvents = sortEvents(
   sourceEvents.filter((event) =>
-    event.durationDays <= MAX_EVENT_DURATION_DAYS &&
     (
       VISA_FREE_CATEGORIES.has(event.visaPolicy.category) ||
       E_VISA_CATEGORIES.has(event.visaPolicy.category) ||

@@ -4,8 +4,8 @@ import { dirname, resolve } from 'node:path';
 const SOURCE_PATH = resolve('output/mymun_calendar_eu_as_dates.md');
 const REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned.md');
 const REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned.json');
-const STRICT_REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free_max_3_days.md');
-const STRICT_REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free_max_3_days.json');
+const STRICT_REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free.md');
+const STRICT_REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free.json');
 const APP_DATA_PATH = resolve('app/assets/data/international-events.json');
 const PASSPORT_ORIGIN = 'Venezuela';
 const formatLocalIsoDate = (date) => {
@@ -16,7 +16,6 @@ const formatLocalIsoDate = (date) => {
 };
 
 const VERIFIED_AT = formatLocalIsoDate(new Date());
-const STRICT_DURATION_LIMIT = 3;
 const STRICT_VISA_CATEGORY = 'visa-free';
 const SHOULD_WRITE_APP_DATA = process.argv.includes('--sync-app-data');
 
@@ -660,7 +659,6 @@ const cleaned = [];
 for (const entry of rawEntries) {
   const reasons = [];
   if (entry.isCancelled) reasons.push('cancelled');
-  if (entry.durationDays > 4) reasons.push('duration-over-4-days');
   if (entry.durationDays <= 0) reasons.push('invalid-date-range');
 
   if (reasons.length > 0) {
@@ -701,7 +699,6 @@ const destinations = buildDestinationGroups(cleaned);
 
 const removalSummary = {
   cancelled: removed.filter((entry) => entry.removalReasons.includes('cancelled')).length,
-  durationOver4Days: removed.filter((entry) => entry.removalReasons.includes('duration-over-4-days')).length,
   invalidDateRanges: removed.filter((entry) => entry.removalReasons.includes('invalid-date-range')).length,
 };
 
@@ -724,7 +721,6 @@ const reviewDataset = {
     visaVerificationDate: VERIFIED_AT,
     cleaningRules: [
       'Removed entries marked as cancelled/canceled in the title.',
-      'Removed conferences with inclusive duration longer than 4 days.',
       'Removed malformed records whose end date is earlier than the start date.',
     ],
     counts: {
@@ -794,7 +790,6 @@ const reviewMarkdown = [
   `- Cleaned conferences: ${reviewDataset.metadata.counts.cleaned}`,
   `- Removed conferences: ${reviewDataset.metadata.counts.removed}`,
   `- Removed cancelled entries: ${removalSummary.cancelled}`,
-  `- Removed entries over 4 days: ${removalSummary.durationOver4Days}`,
   `- Removed invalid date ranges: ${removalSummary.invalidDateRanges}`,
   `- Countries/territories represented after cleaning: ${reviewDataset.metadata.counts.destinations}`,
   '',
@@ -821,7 +816,6 @@ const strictEvents = [];
 
 for (const event of cleaned) {
   const reasons = [];
-  if (event.durationDays > STRICT_DURATION_LIMIT) reasons.push(`duration-over-${STRICT_DURATION_LIMIT}-days`);
   if (event.visaPolicy.category !== STRICT_VISA_CATEGORY) {
     reasons.push(`visa-category-is-${event.visaPolicy.category}`);
   }
@@ -840,9 +834,6 @@ for (const event of cleaned) {
 const strictDestinations = buildDestinationGroups(strictEvents);
 const strictMonthBreakdown = buildMonthBreakdown(strictEvents);
 const strictRemovalSummary = {
-  durationOver3Days: strictRemoved.filter((entry) =>
-    entry.removalReasons.includes(`duration-over-${STRICT_DURATION_LIMIT}-days`),
-  ).length,
   notVisaFree: strictRemoved.filter((entry) =>
     entry.removalReasons.some((reason) => reason.startsWith('visa-category-is-')),
   ).length,
@@ -850,7 +841,7 @@ const strictRemovalSummary = {
 
 const strictDataset = {
   metadata: {
-    title: 'mymun Conference Date Extract (Visa-Free, Max 3 Days)',
+    title: 'mymun Conference Date Extract (Visa-Free Only)',
     sourceFile: SOURCE_PATH,
     generatedFiles: [STRICT_REVIEW_MARKDOWN_PATH, STRICT_REVIEW_JSON_PATH],
     sourcePage: rawMetadata['Source page'] ?? null,
@@ -864,8 +855,8 @@ const strictDataset = {
     visaVerificationDate: VERIFIED_AT,
     filterRules: [
       'Kept only entries not marked as cancelled/canceled in the title.',
-      `Kept only conferences with inclusive duration of ${STRICT_DURATION_LIMIT} days or less.`,
       `Kept only destinations marked as ${STRICT_VISA_CATEGORY} for a Venezuelan passport.`,
+      'No duration limit applied; all event lengths are included.',
       'Preserved application status from the source; closed statuses are kept because some future events may reopen later.',
     ],
     counts: {
@@ -913,7 +904,7 @@ const strictMonthSections = Object.keys(strictMonthGroups)
   .join('\n\n');
 
 const strictReviewMarkdown = [
-  '# mymun Conference Date Extract (Visa-Free, Max 3 Days)',
+  '# mymun Conference Date Extract (Visa-Free Only)',
   '',
   `- Source file: ${SOURCE_PATH}`,
   `- Source page: ${strictDataset.metadata.sourcePage}`,
@@ -929,7 +920,6 @@ const strictReviewMarkdown = [
   `- Base cleaned conferences: ${strictDataset.metadata.counts.baseCleaned}`,
   `- Filtered conferences: ${strictDataset.metadata.counts.filtered}`,
   `- Removed by strict filters: ${strictDataset.metadata.counts.removedByStrictFilters}`,
-  `- Removed entries over ${STRICT_DURATION_LIMIT} days: ${strictRemovalSummary.durationOver3Days}`,
   `- Removed entries not visa-free for Venezuelan passport: ${strictRemovalSummary.notVisaFree}`,
   `- Countries/territories represented after filtering: ${strictDataset.metadata.counts.destinations}`,
   '',
