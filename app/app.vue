@@ -8,7 +8,7 @@ useHead({
     { name: 'viewport', content: 'width=device-width, initial-scale=1' },
     { name: 'author', content: 'Kenny' },
     { property: 'og:type', content: 'website' },
-    { property: 'og:site_name', content: 'MUN Calendar 2025-2026' },
+    { property: 'og:site_name', content: 'MUN Calendar 2026-2027' },
     { name: 'twitter:card', content: 'summary_large_image' }
   ],
   link: [

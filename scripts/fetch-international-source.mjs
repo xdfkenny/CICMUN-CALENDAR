@@ -3,12 +3,16 @@ import { dirname, resolve } from 'node:path';
 
 const SOURCE_PATH = resolve('output/mymun_calendar_eu_as_dates.md');
 const SOURCE_PAGE = 'https://mymun.com/conferences/calendar?a=eu,as&s=fe&r=desc';
-const API_URL =
-  'https://mymun.com/api/conferences?filter_time=future&sb=fe&order=desc&filter_cont=eu&filter_cont=as&online_conf=false&page=1&per_page=500';
+const API_BASE_URL =
+  'https://mymun.com/api/conferences?filter_time=future&sb=fe&order=desc&filter_cont=eu&filter_cont=as&online_conf=false&page={page}&per_page={perPage}';
+const PER_PAGE = 50;
+const MAX_PAGES = 20;
 const EFFECTIVE_FILTERS =
   'Europe + Asia (`a=eu,as`), in-person only, future conferences, sort by price descending (`s=fe&r=desc`).';
 const SOURCE_NOTE =
-  'The calendar view loads month-by-month and its calendar data request drops the sort params. This export uses the matching list endpoint so all filtered conference date ranges are captured in one file. A source-side MUN relevance filter then keeps only entries whose slug, title, or name indicates a MUN or United Nations simulation.';
+  'The calendar view loads month-by-month and its calendar data request drops the sort params. This export pages through the full filtered conference list endpoint (the API caps each response at 50 rows, so multiple pages are fetched and deduplicated by conference slug) so all filtered conference date ranges are captured in one file. A source-side MUN relevance filter then keeps only entries whose slug, title, or name indicates a MUN or United Nations simulation.';
+
+const buildApiUrl = (page) => API_BASE_URL.replace('{page}', page).replace('{perPage}', PER_PAGE);
 
 const formatLocalIsoDate = (date) => {
   const year = date.getFullYear();
@@ -62,21 +66,45 @@ const buildMonthBreakdown = (events) =>
     return accumulator;
   }, {});
 
-const response = await fetch(API_URL, {
-  headers: {
-    accept: 'application/json',
-  },
-});
+const fetchedResources = [];
+const seenSlugs = new Set();
+let pagesFetched = 0;
 
-if (!response.ok) {
-  throw new Error(`MyMUN API request failed with status ${response.status}`);
+for (let page = 1; page <= MAX_PAGES; page += 1) {
+  const url = buildApiUrl(page);
+  const response = await fetch(url, {
+    headers: {
+      accept: 'application/json',
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`MyMUN API request failed with status ${response.status} (page ${page})`);
+  }
+
+  const payload = await response.json();
+
+  if (!Array.isArray(payload)) {
+    throw new Error('Expected the MyMUN API to return an array of conferences.');
+  }
+
+  pagesFetched = page;
+  const newConferences = payload.filter((conference) => {
+    const slug = conference.slug ?? conference.id ?? '';
+    if (!slug) return true;
+    if (seenSlugs.has(slug)) return false;
+    seenSlugs.add(slug);
+    return true;
+  });
+  fetchedResources.push(...newConferences);
+
+  if (payload.length < PER_PAGE) {
+    break;
+  }
 }
 
-const payload = await response.json();
-
-if (!Array.isArray(payload)) {
-  throw new Error('Expected the MyMUN API to return an array of conferences.');
-}
+const payload = fetchedResources;
+const pagesCount = pagesFetched;
 
 const extractionDate = formatLocalIsoDate(new Date());
 
@@ -125,12 +153,13 @@ const markdown = [
   `- Source page: ${SOURCE_PAGE}`,
   `- Extraction date: ${extractionDate}`,
   `- Effective filters kept from the URL: ${EFFECTIVE_FILTERS}`,
-  `- Export method: full filtered conference list API pull for review: \`${API_URL}\``,
+  `- Export method: full filtered conference list API pull for review (${pagesCount} page${pagesCount === 1 ? '' : 's'} at up to ${PER_PAGE} rows per page, deduplicated by slug): \`${API_BASE_URL}\``,
   `- Note: ${SOURCE_NOTE}`,
   '',
   '## Summary',
   '',
-  `- API conferences received: ${payload.length}`,
+  `- API pages fetched: ${pagesCount}`,
+  `- API conferences received (after dedupe by slug): ${payload.length}`,
   `- MUN-like conferences kept: ${keptConferences.length}`,
   `- Excluded non-MUN directory entries: ${payload.length - keptConferences.length}`,
   `- Earliest start date: ${earliestStartDate}`,
@@ -152,6 +181,7 @@ console.log(
   JSON.stringify(
     {
       source: SOURCE_PATH,
+      pagesFetched: pagesCount,
       apiConferences: payload.length,
       keptMunLike: keptConferences.length,
       excludedNonMun: payload.length - keptConferences.length,

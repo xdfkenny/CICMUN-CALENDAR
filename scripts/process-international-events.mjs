@@ -130,6 +130,31 @@ const uzbekistanSource = {
   url: 'https://oman.mfa.uz/page/736?language=en',
 };
 
+const qatarSource = {
+  label: 'Qatar Ministry of Interior: visa services portal',
+  url: 'https://portal.moi.gov.qa/qatarvisas/index.html',
+};
+
+const mongoliaSource = {
+  label: 'Mongolia e-Visa official portal',
+  url: 'https://evisa.mn/',
+};
+
+const cambodiaSource = {
+  label: 'Cambodia e-Visa official portal',
+  url: 'https://www.evisa.gov.kh/',
+};
+
+const philippinesEo408Source = {
+  label: 'Philippines DFA: nationals who may enter the Philippines without a visa under EO 408',
+  url: 'https://dfa-oca.ph/visa/visa-general-info/',
+};
+
+const philippinesOfficialGazetteSource = {
+  label: 'Philippines Official Gazette: Executive Order No. 408, s. 1960',
+  url: 'https://www.officialgazette.gov.ph/1960/11/09/executive-order-no-408-s-1960/',
+};
+
 const labelForVisaCategory = {
   'visa-free': 'Visa-free',
   'visa-required': 'Visa required',
@@ -241,6 +266,17 @@ const DESTINATIONS = [
   ),
   makeDestination('belgium', 'Belgium', '🇧🇪', ['Belgium'], makeSchengenVisaFreePolicy()),
   makeDestination('bulgaria', 'Bulgaria', '🇧🇬', ['Bulgaria'], makeSchengenVisaFreePolicy()),
+  makeDestination(
+    'cambodia',
+    'Cambodia',
+    '🇰🇭',
+    ['Cambodia'],
+    makeVisaPolicy('eVisa or visa on arrival', '30 days', {
+      note:
+        'Cambodia issues e-visas and visas on arrival to Venezuelan ordinary passport holders for tourist stays up to 30 days. Reconfirm entry points and the latest fee rules before travel.',
+      sources: [passportIndexSource, cambodiaSource],
+    }),
+  ),
   makeDestination('china', 'China', '🇨🇳', ['China'], makeVisaPolicy('visa-required')),
   makeDestination('croatia', 'Croatia', '🇭🇷', ['Croatia'], makeSchengenVisaFreePolicy()),
   makeDestination('cyprus', 'Cyprus', '🇨🇾', ['Cyprus'], makeVisaPolicy('visa-free', '90 days')),
@@ -252,6 +288,7 @@ const DESTINATIONS = [
     makeSchengenVisaFreePolicy(),
   ),
   makeDestination('denmark', 'Denmark', '🇩🇰', ['Denmark'], makeSchengenVisaFreePolicy()),
+  makeDestination('estonia', 'Estonia', '🇪🇪', ['Estonia'], makeSchengenVisaFreePolicy()),
   makeDestination('france', 'France', '🇫🇷', ['France'], makeSchengenVisaFreePolicy()),
   makeDestination('georgia', 'Georgia', '🇬🇪', ['Georgia'], makeVisaPolicy('visa-required')),
   makeDestination('germany', 'Germany', '🇩🇪', ['Germany'], makeSchengenVisaFreePolicy()),
@@ -272,6 +309,7 @@ const DESTINATIONS = [
     ['Indonesia'],
     makeVisaPolicy('eVisa or visa on arrival', '30 days'),
   ),
+  makeDestination('ireland', 'Ireland', '🇮🇪', ['Ireland'], makeVisaPolicy('visa-required')),
   makeDestination('italy', 'Italy', '🇮🇹', ['Italy'], makeSchengenVisaFreePolicy()),
   makeDestination('japan', 'Japan', '🇯🇵', ['Japan'], makeVisaPolicy('visa-required')),
   makeDestination(
@@ -291,6 +329,7 @@ const DESTINATIONS = [
   makeDestination('kosovo', 'Kosovo', '🇽🇰', ['Kosovo'], makeVisaPolicy('visa-free', '90 days')),
   makeDestination('kuwait', 'Kuwait', '🇰🇼', ['Kuwait'], makeVisaPolicy('visa-required')),
   makeDestination('lebanon', 'Lebanon', '🇱🇧', ['Lebanon'], makeVisaPolicy('visa on arrival', '30 days')),
+  makeDestination('lithuania', 'Lithuania', '🇱🇹', ['Lithuania'], makeSchengenVisaFreePolicy()),
   makeDestination('luxembourg', 'Luxembourg', '🇱🇺', ['Luxembourg'], makeSchengenVisaFreePolicy()),
   makeDestination('malaysia', 'Malaysia', '🇲🇾', ['Malaysia'], makeVisaPolicy('visa-free', '30 days', {
     note:
@@ -299,11 +338,32 @@ const DESTINATIONS = [
   })),
   makeDestination('malta', 'Malta', '🇲🇹', ['Malta'], makeSchengenVisaFreePolicy()),
   makeDestination(
+    'macao',
+    'Macao SAR',
+    '🇲🇴',
+    ['Macao SAR, China', 'Macao', 'Macau SAR, China', 'Macau'],
+    makeVisaPolicy('visa on arrival', '30 days', {
+      note:
+        'Passport Index lists Macao as granting visa on arrival to Venezuelan ordinary passport holders for stays up to 30 days. Reconfirm the stay privilege and airline boarding rules before travel.',
+    }),
+  ),
+  makeDestination(
     'moldova',
     'Moldova',
     '🇲🇩',
     ['Moldova, Republic of', 'Moldova'],
     makeVisaPolicy('visa-free', '90 days'),
+  ),
+  makeDestination(
+    'mongolia',
+    'Mongolia',
+    '🇲🇳',
+    ['Mongolia'],
+    makeVisaPolicy('eVisa', null, {
+      note:
+        'Mongolia issues electronic visas to eligible nationalities including Venezuelan ordinary passport holders. Confirm eligibility and application timing on the official e-Visa portal before booking.',
+      sources: [passportIndexSource, mongoliaSource],
+    }),
   ),
   makeDestination(
     'nepal',
@@ -329,8 +389,30 @@ const DESTINATIONS = [
     ['Palestine, State of', 'Palestinian Territories', 'Palestine'],
     makeVisaPolicy('visa-free'),
   ),
+  makeDestination(
+    'philippines',
+    'Philippines',
+    '🇵🇭',
+    ['Philippines'],
+    makeVisaPolicy('visa-free', '30 days', {
+      note:
+        'The Philippine Department of Foreign Affairs lists Venezuelan ordinary passports among the nationalities that may enter the Philippines without a visa for an initial stay of 30 days under Executive Order No. 408, as amended. Passport must be valid at least six months beyond the contemplated stay.',
+      sources: [passportIndexSource, philippinesEo408Source, philippinesOfficialGazetteSource],
+    }),
+  ),
   makeDestination('poland', 'Poland', '🇵🇱', ['Poland'], makeSchengenVisaFreePolicy()),
   makeDestination('portugal', 'Portugal', '🇵🇹', ['Portugal'], makeSchengenVisaFreePolicy()),
+  makeDestination(
+    'qatar',
+    'Qatar',
+    '🇶🇦',
+    ['Qatar'],
+    makeVisaPolicy('eVisa or visa on arrival', '30 days', {
+      note:
+        'Qatar\'s Ministry of Interior visa services portal lists Venezuela among the eligible nationalities. Qatar renamed its visa-on-arrival program to "visa-free entry"; eligible travellers receive a pre-authorised entry permit valid for around 30 days. Reconfirm the duration and entry conditions before travel.',
+      sources: [passportIndexSource, qatarSource],
+    }),
+  ),
   makeDestination('romania', 'Romania', '🇷🇴', ['Romania'], makeSchengenVisaFreePolicy()),
   makeDestination(
     'russia',
@@ -375,6 +457,7 @@ const DESTINATIONS = [
     }),
   ),
   makeDestination('turkiye', 'Türkiye', '🇹🇷', ['Türkiye', 'Turkey'], makeVisaPolicy('visa-free', '90 days')),
+  makeDestination('ukraine', 'Ukraine', '🇺🇦', ['Ukraine'], makeVisaPolicy('visa-required')),
   makeDestination(
     'united-arab-emirates',
     'United Arab Emirates',
