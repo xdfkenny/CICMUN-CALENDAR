@@ -1,14 +1,15 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
-const SOURCE_PATH = resolve('output/mymun_calendar_eu_as_dates.md');
-const SOURCE_PAGE = 'https://mymun.com/conferences/calendar?a=eu,as&s=fe&r=desc';
-const API_BASE_URL =
-  'https://mymun.com/api/conferences?filter_time=future&sb=fe&order=desc&filter_cont=eu&filter_cont=as&online_conf=false&page={page}&per_page={perPage}';
+const SOURCE_PATH = resolve('output/mymun_calendar_world.md');
+const SOURCE_PAGE = 'https://mymun.com/conferences/calendar?a=eu,as,sa,na,af,oc&s=fe&r=desc';
+const CONTINENTS = ['eu', 'as', 'sa', 'na', 'af', 'oc'];
+const continentFilters = CONTINENTS.map((continent) => `filter_cont=${continent}`).join('&');
+const API_BASE_URL = `https://mymun.com/api/conferences?filter_time=future&sb=fe&order=desc&${continentFilters}&online_conf=false&page={page}&per_page={perPage}`;
 const PER_PAGE = 50;
-const MAX_PAGES = 20;
+const MAX_PAGES = 30;
 const EFFECTIVE_FILTERS =
-  'Europe + Asia (`a=eu,as`), in-person only, future conferences, sort by price descending (`s=fe&r=desc`).';
+  'All continents (`a=eu,as,sa,na,af,oc`), in-person only, future conferences, sort by price descending (`s=fe&r=desc`).';
 const SOURCE_NOTE =
   'The calendar view loads month-by-month and its calendar data request drops the sort params. This export pages through the full filtered conference list endpoint (the API caps each response at 50 rows, so multiple pages are fetched and deduplicated by conference slug) so all filtered conference date ranges are captured in one file. A source-side MUN relevance filter then keeps only entries whose slug, title, or name indicates a MUN or United Nations simulation.';
 

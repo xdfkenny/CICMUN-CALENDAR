@@ -1,11 +1,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 
-const SOURCE_PATH = resolve('output/mymun_calendar_eu_as_dates.md');
-const REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned.md');
-const REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned.json');
-const STRICT_REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free.md');
-const STRICT_REVIEW_JSON_PATH = resolve('output/mymun_calendar_eu_as_dates_cleaned_visa_free.json');
+const SOURCE_PATH = resolve('output/mymun_calendar_world.md');
+const REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_world_cleaned.md');
+const REVIEW_JSON_PATH = resolve('output/mymun_calendar_world_cleaned.json');
+const STRICT_REVIEW_MARKDOWN_PATH = resolve('output/mymun_calendar_world_cleaned_visa_free.md');
+const STRICT_REVIEW_JSON_PATH = resolve('output/mymun_calendar_world_cleaned_visa_free.json');
 const APP_DATA_PATH = resolve('app/assets/data/international-events.json');
 const PASSPORT_ORIGIN = 'Venezuela';
 const formatLocalIsoDate = (date) => {
@@ -247,6 +247,8 @@ const verifiedVisaPolicyOverrides = {
 const DESTINATIONS = [
   makeDestination('albania', 'Albania', '🇦🇱', ['Albania'], makeVisaPolicy('visa-free', '90 days')),
   makeDestination('armenia', 'Armenia', '🇦🇲', ['Armenia'], makeVisaPolicy('eVisa', '120 days')),
+  makeDestination('argentina', 'Argentina', '🇦🇷', ['Argentina'], makeVisaPolicy('visa-free', '90 days')),
+  makeDestination('australia', 'Australia', '🇦🇺', ['Australia'], makeVisaPolicy('eVisa')),
   makeDestination('austria', 'Austria', '🇦🇹', ['Austria'], makeSchengenVisaFreePolicy()),
   makeDestination('azerbaijan', 'Azerbaijan', '🇦🇿', ['Azerbaijan'], makeVisaPolicy('visa-required')),
   makeDestination(
@@ -264,6 +266,20 @@ const DESTINATIONS = [
     makeVisaPolicy('visa on arrival', '30 days'),
   ),
   makeDestination('belgium', 'Belgium', '🇧🇪', ['Belgium'], makeSchengenVisaFreePolicy()),
+  makeDestination(
+    'bolivia',
+    'Bolivia',
+    '🇧🇴',
+    ['Bolivia (Plurinational State of)', 'Bolivia'],
+    makeVisaPolicy('visa-free', '90 days'),
+  ),
+  makeDestination(
+    'brazil',
+    'Brazil',
+    '🇧🇷',
+    ['Brazil'],
+    makeVisaPolicy('visa-free', '60 days'),
+  ),
   makeDestination('bulgaria', 'Bulgaria', '🇧🇬', ['Bulgaria'], makeSchengenVisaFreePolicy()),
   makeDestination(
     'cambodia',
@@ -276,7 +292,10 @@ const DESTINATIONS = [
       sources: [passportIndexSource, cambodiaSource],
     }),
   ),
+  makeDestination('canada', 'Canada', '🇨🇦', ['Canada'], makeVisaPolicy('visa-required')),
   makeDestination('china', 'China', '🇨🇳', ['China'], makeVisaPolicy('visa-required')),
+  makeDestination('colombia', 'Colombia', '🇨🇴', ['Colombia'], makeVisaPolicy('visa-free', '90 days')),
+  makeDestination('costa-rica', 'Costa Rica', '🇨🇷', ['Costa Rica'], makeVisaPolicy('visa-required')),
   makeDestination('croatia', 'Croatia', '🇭🇷', ['Croatia'], makeSchengenVisaFreePolicy()),
   makeDestination('cyprus', 'Cyprus', '🇨🇾', ['Cyprus'], makeVisaPolicy('visa-free', '90 days')),
   makeDestination(
@@ -287,6 +306,14 @@ const DESTINATIONS = [
     makeSchengenVisaFreePolicy(),
   ),
   makeDestination('denmark', 'Denmark', '🇩🇰', ['Denmark'], makeSchengenVisaFreePolicy()),
+  makeDestination('ecuador', 'Ecuador', '🇪🇨', ['Ecuador'], makeVisaPolicy('eVisa')),
+  makeDestination(
+    'egypt',
+    'Egypt',
+    '🇪🇬',
+    ['Egypt'],
+    makeVisaPolicy('eVisa or visa on arrival', '30 days'),
+  ),
   makeDestination('estonia', 'Estonia', '🇪🇪', ['Estonia'], makeSchengenVisaFreePolicy()),
   makeDestination('france', 'France', '🇫🇷', ['France'], makeSchengenVisaFreePolicy()),
   makeDestination('georgia', 'Georgia', '🇬🇪', ['Georgia'], makeVisaPolicy('visa-required')),
@@ -325,9 +352,17 @@ const DESTINATIONS = [
     ['Kazakhstan'],
     makeVisaPolicy('eVisa'),
   ),
+  makeDestination(
+    'kenya',
+    'Kenya',
+    '🇰🇪',
+    ['Kenya'],
+    makeVisaPolicy('eTA', '90 days'),
+  ),
   makeDestination('kosovo', 'Kosovo', '🇽🇰', ['Kosovo'], makeVisaPolicy('visa-free', '90 days')),
   makeDestination('kuwait', 'Kuwait', '🇰🇼', ['Kuwait'], makeVisaPolicy('visa-required')),
   makeDestination('lebanon', 'Lebanon', '🇱🇧', ['Lebanon'], makeVisaPolicy('visa on arrival', '30 days')),
+  makeDestination('libya', 'Libya', '🇱🇾', ['Libya'], makeVisaPolicy('eVisa')),
   makeDestination('lithuania', 'Lithuania', '🇱🇹', ['Lithuania'], makeSchengenVisaFreePolicy()),
   makeDestination('luxembourg', 'Luxembourg', '🇱🇺', ['Luxembourg'], makeSchengenVisaFreePolicy()),
   makeDestination('malaysia', 'Malaysia', '🇲🇾', ['Malaysia'], makeVisaPolicy('visa-free', '30 days', {
@@ -336,6 +371,8 @@ const DESTINATIONS = [
     sources: [passportIndexSource, malaysiaArrivalCardSource],
   })),
   makeDestination('malta', 'Malta', '🇲🇹', ['Malta'], makeSchengenVisaFreePolicy()),
+  makeDestination('mexico', 'Mexico', '🇲🇽', ['Mexico'], makeVisaPolicy('visa-required')),
+  makeDestination('morocco', 'Morocco', '🇲🇦', ['Morocco'], makeVisaPolicy('visa-required')),
   makeDestination(
     'macao',
     'Macao SAR',
@@ -372,6 +409,14 @@ const DESTINATIONS = [
     makeVisaPolicy('eVisa or visa on arrival', '150 days'),
   ),
   makeDestination('netherlands', 'Netherlands', '🇳🇱', ['Netherlands'], makeSchengenVisaFreePolicy()),
+  makeDestination('new-zealand', 'New Zealand', '🇳🇿', ['New Zealand'], makeVisaPolicy('visa-required')),
+  makeDestination(
+    'nigeria',
+    'Nigeria',
+    '🇳🇬',
+    ['Nigeria'],
+    makeVisaPolicy('eVisa', '90 days'),
+  ),
   makeDestination('norway', 'Norway', '🇳🇴', ['Norway'], makeSchengenVisaFreePolicy()),
   makeDestination(
     'oman',
@@ -381,6 +426,8 @@ const DESTINATIONS = [
     makeVisaPolicy('eVisa or visa on arrival', '30 days'),
   ),
   makeDestination('pakistan', 'Pakistan', '🇵🇰', ['Pakistan'], makeVisaPolicy('eVisa')),
+  makeDestination('panama', 'Panama', '🇵🇦', ['Panama'], makeVisaPolicy('visa-required')),
+  makeDestination('peru', 'Peru', '🇵🇪', ['Peru'], makeVisaPolicy('visa-required')),
   makeDestination(
     'palestine',
     'Palestine',
@@ -411,6 +458,13 @@ const DESTINATIONS = [
         'Qatar\'s Ministry of Interior visa services portal lists Venezuela among the eligible nationalities. Qatar renamed its visa-on-arrival program to "visa-free entry"; eligible travellers receive a pre-authorised entry permit valid for around 30 days. Reconfirm the duration and entry conditions before travel.',
       sources: [passportIndexSource, qatarSource],
     }),
+  ),
+  makeDestination(
+    'rwanda',
+    'Rwanda',
+    '🇷🇼',
+    ['Rwanda'],
+    makeVisaPolicy('eVisa or visa on arrival', '30 days'),
   ),
   makeDestination('romania', 'Romania', '🇷🇴', ['Romania'], makeSchengenVisaFreePolicy()),
   makeDestination(
@@ -478,6 +532,16 @@ const DESTINATIONS = [
     }),
   ),
   makeDestination(
+    'united-states',
+    'United States',
+    '🇺🇸',
+    ['United States of America', 'United States', 'USA'],
+    makeVisaPolicy('visa-required', null, {
+      note:
+        'Venezuelan ordinary passport holders require a United States visa (B-1/B-2) in advance. Arranging entry is time-sensitive; confirm current policy before planning travel.',
+    }),
+  ),
+  makeDestination(
     'vietnam',
     'Viet Nam',
     '🇻🇳',
@@ -489,6 +553,27 @@ const DESTINATIONS = [
     }),
   ),
   makeDestination('uzbekistan', 'Uzbekistan', '🇺🇿', ['Uzbekistan'], makeVisaPolicy('eVisa', '30 days')),
+  makeDestination(
+    'venezuela',
+    'Venezuela',
+    '🇻🇪',
+    ['Venezuela (Bolivarian Republic of)', 'Venezuela'],
+    makeVisaPolicy('visa-free'),
+  ),
+  makeDestination(
+    'zambia',
+    'Zambia',
+    '🇿🇲',
+    ['Zambia'],
+    makeVisaPolicy('eVisa or visa on arrival', '90 days'),
+  ),
+  makeDestination(
+    'zimbabwe',
+    'Zimbabwe',
+    '🇿🇼',
+    ['Zimbabwe'],
+    makeVisaPolicy('eVisa or visa on arrival', '90 days'),
+  ),
 ];
 
 for (const destination of DESTINATIONS) {

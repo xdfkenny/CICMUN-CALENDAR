@@ -1,7 +1,7 @@
 import type { InternationalDestination, InternationalEvent } from '~/types/international'
 
 export type DestinationStatus = 'open' | 'upcoming' | 'closed'
-export type RegionFilter = 'all' | 'europe' | 'asia'
+export type RegionFilter = 'all' | 'europe' | 'asia' | 'americas' | 'africa' | 'oceania'
 export type DateRangeFilter = 'all' | '30' | '90' | '180' | '365'
 export type SortOption = 'date' | 'country' | 'status'
 export type ViewMode = 'grid' | 'list'
@@ -18,19 +18,28 @@ export interface WeekendTimingMeta {
 
 export const PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY: Record<string, string | null> = {
   albania: 'al',
+  argentina: 'ar',
   armenia: 'am',
+  australia: 'au',
   austria: 'at',
   azerbaijan: 'az',
   bahrain: 'bh',
   bangladesh: 'bd',
   belgium: 'be',
+  bolivia: 'bo',
+  brazil: 'br',
   bulgaria: 'bg',
   cambodia: 'kh',
+  canada: 'ca',
   china: 'cn',
+  colombia: 'co',
+  'costa-rica': 'cr',
   croatia: 'hr',
   cyprus: 'cy',
   czechia: 'cz',
   denmark: 'dk',
+  ecuador: 'ec',
+  egypt: 'eg',
   estonia: 'ee',
   france: 'fr',
   georgia: 'ge',
@@ -45,28 +54,37 @@ export const PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY: Record<string, string 
   japan: 'jp',
   jordan: 'jo',
   kazakhstan: 'kz',
+  kenya: 'ke',
   kosovo: 'rk',
   kuwait: 'kw',
   lebanon: 'lb',
+  libya: 'ly',
   lithuania: 'lt',
   luxembourg: 'lu',
   malaysia: 'my',
   malta: 'mt',
   macao: 'mo',
+  mexico: 'mx',
   moldova: 'md',
   mongolia: 'mn',
+  morocco: 'ma',
   nepal: 'np',
   netherlands: 'nl',
+  'new-zealand': 'nz',
+  nigeria: 'ng',
   norway: 'no',
   oman: 'om',
   pakistan: 'pk',
   palestine: 'ps',
+  panama: 'pa',
+  peru: 'pe',
   philippines: 'ph',
   poland: 'pl',
   portugal: 'pt',
   qatar: 'qa',
   romania: 'ro',
   russia: 'ru',
+  rwanda: 'rw',
   'saudi-arabia': 'sa',
   serbia: 'rs',
   singapore: 'sg',
@@ -82,8 +100,12 @@ export const PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY: Record<string, string 
   ukraine: 'ua',
   'united-arab-emirates': 'ae',
   'united-kingdom': 'gb',
+  'united-states': 'us',
   uzbekistan: 'uz',
+  venezuela: 've',
   vietnam: 'vn',
+  zambia: 'zm',
+  zimbabwe: 'zw',
 }
 
 export const FLAG_CODE_BY_DESTINATION_KEY = PASSPORT_INDEX_FLAG_CODE_BY_DESTINATION_KEY
@@ -121,6 +143,68 @@ const EUROPE_DESTINATION_KEYS = new Set([
   'georgia',
   'armenia',
 ])
+
+const ASIA_DESTINATION_KEYS = new Set([
+  'azerbaijan',
+  'bahrain',
+  'bangladesh',
+  'cambodia',
+  'china',
+  'hong-kong',
+  'india',
+  'indonesia',
+  'japan',
+  'jordan',
+  'kazakhstan',
+  'kuwait',
+  'lebanon',
+  'macao',
+  'malaysia',
+  'mongolia',
+  'nepal',
+  'oman',
+  'pakistan',
+  'palestine',
+  'philippines',
+  'qatar',
+  'saudi-arabia',
+  'singapore',
+  'south-korea',
+  'syria',
+  'thailand',
+  'turkiye',
+  'united-arab-emirates',
+  'uzbekistan',
+  'vietnam',
+])
+
+const AMERICAS_DESTINATION_KEYS = new Set([
+  'argentina',
+  'bolivia',
+  'brazil',
+  'canada',
+  'colombia',
+  'costa-rica',
+  'ecuador',
+  'mexico',
+  'panama',
+  'peru',
+  'united-states',
+  'venezuela',
+])
+
+const AFRICA_DESTINATION_KEYS = new Set([
+  'egypt',
+  'kenya',
+  'libya',
+  'morocco',
+  'nigeria',
+  'rwanda',
+  'zambia',
+  'zimbabwe',
+])
+
+const OCEANIA_DESTINATION_KEYS = new Set(['australia', 'new-zealand'])
 
 export const statusPriority: Record<DestinationStatus, number> = {
   open: 0,
@@ -284,11 +368,24 @@ export const isWeekendFriendlyEvent = (event: Pick<InternationalEvent, 'startDat
 }
 
 export const getRegionForDestination = (destinationKey: string): Exclude<RegionFilter, 'all'> => {
-  return EUROPE_DESTINATION_KEYS.has(destinationKey) ? 'europe' : 'asia'
+  if (EUROPE_DESTINATION_KEYS.has(destinationKey)) return 'europe'
+  if (ASIA_DESTINATION_KEYS.has(destinationKey)) return 'asia'
+  if (AMERICAS_DESTINATION_KEYS.has(destinationKey)) return 'americas'
+  if (AFRICA_DESTINATION_KEYS.has(destinationKey)) return 'africa'
+  if (OCEANIA_DESTINATION_KEYS.has(destinationKey)) return 'oceania'
+  return 'asia'
+}
+
+const REGION_LABELS: Record<Exclude<RegionFilter, 'all'>, string> = {
+  europe: 'Europe',
+  asia: 'Asia',
+  americas: 'Americas',
+  africa: 'Africa',
+  oceania: 'Oceania',
 }
 
 export const getRegionLabel = (destinationKey: string) => {
-  return getRegionForDestination(destinationKey) === 'europe' ? 'Europe' : 'Asia'
+  return REGION_LABELS[getRegionForDestination(destinationKey)]
 }
 
 export const getNextEvent = (destination: InternationalDestination, todayIso: string) => {
