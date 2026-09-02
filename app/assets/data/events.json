@@ -405,6 +405,15 @@
     "language": "Español"
   },
   {
+    "id": "madipmun-externo-2026",
+    "title": "MADIPMUN (Externo)",
+    "model": "C",
+    "startDate": "2026-06-12",
+    "endDate": "2026-06-14",
+    "notes": "12, 13 y 14 ❤️💛 · Externo",
+    "language": "Bilingüe"
+  },
+  {
     "id": "ceamun-2026",
     "title": "CEAMUN",
     "model": "A",
@@ -439,24 +448,6 @@
     "endDate": "2026-06-28",
     "notes": "26, 27 y 28 de junio 💙🤍🤎",
     "language": "Español"
-  },
-  {
-    "id": "damun-2026",
-    "title": "DAMUN",
-    "model": "A",
-    "startDate": "2026-07-10",
-    "endDate": "2026-07-12",
-    "notes": "10, 11, 12 🦁♥️🤍",
-    "language": "Español"
-  },
-  {
-    "id": "madipmun-externo-2026",
-    "title": "MADIPMUN (Externo)",
-    "model": "C",
-    "startDate": "2026-06-12",
-    "endDate": "2026-06-14",
-    "notes": "12, 13 y 14 ❤️💛 · Externo",
-    "language": "Bilingüe"
   },
   {
     "id": "safmun-2026",
@@ -504,6 +495,15 @@
     "language": "Bilingüe"
   },
   {
+    "id": "huimun-oct-2026",
+    "title": "HUIMUN",
+    "model": "A",
+    "startDate": "2026-10-23",
+    "endDate": "2026-10-25",
+    "notes": "23, 24 y 25",
+    "language": "Español"
+  },
+  {
     "id": "jomun-2026",
     "title": "JOMUN",
     "model": "C",
@@ -519,6 +519,15 @@
     "startDate": "2026-11-07",
     "endDate": "2026-11-08",
     "notes": "7 y 8 ❤️🤍💙",
+    "language": "Bilingüe"
+  },
+  {
+    "id": "samun-2026",
+    "title": "SAMUN",
+    "model": "C",
+    "startDate": "2026-11-13",
+    "endDate": "2026-11-14",
+    "notes": "13 y 14 🤍❤️🐻",
     "language": "Bilingüe"
   },
   {
@@ -549,12 +558,48 @@
     "language": "Bilingüe"
   },
   {
+    "id": "metromun-la-school-edition-2027",
+    "title": "METROMUN-LA School Edition",
+    "model": "A",
+    "startDate": "2027-02-12",
+    "endDate": "2027-02-14",
+    "notes": "12, 13 y 14 🌳🧡",
+    "language": "Español"
+  },
+  {
+    "id": "mini-creymun-2027",
+    "title": "Mini CREYMUN",
+    "model": "A",
+    "startDate": "2027-02-20",
+    "endDate": "2027-02-20",
+    "notes": "20 ❤️💙",
+    "language": "Español"
+  },
+  {
+    "id": "saimun-2027",
+    "title": "SAIMUN",
+    "model": "C",
+    "startDate": "2027-02-26",
+    "endDate": "2027-02-28",
+    "notes": "26, 27 y 28 💙⭐️",
+    "language": "Bilingüe"
+  },
+  {
     "id": "msmun-2027",
     "title": "MSMUN",
     "model": "A",
     "startDate": "2027-03-12",
     "endDate": "2027-03-14",
     "notes": "12, 13 y 14 ❤️💙",
+    "language": "Español"
+  },
+  {
+    "id": "jilmun-2027",
+    "title": "JILMUN",
+    "model": "A",
+    "startDate": "2027-03-18",
+    "endDate": "2027-03-21",
+    "notes": "18, 19, 20 y 21 🌍💙💚🧡",
     "language": "Español"
   },
   {
@@ -576,15 +621,6 @@
     "language": "Español"
   },
   {
-    "id": "creymun-2027",
-    "title": "CREYMUN",
-    "model": "A",
-    "startDate": "2027-04-16",
-    "endDate": "2027-04-18",
-    "notes": "16, 17 y 18 ❤️💙",
-    "language": "Español"
-  },
-  {
     "id": "vimun-2027",
     "title": "VIMUN",
     "model": "C",
@@ -601,6 +637,15 @@
     "endDate": "2027-05-16",
     "notes": "14, 15 y 16 💙🌎 · Externo",
     "language": "Bilingüe"
+  },
+  {
+    "id": "creymun-2027",
+    "title": "CREYMUN",
+    "model": "A",
+    "startDate": "2027-05-21",
+    "endDate": "2027-05-23",
+    "notes": "21, 22 y 23 💙❤️",
+    "language": "Español"
   },
   {
     "id": "iccmun-2027",
